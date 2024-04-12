@@ -33,3 +33,45 @@ html, body {
   background-color: #2B2B2B!important;
   color: white!important;
 }
+
+.imagem{
+  width: 100%;
+  margin-top: 20vh;
+}
+
+.form-label{
+  font-family: "Inter", sans-serif;
+}
+
+.texto-1{
+  font-family: "Inter", sans-serif;
+  font-size: 30px;
+  font-weight: 100;
+  color: #FFFFFF;
+  margin-left: 20px;
+}
+
+.texto-2{
+  font-family: "Baloo Da 2", sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-left: 20px;
+}
+
+.texto-voce{
+  color: blue;
+}
+
+.texto-2 {
+  font-family: "Baloo Da 2", sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-left: 20px;
+}
+
+.texto-voce {
+  color: #0D1337;
+  display: inline;
+}
