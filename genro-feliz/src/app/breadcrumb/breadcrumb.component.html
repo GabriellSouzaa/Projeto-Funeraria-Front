@@ -1,4 +1,4 @@
-<div class="container-breadcrumb">
+<div class="container-breadcrumb" [ngClass]="{'container-breadcrumb-side-bar-aberta': breadcrumbService.sideBarAberta}">
   <div class="texto-inicio">Início</div>
   <div class="texto-aplicacao">/ {{aplicacao}}</div>
   <div class="texto-subaplicacao">/ {{subAplicacao}}</div>

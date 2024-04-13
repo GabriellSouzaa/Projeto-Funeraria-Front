@@ -11,17 +11,49 @@
 }
 
 .side-nav-container {
-    /* Defina a posição inicial do drawer */
     transition: transform 0.3s ease;
   }
   
   .opened {
-    /* Define a posição do drawer quando aberto */
     transform: translateX(0);
   }
   
   .closed {
-    /* Define a posição do drawer quando fechado */
     transform: translateX(-100%);
   }
+
+  .botao-side-nav{
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px 0;
+  }
+
+  .botao-side-nav:hover{
+    background-color: #1E2A78;
+  }
+
+  .logo-sao-vicente{
+    margin-left: 50px;
+    margin-bottom: 20px;
+    width: 60%;
+  }
   
+  .info-funcionario{
+    display: flex;
+    flex-direction: row;
+    margin-top: 48vh;
+    margin-left: 8px;
+  }
+
+  .nome-funcionario{
+    margin-left: 5px;
+  }
+
+  .cargo-funcionario{
+    font-size: small;
+    font-weight: lighter;
+    font-family: 'Inter', sans-serif;
+  }
+

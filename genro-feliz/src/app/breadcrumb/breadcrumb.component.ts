@@ -1,23 +1,26 @@
 import { Component, Input } from '@angular/core';
+import { BreadcrumbService } from '../services/breadcrumb.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.css'
 })
 export class BreadcrumbComponent {
 
-  constructor() { }
+  constructor(public breadcrumbService: BreadcrumbService) { }
 
   @Input() aplicacao: string = "";
 
   @Input() subAplicacao: string = "";
 
-  ngOnInit(): void{
+  @Input() sideNavAberta: boolean = false;
 
+  ngOnInit(): void{
   }
 
-
+ 
 }

@@ -1,0 +1,100 @@
+<app-breadcrumb
+  [aplicacao]="'Gerenciador Funerária'"
+  [subAplicacao]="'Clientes'"
+/>
+
+<p-table
+  [value]="clientes"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [paginator]="true"
+  [rows]="5"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Total de Clientes: {totalRecords}"
+>
+  <ng-template pTemplate="caption">
+    <button class="btn btn-warning m-2 text-white">
+      <i class="bi bi-people-fill"></i> Clientes em Atraso
+    </button>
+    <button class="btn btn-danger text-white m-2">
+      <i class="bi bi-people-fill"></i> Clientes com Beneficiários Falecidos
+    </button>
+    <button class="btn btn-primary m-2">
+      <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
+    </button>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>RG</th>
+      <th>Data de Nascimento</th>
+      <th>Natural de</th>
+      <th>Religião</th>
+      <th>Estado Cívil</th>
+      <th>Telefone</th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cliente>
+    <tr>
+      <td>{{ cliente.nome }}</td>
+      <td>{{ cliente.cpf }}</td>
+      <td>{{ cliente.rg }}</td>
+      <td>{{ cliente.dataNascimento }}</td>
+      <td>{{ cliente.cidadeNascimento }}</td>
+      <td>{{ cliente.religiao }}</td>
+      <td>{{ cliente.estadoCivil }}</td>
+      <td>{{ cliente.telefone }}</td>
+      <td>
+        <button
+          class="btn btn-primary"
+          pTooltip="Consultar Beneficiários do Cliente"
+          tooltipPosition="bottom"
+        >
+          <i class="bi bi-people-fill"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-info m-2"
+          pTooltip="Consultar Informações Adicionais do Cliente"
+          tooltipPosition="bottom"
+          (click)="abrirDialogConsultarInformacoesAdicionais(cliente)"
+        >
+          <i class="bi bi-list text-white"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          pTooltip="Excluir Cliente"
+          tooltipPosition="bottom"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [visible]="visibleDialogConsultarInformacoesAdicionais"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '300px' }"
+  [draggable]="false"
+>
+  <ng-template pTemplate="header"
+    >Informações adicionais de
+    {{ clienteSelecionadoParaConsultarInformacoesAdicionais.nome }}</ng-template
+  >
+  <div>
+    <b>Profissão: </b>
+    {{ clienteSelecionadoParaConsultarInformacoesAdicionais.profissao }}<br />
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      class="btn btn-danger"
+      (click)="fecharDialogConsultarInformacoesAdicionais()"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </ng-template>
+</p-dialog>

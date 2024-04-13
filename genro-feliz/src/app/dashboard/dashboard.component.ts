@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { BreadcrumbService } from '../services/breadcrumb.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 })
 export class DashboardComponent {
 
-  constructor() { }
+  constructor(private breadcrumbService: BreadcrumbService) { }
 
   estaAbertaSideNav: boolean = false;
 
@@ -21,6 +22,8 @@ export class DashboardComponent {
 
   public abrirSideNav(): void {
     this.estaAbertaSideNav = !this.estaAbertaSideNav;
+    this.breadcrumbService.sideBarAberta = this.estaAbertaSideNav;
+    
   }
 
 }

@@ -1,3 +1,17 @@
 <mat-drawer-container class="side-nav-container" [ngClass]="{'opened': estaAberta, 'closed': !estaAberta}">
+  <img src="../../assets/sao_vicente_logo_sidenav.png" alt="logo da são vicente" class="logo-sao-vicente">
+  <button class="botao-side-nav" [routerLink]="['/clientes']">Clientes</button>
+  <button class="botao-side-nav">Caixão</button>
+  <button class="botao-side-nav">Beneficiários</button>
+  <button class="botao-side-nav">Salas de Velório</button>
+  <button class="botao-side-nav">Falecimentos</button>
 
+  <div class="info-funcionario">
+    <div class="imagem-funcionario">
+      <img src="../../assets/avatar_funcionario.png" alt="imagem do funcionário">
+    </div>
+    <div class="nome-funcionario">MATHEUS DE OLIVEIRA RODRIGUES SALEH
+      <div class="cargo-funcionario">Atendente</div>
+    </div>
+  </div>
 </mat-drawer-container>
