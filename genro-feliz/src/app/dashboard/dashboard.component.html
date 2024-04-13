@@ -1,0 +1,21 @@
+<div class="container-botoes">
+  <div>
+    <button class="btn btn-dark botao-barra" (click)="abrirSideNav()"><i class="bi bi-list"></i></button>
+    <div class="texto-botao">Menu</div>
+  </div>
+  <div>
+    <button class="btn btn-dark botao-barra"><i class="bi bi-house "></i></button>
+    <div class="texto-botao">Home</div>
+  </div>
+  <div>
+    <button class="btn btn-dark botao-barra"><i class="bi bi-box-arrow-right"></i></button>
+    <div class="texto-botao">Sair</div>
+  </div>
+</div>
+<div class="container-nome-app">
+  <div>Gerenciador Funerária</div>
+</div>
+
+<app-side-nav [estaAberta]="estaAbertaSideNav"></app-side-nav>
+
+

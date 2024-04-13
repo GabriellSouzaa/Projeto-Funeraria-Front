@@ -1,0 +1,27 @@
+.side-nav-container{
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #0D1337;
+    padding-top: 20px;
+    margin-top: 115px;
+    color: white;
+}
+
+.side-nav-container {
+    /* Defina a posição inicial do drawer */
+    transition: transform 0.3s ease;
+  }
+  
+  .opened {
+    /* Define a posição do drawer quando aberto */
+    transform: translateX(0);
+  }
+  
+  .closed {
+    /* Define a posição do drawer quando fechado */
+    transform: translateX(-100%);
+  }
+  

@@ -1,0 +1,31 @@
+.container-breadcrumb{
+  font-family: "Baloo Da 2", sans-serif;
+  font-weight: 800;
+  margin-left: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-breadcrumb-side-bar-aberta{
+  font-family: "Baloo Da 2", sans-serif;
+  font-weight: 800;
+  margin-left: 260px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.texto-inicio{
+  color: #2B7333;
+}
+
+.texto-aplicacao{
+  color: #6C757D;
+  margin-left: 6px;
+}
+
+.texto-subaplicacao{
+  color: #6C757D;
+  margin-left: 6px;
+}

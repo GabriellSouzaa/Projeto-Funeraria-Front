@@ -1,0 +1,10 @@
+<app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Tela de Boas-Vindas'"/>
+
+<p-dialog header="Boas Vindas" [(visible)]="visibleDialogBoasVindas" [style]="{width: '50vw'}" closable="false">
+  <p>
+    Bem-vindo ao software da Funerária São Vicente Prever, utilize a barra lateral clicando no botão “Menu” acima para navegar pela aplicação
+  </p>
+  <p-footer>
+    <button class="btn btn-primary" (click)="fecharDialogBoasVindas()"><i class="bi bi-check-lg"></i> Okay</button>
+  </p-footer>
+</p-dialog>

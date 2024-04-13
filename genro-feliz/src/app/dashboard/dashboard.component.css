@@ -1,0 +1,23 @@
+.container-botoes{
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 1vh;
+}
+
+.texto-botao{
+  color: white;
+  text-align: center;
+}
+
+.container-nome-app{
+  background-color: #2b7333;
+  color: white;
+  font-weight: 600;
+  font-size: large;
+  text-align: center;
+  padding: 1vh;
+}
+
+
