@@ -18,7 +18,7 @@
     <button class="btn btn-danger text-white m-2">
       <i class="bi bi-people-fill"></i> Clientes com Beneficiários Falecidos
     </button>
-    <button class="btn btn-primary m-2">
+    <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarCliente()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
     </button>
   </ng-template>
@@ -95,6 +95,37 @@
       (click)="fecharDialogConsultarInformacoesAdicionais()"
     >
       <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogCadastrarCliente"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '600px' }"
+  [draggable]="false"
+>
+
+  <form [formGroup]="formCadastrarCliente" class="formulario-cadastrar-cliente">
+    <input type="text" class="form-control" formControlName="nome" placeholder="Nome">
+    <input type="text" class="form-control" formControlName="dataNascimento" placeholder="Data de Nascimento">
+    <input type="text" class="form-control" formControlName="cidadeNascimento" placeholder="Cidade de Nascimento">
+    <input type="text" class="form-control" formControlName="rg" placeholder="RG">
+    <input type="text" class="form-control" formControlName="cpf" placeholder="CPF">
+    <input type="text" class="form-control" formControlName="profissao" placeholder="Profissão">
+    <input type="text" class="form-control" formControlName="religiao" placeholder="Religião">
+    <input type="text" class="form-control" formControlName="estado_civil" placeholder="Estado Civil">
+    <input type="text" class="form-control" formControlName="telefone" placeholder="Telefone">
+  </form>
+  <ng-template pTemplate="footer">
+    <button
+      class="btn btn-danger m-2"
+      (click)="fecharDialogCadastrarCliente()"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+    <button class="btn btn-success m-2" (click)="cadastrarCliente()">
+      <i class="bi bi-check"></i> Confirmar
     </button>
   </ng-template>
 </p-dialog>

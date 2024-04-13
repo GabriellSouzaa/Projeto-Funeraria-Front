@@ -5,13 +5,15 @@ import { Cliente } from '../models/Cliente.model';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
+import { ClienteForm } from '../forms/Cliente.form';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule],
+  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -23,10 +25,15 @@ export class ClientesComponent {
 
   public clienteSelecionadoParaConsultarInformacoesAdicionais: Cliente = new Cliente();
 
+  public formCadastrarCliente: FormGroup = new FormGroup({});
+
   public visibleDialogConsultarInformacoesAdicionais: boolean = false;
+
+  public visibleDialogCadastrarCliente: boolean = false;
 
   ngOnInit(): void {
     this.listarClientes();
+    this.formCadastrarCliente = ClienteForm;
   }
 
   public listarClientes(): void {
@@ -42,6 +49,22 @@ export class ClientesComponent {
 
   public fecharDialogConsultarInformacoesAdicionais(): void{
     this.visibleDialogConsultarInformacoesAdicionais = false;
+  }
+
+  public abrirDialogCadastrarCliente(): void{
+    this.visibleDialogCadastrarCliente = true;
+  }
+
+  public fecharDialogCadastrarCliente(): void{
+    this.visibleDialogCadastrarCliente = false;
+  }
+
+  public cadastrarCliente(): void{
+    this.clienteService.cadastrarCliente(this.formCadastrarCliente.value).subscribe(() => {
+      this.fecharDialogCadastrarCliente();
+      this.listarClientes();
+      this.formCadastrarCliente.reset();
+    })
   }
 
 }

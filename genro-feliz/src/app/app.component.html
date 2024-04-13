@@ -1,3 +1,5 @@
 
 <app-dashboard *ngIf="!ePaginaDeLogin"/>
-<router-outlet/>
+<div [ngClass]="{'navbar-aberta': breadcrumbService.sideBarAberta}">
+  <router-outlet/>
+</div>
