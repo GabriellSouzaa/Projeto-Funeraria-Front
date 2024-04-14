@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { BreadcrumbService } from '../services/breadcrumb.service';
+import { DataHoraAtualComponent } from '../data-hora-atual/data-hora-atual.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SideNavComponent, BreadcrumbComponent],
+  imports: [SideNavComponent, BreadcrumbComponent, DataHoraAtualComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

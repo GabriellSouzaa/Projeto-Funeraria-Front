@@ -1,0 +1,11 @@
+.card-data-hora{
+  background-color: #0D1337;
+  color: white;
+  align-items: end;
+  width: 13%;
+  margin-left: 80%;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-size: medium;
+  padding: 8px;
+}
