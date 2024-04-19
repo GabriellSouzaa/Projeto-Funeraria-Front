@@ -5,7 +5,7 @@ html, body {
 }
 
 .login-screen {
-  background-image: url('../../assets/tela_login.png');
+  background-image: url('../../../assets/tela_login.png');
   background-size: cover;
   height: 100%;
   width: 100%;
@@ -19,7 +19,7 @@ html, body {
   height: 300px;
   position: fixed;
   top: 50%;
-  right: 200px; 
+  right: 200px;
   transform: translateY(-50%);
   padding: 20px;
   border-radius: 10px;

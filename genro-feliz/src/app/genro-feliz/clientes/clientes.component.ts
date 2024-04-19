@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { ClienteService } from '../services/cliente.service';
-import { Cliente } from '../models/Cliente.model';
+import { ClienteService } from '../shared/services/cliente.service';
+import { Cliente } from '../shared/models/Cliente.model';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BreadcrumbService } from '../services/breadcrumb.service';
+import { BreadcrumbService } from '../shared/services/breadcrumb.service';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -22,5 +22,5 @@ export class BreadcrumbComponent {
   ngOnInit(): void{
   }
 
- 
+
 }

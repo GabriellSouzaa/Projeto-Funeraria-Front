@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { BreadcrumbService } from '../services/breadcrumb.service';
+import { BreadcrumbService } from '../shared/services/breadcrumb.service';
 import { DataHoraAtualComponent } from '../data-hora-atual/data-hora-atual.component';
 
 
@@ -19,12 +19,12 @@ export class DashboardComponent {
   estaAbertaSideNav: boolean = false;
 
   ngOnInit() {
-  } 
+  }
 
   public abrirSideNav(): void {
     this.estaAbertaSideNav = !this.estaAbertaSideNav;
     this.breadcrumbService.sideBarAberta = this.estaAbertaSideNav;
-    
+
   }
 
 }

@@ -8,12 +8,12 @@ import { Cliente } from '../models/Cliente.model';
 })
 export class ClienteService {
 
-  private apiUrl = 'http://localhost:8080/cliente'
+  private apiUrl = 'http://localhost:8080/client'
 
   constructor(private http: HttpClient) { }
 
   public listarClientes(): Observable<Cliente[]>{
-    return this.http.get<Cliente[]>(`${this.apiUrl}/listar`); 
+    return this.http.get<Cliente[]>(`${this.apiUrl}`);
   }
 
   public cadastrarCliente(cliente: Cliente): Observable<Cliente>{
