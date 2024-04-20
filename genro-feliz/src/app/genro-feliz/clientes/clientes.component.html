@@ -12,7 +12,7 @@
   currentPageReportTemplate="Total de Clientes: {totalRecords}"
 >
   <ng-template pTemplate="caption">
-    <button class="btn btn-warning m-2 text-white">
+    <button class="btn btn-warning m-2 text-white" (click)="abrirDialogClientesAtraso()">
       <i class="bi bi-people-fill"></i> Clientes em Atraso
     </button>
     <button class="btn btn-danger text-white m-2">
@@ -126,6 +126,24 @@
     </button>
     <button class="btn btn-success m-2" (click)="cadastrarCliente()">
       <i class="bi bi-check"></i> Confirmar
+    </button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog 
+  [visible]="visibleDialogClientesAtraso"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '500px' }"
+  [draggable]="false"
+>
+  <ng-template pTemplate="header">Clientes em Atraso</ng-template>
+  <app-clientes-atraso/>
+  <ng-template pTemplate="footer">
+    <button
+      class="btn btn-danger"
+      (click)="fecharDialogClientesAtraso()"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
     </button>
   </ng-template>
 </p-dialog>

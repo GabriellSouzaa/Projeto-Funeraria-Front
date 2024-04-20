@@ -1,0 +1,20 @@
+<p-table
+  [value]="planosFunerariosEmAtraso"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome Do Cliente</th>
+      <th>Tempo Atrasado</th>
+      <th>CPF Do Cliente</th>
+      <th>Valor a Pagar</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cliente>
+    <tr>
+      <td>{{cliente.nomeCliente}}</td>
+      <td>{{cliente.tempoAtrasado}}</td>
+      <td>{{cliente.cpfCliente}}</td>
+      <td>{{cliente.valorAPagar}}</td>
+    </tr>
+  </ng-template>
+</p-table>

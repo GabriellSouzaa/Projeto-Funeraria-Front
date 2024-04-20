@@ -6,14 +6,15 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ClientesAtrasoComponent } from '../../clientes-atraso/clientes-atraso.component';
 
 
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule],
+  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -30,6 +31,8 @@ export class ClientesComponent {
   public visibleDialogConsultarInformacoesAdicionais: boolean = false;
 
   public visibleDialogCadastrarCliente: boolean = false;
+
+  public visibleDialogClientesAtraso: boolean = false;
 
   ngOnInit(): void {
     this.listarClientes();
@@ -57,6 +60,14 @@ export class ClientesComponent {
 
   public fecharDialogCadastrarCliente(): void{
     this.visibleDialogCadastrarCliente = false;
+  }
+
+  public abrirDialogClientesAtraso(): void{
+    this.visibleDialogClientesAtraso = true;
+  }
+
+  public fecharDialogClientesAtraso(): void{
+    this.visibleDialogClientesAtraso = false;
   }
 
   public cadastrarCliente(): void{
