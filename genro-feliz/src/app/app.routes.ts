@@ -6,13 +6,14 @@ import { CaixaoComponent } from './genro-feliz/caixao/caixao.component';
 import { BeneficiariosComponent } from './genro-feliz/beneficiarios/beneficiarios.component';
 import { SalasDeVelorioComponent } from './genro-feliz/salas-de-velorio/salas-de-velorio.component';
 import { FalecimentosComponent } from './genro-feliz/falecimentos/falecimentos.component';
+import { AuthGuard } from './genro-feliz/shared/guard/authguard';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent},
-  { path: 'pagina-inicial', component: PaginaInicialComponent},
-  {path: 'clientes', component: ClientesComponent},
-  {path: 'caixao', component: CaixaoComponent},
-  {path: 'beneficiarios', component: BeneficiariosComponent},
-  {path: 'salas-de-velorio', component: SalasDeVelorioComponent},
-  {path: 'falecimentos', component: FalecimentosComponent}
+  { path: 'pagina-inicial', component: PaginaInicialComponent, canActivate: [AuthGuard]},
+  {path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard]},
+  {path: 'caixao', component: CaixaoComponent, canActivate: [AuthGuard]},
+  {path: 'beneficiarios', component: BeneficiariosComponent, canActivate: [AuthGuard]},
+  {path: 'salas-de-velorio', component: SalasDeVelorioComponent, canActivate: [AuthGuard]},
+  {path: 'falecimentos', component: FalecimentosComponent, canActivate: [AuthGuard]}
 ];

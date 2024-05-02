@@ -1,6 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from '../shared/services/login.service';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   public loginForm: FormGroup = new FormGroup({});
+
 
   public constructor(private loginService: LoginService, private messageService: MessageService, private router: Router){}
 

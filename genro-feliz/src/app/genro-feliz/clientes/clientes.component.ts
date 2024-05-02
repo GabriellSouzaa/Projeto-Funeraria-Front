@@ -7,7 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ClientesAtrasoComponent } from '../../clientes-atraso/clientes-atraso.component';
+import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
 
 
 
