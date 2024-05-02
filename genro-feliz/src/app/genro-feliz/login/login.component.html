@@ -24,6 +24,14 @@
     </form>
     <p-toast></p-toast>
     <button type="button" (click)="login()" [disabled]="!loginForm.valid" class="btn btn-success">Fazer Login</button>
-
+    <button type="button" class="btn btn-info mt-2" (click)="abrirDialogRegistrarUsuario()">Criar Usuário</button>
   </div>
 </div>
+
+
+<p-dialog header="Novo Usuário" [(visible)]="visibleDialogRegistrarUsuario" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [closable]="false">
+  <app-register/>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btn-danger" (click)="visibleDialogRegistrarUsuario = false"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </ng-template>
+</p-dialog>
