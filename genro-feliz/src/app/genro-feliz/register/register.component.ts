@@ -25,7 +25,8 @@ export class RegisterComponent {
 
   public registrarUsuario(): void{
     this.registerService.register(this.registerForm).subscribe(() => {
-      console.log('Usuário registrado com sucesso.');
+      window.location.reload();
+      this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Usuário registrado com sucesso.'});
     }, () => {
       this.messageService.add({severity:'error', summary: 'Erro', detail: 'Erro ao registrar usuário.'});
     })
