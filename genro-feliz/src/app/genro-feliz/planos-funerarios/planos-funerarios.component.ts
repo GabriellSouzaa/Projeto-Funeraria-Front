@@ -3,11 +3,13 @@ import { TableModule } from 'primeng/table';
 import { PlanoFunerarioService } from '../shared/services/plano-funerario.service';
 import { PlanoFunerario } from '../shared/models/PlanoFunerario.model';
 import { DialogModule } from 'primeng/dialog';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { PlanoFunerarioForm } from '../forms/PlanoFunerario.form';
 
 @Component({
   selector: 'app-planos-funerarios',
   standalone: true,
-  imports: [TableModule, DialogModule],
+  imports: [TableModule, DialogModule, ReactiveFormsModule],
   templateUrl: './planos-funerarios.component.html',
   styleUrl: './planos-funerarios.component.css'
 })
@@ -17,12 +19,20 @@ export class PlanosFunerariosComponent {
 
   public visibleDialogCadastrarPlanoFunerario: boolean = false;
 
+  public visibleDialogExcluirPlanoFunerario: boolean = false;
+
+  public planoFunerarioParaRemover: PlanoFunerario = new PlanoFunerario();
+
+  public planosFunerarios: PlanoFunerario[] = [];
+
+  public planoFunerarioParaCadastrarForm: FormGroup  = PlanoFunerarioForm;
+
+
   ngOnInit() {
     this.listarPlanosFunerarios();
   }
 
-  public planosFunerarios: PlanoFunerario[] = [];
-
+  
   public listarPlanosFunerarios(): void {
     this.planoFunerarioService.listarPlanosFunerarios().subscribe(
       (planosFunerarios: PlanoFunerario[]) => {
@@ -42,8 +52,33 @@ export class PlanosFunerariosComponent {
     this.visibleDialogCadastrarPlanoFunerario = false;
   }
 
-  public salvarPlanoFunerario(): void {
-    console.log('Salvando plano funerário');
+  public abrirDialogExcluirPlanoFunerario(planoFunerario: PlanoFunerario): void {
+    this.planoFunerarioParaRemover = planoFunerario;
+    this.visibleDialogExcluirPlanoFunerario = true;
   }
+
+  public fecharDialogExcluirPlanoFunerario(): void {
+    this.visibleDialogExcluirPlanoFunerario = false;
+  }
+
+  public salvarPlanoFunerario(): void {
+    console.log(this.planoFunerarioParaCadastrarForm.value)
+    this.planoFunerarioService.criarPlanoFunerario(this.planoFunerarioParaCadastrarForm.value).subscribe(() => {
+      this.listarPlanosFunerarios();
+      this.fecharDialogCadastrarPlanoFunerario();
+    })
+  }
+
+  public excluirPlanoFunerario(): void{
+    if(this.planoFunerarioParaRemover.id){
+      this.planoFunerarioService.removerPlanoFunerario(this.planoFunerarioParaRemover.id).subscribe(() => {
+        this.listarPlanosFunerarios();
+        this.fecharDialogExcluirPlanoFunerario();
+      })
+    }
+    
+  }
+
+
 
 }

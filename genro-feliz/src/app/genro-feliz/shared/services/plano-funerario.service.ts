@@ -16,5 +16,13 @@ export class PlanoFunerarioService {
     return this.http.get<PlanoFunerario[]>(`${this.apiUrl}`);
   }
 
+  public criarPlanoFunerario(planoFunerario: PlanoFunerario): Observable<any>{
+    return this.http.post(`${this.apiUrl}/create`, planoFunerario)
+  }
+
+  public removerPlanoFunerario(id: number): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/delete/${id}`)
+  }
+
   
 }
