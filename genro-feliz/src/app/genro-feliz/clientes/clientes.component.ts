@@ -26,6 +26,8 @@ export class ClientesComponent {
 
   public clienteSelecionadoParaConsultarInformacoesAdicionais: Cliente = new Cliente();
 
+  public clienteSelecionadoParaExcluir: Cliente = new Cliente();
+
   public formCadastrarCliente: FormGroup = new FormGroup({});
 
   public visibleDialogConsultarInformacoesAdicionais: boolean = false;
@@ -33,6 +35,8 @@ export class ClientesComponent {
   public visibleDialogCadastrarCliente: boolean = false;
 
   public visibleDialogClientesAtraso: boolean = false;
+
+  public visibleDialogExcluirCliente: boolean = false;
 
   ngOnInit(): void {
     this.listarClientes();
@@ -70,12 +74,29 @@ export class ClientesComponent {
     this.visibleDialogClientesAtraso = false;
   }
 
+  public abrirDialogExcluirCliente(cliente: Cliente): void{
+    this.clienteSelecionadoParaExcluir = cliente;
+    this.visibleDialogExcluirCliente = true;
+  }
+
+  public fecharDialogExcluirCliente(): void{
+    this.visibleDialogExcluirCliente = false;
+  }
+
   public cadastrarCliente(): void{
     this.clienteService.cadastrarCliente(this.formCadastrarCliente.value).subscribe(() => {
       this.fecharDialogCadastrarCliente();
       this.listarClientes();
       this.formCadastrarCliente.reset();
     })
+  }
+
+  public excluirCliente(): void{
+    this.clienteService.deleteClient(this.clienteSelecionadoParaExcluir).subscribe(() => {
+      this.fecharDialogExcluirCliente();
+      this.listarClientes();
+      this.clienteSelecionadoParaExcluir = new Cliente();
+    });
   }
 
 }

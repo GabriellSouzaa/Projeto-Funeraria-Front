@@ -67,6 +67,7 @@
           class="btn btn-danger"
           pTooltip="Excluir Cliente"
           tooltipPosition="bottom"
+          (click)="abrirDialogExcluirCliente(cliente)"
         >
           <i class="bi bi-trash3"></i>
         </button>
@@ -144,6 +145,25 @@
       (click)="fecharDialogClientesAtraso()"
     >
       <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogExcluirCliente"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '300px' }"	
+>
+  Tem Certeza que deseja excluir o cliente?
+  <ng-template pTemplate="footer">
+    <button
+      class="btn btn-danger m-2"
+      (click)="fecharDialogExcluirCliente()"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+    <button class="btn btn-success m-2" (click)="excluirCliente()">
+      <i class="bi bi-check"></i> Confirmar
     </button>
   </ng-template>
 </p-dialog>
