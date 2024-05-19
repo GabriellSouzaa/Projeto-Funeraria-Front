@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Comunicar Falecimento</h2>
+      <p>Tipo de Falecido</p>
+      <div class="radio-button-falecido-titular">
+        <div>
+          <p-radioButton
+          name="titular"
+          value="Titular"
+          inputId="titular"
+          [(ngModel)]="selectedType"
+          />
+          <label for="titular">Titular</label>
+        </div>
+        <div class="radio-button-beneficiario">
+          <p-radioButton
+          name="beneficiario"
+          value="Beneficiário"
+          inputId="beneficiario"
+          [(ngModel)]="selectedType"
+          />
+          <label for="beneficiario">Beneficiário</label>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="mb-2">Falecido</div>
+        <p-dropdown
+          optionLabel="falecido"
+          placeholder="Selecione o falecido" />
+      </div>
+      <div class="mt-4">
+        <div class="mb-2">Caixão</div>
+        <p-dropdown
+          optionLabel="caixao"
+          placeholder="Selecione o caixão"
+        ></p-dropdown>
+      </div>
+      <div class="mt-4">
+        <div class="mb-2">Sala de Velório</div>
+        <p-dropdown
+          optionLabel="sala"
+          placeholder="Selecione a sala de velório"/>
+      </div>
+      <div class="mt-4">
+        <div class="mb-2">Conservação Química</div>
+        <div class="d-flex flex-row ">
+          <div>
+            <p-radioButton
+            name="sim"
+            value="sim"
+            inputId="sim"
+            [(ngModel)]="selectedType"
+            />
+            <label for="sim">Sim</label>
+          </div>
+          <div class="radio-button-nao">
+            <p-radioButton
+            name="nao"
+            value="nao"
+            inputId="nao"
+            [(ngModel)]="selectedType"
+            />
+            <label for="nao">Não</label>
+          </div>
+        </div>
+      </div> 
+      <div class="mt-2">
+        <div class="mb-2">Causa da Morte</div>
+        <input pInputText >
+      </div>
+      <button class="btn btn-success mt-4">Registrar Falecimento</button>
+    </div>
+    <div class="col-md-6">
+      <h2>RESUMO</h2>
+      <div>Falecido: </div>
+      <div>Sala de Velório:</div>
+      <div>Desconto por Tempo de Plano:</div>
+      <div>Conservação:</div>
+      <b>Total:</b>
+    </div>
+  </div>
+</div>

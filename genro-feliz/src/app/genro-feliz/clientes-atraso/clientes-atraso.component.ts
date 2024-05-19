@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { PlanoFunerarioAtrasado } from '../shared/models/PlanoFunerarioAtrasado.model';
 import { PlanoFunerarioEmAtrasoService } from '../shared/services/plano-funerario-em-atraso.service';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-clientes-atraso',
   standalone: true,
-  imports: [TableModule],
+  imports: [TableModule, TooltipModule],
   templateUrl: './clientes-atraso.component.html',
   styleUrl: './clientes-atraso.component.css'
 })

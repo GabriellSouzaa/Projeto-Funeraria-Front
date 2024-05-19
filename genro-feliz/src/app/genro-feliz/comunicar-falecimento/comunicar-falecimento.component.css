@@ -1,0 +1,12 @@
+.radio-button-falecido-titular{
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-button-beneficiario{
+  margin-left: 10px;
+}
+
+.radio-button-nao{
+  margin-left: 10px;
+}	

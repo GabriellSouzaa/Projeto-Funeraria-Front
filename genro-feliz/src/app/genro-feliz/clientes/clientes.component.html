@@ -134,14 +134,14 @@
 <p-dialog 
   [visible]="visibleDialogClientesAtraso"
   [closable]="false"
-  [style]="{ width: '50vw', height: '500px' }"
+  [style]="{ width: '60vw', height: '600px' }"
   [draggable]="false"
 >
   <ng-template pTemplate="header">Clientes em Atraso</ng-template>
   <app-clientes-atraso/>
   <ng-template pTemplate="footer">
     <button
-      class="btn btn-danger"
+      class="btn btn-danger mt-2"
       (click)="fecharDialogClientesAtraso()"
     >
       <i class="bi bi-arrow-left"></i> Voltar

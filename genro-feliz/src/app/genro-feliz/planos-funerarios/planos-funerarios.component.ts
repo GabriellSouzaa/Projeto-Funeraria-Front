@@ -57,6 +57,14 @@ export class PlanosFunerariosComponent {
     this.visibleDialogExcluirPlanoFunerario = true;
   }
 
+  public abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios(): void{
+
+  }
+
+  public fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios(): void{
+    
+  }
+
   public fecharDialogExcluirPlanoFunerario(): void {
     this.visibleDialogExcluirPlanoFunerario = false;
   }
