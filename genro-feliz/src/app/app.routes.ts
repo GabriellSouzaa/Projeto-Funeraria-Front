@@ -10,6 +10,7 @@ import { AuthGuard } from './genro-feliz/shared/guard/authguard';
 import { PlanosFunerariosComponent } from './genro-feliz/planos-funerarios/planos-funerarios.component';
 import { VendedoresComponent } from './genro-feliz/vendedores/vendedores.component';
 import { ComunicarFalecimentoComponent } from './genro-feliz/comunicar-falecimento/comunicar-falecimento.component';
+import { PlanosDeSaudeComponent } from './genro-feliz/planos-de-saude/planos-de-saude.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -21,5 +22,6 @@ export const routes: Routes = [
   {path: 'salas-de-velorio', component: SalasDeVelorioComponent, canActivate: [AuthGuard]},
   {path: 'falecimentos', component: FalecimentosComponent, canActivate: [AuthGuard]},
   {path: 'vendedores', component: VendedoresComponent, canActivate: [AuthGuard]},
-  {path: 'comunicar-falecimento', component: ComunicarFalecimentoComponent, canActivate: [AuthGuard]}
+  {path: 'comunicar-falecimento', component: ComunicarFalecimentoComponent, canActivate: [AuthGuard]},
+  {path: 'planos-de-saude', component: PlanosDeSaudeComponent, canActivate: [AuthGuard]}
 ];

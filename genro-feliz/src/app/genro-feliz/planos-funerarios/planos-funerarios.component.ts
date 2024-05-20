@@ -21,12 +21,13 @@ export class PlanosFunerariosComponent {
 
   public visibleDialogExcluirPlanoFunerario: boolean = false;
 
+  public visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios: boolean = false;
+
   public planoFunerarioParaRemover: PlanoFunerario = new PlanoFunerario();
 
   public planosFunerarios: PlanoFunerario[] = [];
 
   public planoFunerarioParaCadastrarForm: FormGroup  = PlanoFunerarioForm;
-
 
   ngOnInit() {
     this.listarPlanosFunerarios();
@@ -58,11 +59,11 @@ export class PlanosFunerariosComponent {
   }
 
   public abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios(): void{
-
+    this.visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios = true;
   }
 
   public fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios(): void{
-    
+    this.visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios = false;
   }
 
   public fecharDialogExcluirPlanoFunerario(): void {

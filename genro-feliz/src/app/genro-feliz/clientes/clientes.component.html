@@ -15,7 +15,7 @@
     <button class="btn btn-warning m-2 text-white" (click)="abrirDialogClientesAtraso()">
       <i class="bi bi-people-fill"></i> Clientes em Atraso
     </button>
-    <button class="btn btn-danger text-white m-2">
+    <button class="btn btn-danger text-white m-2" (click)="abrirDialogClientesComBeneficiariosFalecidos()">
       <i class="bi bi-people-fill"></i> Clientes com Beneficiários Falecidos
     </button>
     <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarCliente()">
@@ -147,6 +147,23 @@
       <i class="bi bi-arrow-left"></i> Voltar
     </button>
   </ng-template>
+</p-dialog>
+
+<p-dialog 
+  [visible]="visibleDialogClientesComBeneficiariosFalecidos"
+  [closable]="false"
+  [style]="{ width: '60vw', height: '600px' }"
+  [draggable]="false"
+>
+<app-clientes-com-beneficiarios-falecidos/>
+<ng-template pTemplate="footer">
+  <button
+    class="btn btn-danger mt-2"
+    (click)="fecharDialogClientesComBeneficiariosFalecidos()"
+  >
+    <i class="bi bi-arrow-left"></i> Voltar
+  </button>
+</ng-template>
 </p-dialog>
 
 <p-dialog

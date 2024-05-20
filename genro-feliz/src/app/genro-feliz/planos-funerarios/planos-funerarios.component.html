@@ -10,7 +10,7 @@
     <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarPlanoFunerario()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano
     </button>
-    <button class="btn btn-info m-2">
+    <button class="btn btn-info m-2" (click)="abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano Para Clientes com Beneficiários
     </button>
   </ng-template>
@@ -76,3 +76,37 @@ Tem certeza que deseja excluir este plano funerario?
 </ng-template>
 </p-dialog>
 
+<p-dialog
+  [visible]="visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '600px' }"	
+>
+<form >
+  <div class="form-group row">
+    <label for="valorBeneficiario" class="col-sm-2 col-form-label">Valor Beneficiário</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="valorBeneficiario" placeholder="Valor Beneficiário" >
+    </div>
+  </div>
+  <div class="form-group row mt-2">
+    <label for="dataPagamentoBeneficiario" class="col-sm-2 col-form-label">Data Pagamento Beneficiário</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="dataPagamentoBeneficiario" placeholder="Data Pagamento Beneficiário" >
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="nomeClienteBeneficiario" class="col-sm-2 col-form-label">Nome do Cliente Beneficiário</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="nomeClienteBeneficiario" placeholder="Nome do Cliente Beneficiário" >
+    </div>
+  </div>
+</form>
+<div class="mt-4">
+  <div><button class="btn btn-dark">Adicionar Beneficiário</button></div>
+  <b>Beneficiários: </b>
+</div>
+<ng-template pTemplate="footer">
+  <button class="btn btn-primary m-2" ><i class="bi bi-check"></i> Salvar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()"><i class="bi bi-arrow-left"></i> Cancelar</button>
+</ng-template>
+</p-dialog>

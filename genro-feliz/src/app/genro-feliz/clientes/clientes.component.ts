@@ -8,13 +8,14 @@ import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
+import { ClientesComBeneficiariosFalecidosComponent } from '../clientes-com-beneficiarios-falecidos/clientes-com-beneficiarios-falecidos.component';
 
 
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent],
+  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent, ClientesComBeneficiariosFalecidosComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -37,6 +38,8 @@ export class ClientesComponent {
   public visibleDialogClientesAtraso: boolean = false;
 
   public visibleDialogExcluirCliente: boolean = false;
+
+  public visibleDialogClientesComBeneficiariosFalecidos: boolean = false;
 
   ngOnInit(): void {
     this.listarClientes();
@@ -97,6 +100,14 @@ export class ClientesComponent {
       this.listarClientes();
       this.clienteSelecionadoParaExcluir = new Cliente();
     });
+  }
+
+  public abrirDialogClientesComBeneficiariosFalecidos(): void{
+    this.visibleDialogClientesComBeneficiariosFalecidos = true;
+  }
+
+  public fecharDialogClientesComBeneficiariosFalecidos(): void{
+    this.visibleDialogClientesComBeneficiariosFalecidos = false;
   }
 
 }
