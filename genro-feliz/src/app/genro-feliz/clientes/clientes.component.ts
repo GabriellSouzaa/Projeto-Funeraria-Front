@@ -6,9 +6,10 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Form, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
 import { ClientesComBeneficiariosFalecidosComponent } from '../clientes-com-beneficiarios-falecidos/clientes-com-beneficiarios-falecidos.component';
+import { EditarClienteForm, atribuirForm } from '../forms/EditarCliente.form';
 
 
 
@@ -29,7 +30,11 @@ export class ClientesComponent {
 
   public clienteSelecionadoParaExcluir: Cliente = new Cliente();
 
+  public clienteSelecionadoParaEditar: Cliente = new Cliente();
+
   public formCadastrarCliente: FormGroup = new FormGroup({});
+
+  public formEditarCliente: FormGroup = new FormGroup({});
 
   public visibleDialogConsultarInformacoesAdicionais: boolean = false;
 
@@ -41,9 +46,12 @@ export class ClientesComponent {
 
   public visibleDialogClientesComBeneficiariosFalecidos: boolean = false;
 
+  public visibleDialogEditarCliente: boolean = false;
+
   ngOnInit(): void {
     this.listarClientes();
     this.formCadastrarCliente = ClienteForm;
+    this.formEditarCliente = EditarClienteForm;
   }
 
   public listarClientes(): void {
@@ -94,6 +102,14 @@ export class ClientesComponent {
     })
   }
 
+  public editarCliente(): void{
+    this.clienteService.editarCliente(this.formEditarCliente.value).subscribe(() => {
+      this.fecharDialogEditarCliente();
+      this.listarClientes();
+      this.formEditarCliente.reset();
+    })
+  }
+
   public excluirCliente(): void{
     this.clienteService.deleteClient(this.clienteSelecionadoParaExcluir).subscribe(() => {
       this.fecharDialogExcluirCliente();
@@ -108,6 +124,16 @@ export class ClientesComponent {
 
   public fecharDialogClientesComBeneficiariosFalecidos(): void{
     this.visibleDialogClientesComBeneficiariosFalecidos = false;
+  }
+
+  public abrirDialogEditarCliente(cliente: Cliente): void{
+    this.clienteSelecionadoParaEditar = cliente;
+    atribuirForm(this.formEditarCliente, this.clienteSelecionadoParaEditar);
+    this.visibleDialogEditarCliente = true;
+  }
+
+  public fecharDialogEditarCliente(): void{
+    this.visibleDialogEditarCliente = false;
   }
 
 }

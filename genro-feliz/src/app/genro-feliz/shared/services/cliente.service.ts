@@ -21,6 +21,11 @@ export class ClienteService {
     return this.http.post<Cliente>(`${this.apiUrl}/create`, cliente);
   }
 
+  public editarCliente(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.apiUrl}/update/${cliente.id}`, cliente);
+  
+  }
+
   public deleteClient(cliente: Cliente): Observable<any>{
     console.log(cliente)
     return this.http.delete(`${this.apiUrl}/delete/${cliente.id}`);
