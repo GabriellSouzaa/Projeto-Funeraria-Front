@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EmailService } from '../shared/services/email.service';
 
 @Component({
   selector: 'app-clientes-com-beneficiarios-falecidos',
@@ -8,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrl: './clientes-com-beneficiarios-falecidos.component.css'
 })
 export class ClientesComBeneficiariosFalecidosComponent {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+ 
 
 }

@@ -5,11 +5,12 @@ import { PlanoFunerario } from '../shared/models/PlanoFunerario.model';
 import { DialogModule } from 'primeng/dialog';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlanoFunerarioForm } from '../forms/PlanoFunerario.form';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-planos-funerarios',
   standalone: true,
-  imports: [TableModule, DialogModule, ReactiveFormsModule],
+  imports: [TableModule, DialogModule, ReactiveFormsModule, TooltipModule],
   templateUrl: './planos-funerarios.component.html',
   styleUrl: './planos-funerarios.component.css'
 })

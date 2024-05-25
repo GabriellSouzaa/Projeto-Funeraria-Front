@@ -9,7 +9,8 @@
           name="titular"
           value="Titular"
           inputId="titular"
-          [(ngModel)]="selectedType"
+          [(ngModel)]="tipoDeBeneficiarioSelecionado"
+          (onClick)="verificaTipoDeBeneficiario($event)"
           />
           <label for="titular">Titular</label>
         </div>
@@ -18,7 +19,8 @@
           name="beneficiario"
           value="Beneficiário"
           inputId="beneficiario"
-          [(ngModel)]="selectedType"
+          [(ngModel)]="tipoDeBeneficiarioSelecionado"
+          (onClick)="verificaTipoDeBeneficiario($event)"
           />
           <label for="beneficiario">Beneficiário</label>
         </div>
@@ -26,8 +28,20 @@
       <div class="mt-4">
         <div class="mb-2">Falecido</div>
         <p-dropdown
-          optionLabel="falecido"
-          placeholder="Selecione o falecido" />
+          [(ngModel)]="clienteFalecido"
+          [filter]="true"
+          filterBy="nome"
+          [options]="listaClientes"
+          *ngIf="tipoDeBeneficiarioSelecionado === 'Titular'"
+          optionLabel="nome"
+          placeholder="Selecione o cliente falecido" />
+          <p-dropdown
+          [filter]="true"
+          filterBy="nome"
+          [options]="listaClientes"
+          *ngIf= "tipoDeBeneficiarioSelecionado === 'Beneficiário'"
+          optionLabel="nome"
+          placeholder="Selecione o beneficiario falecido" />
       </div>
       <div class="mt-4">
         <div class="mb-2">Caixão</div>
@@ -50,7 +64,7 @@
             name="sim"
             value="sim"
             inputId="sim"
-            [(ngModel)]="selectedType"
+            [(ngModel)]="conservacaoQuimica"
             />
             <label for="sim">Sim</label>
           </div>
@@ -59,7 +73,7 @@
             name="nao"
             value="nao"
             inputId="nao"
-            [(ngModel)]="selectedType"
+            [(ngModel)]="conservacaoQuimica"
             />
             <label for="nao">Não</label>
           </div>
@@ -73,7 +87,7 @@
     </div>
     <div class="col-md-6">
       <h2>RESUMO</h2>
-      <div>Falecido: </div>
+      <div *ngIf="tipoDeBeneficiarioSelecionado === 'Titular'">Cliente Falecido: {{clienteFalecido.nome}}</div>
       <div>Sala de Velório:</div>
       <div>Desconto por Tempo de Plano:</div>
       <div>Conservação:</div>

@@ -16,7 +16,14 @@
       <td>{{cliente.tempoAtrasado}}</td>
       <td>{{cliente.cpfCliente}}</td>
       <td>{{cliente.valorAPagar}}</td>
-      <td><button class="btn btn-primary" pTooltip="Enviar email notificando atraso"><i class="bi bi-envelope-arrow-up"></i></button></td>
+      <td>
+        <button class="btn btn-primary" pTooltip="Enviar email notificando atraso" (click)="enviarEmailParaClienteAtrasado(cliente)" [disabled]="cliente.enviandoEmail">
+          <i class="bi bi-envelope-arrow-up" *ngIf="!cliente.enviandoEmail"></i>
+          <span *ngIf="cliente.enviandoEmail" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-toast></p-toast>
