@@ -4,7 +4,7 @@
 [showCurrentPageReport]="true"
 currentPageReportTemplate="Total de Caixões: {totalRecords}">
 <ng-template pTemplate="caption">
-  <button class="btn btn-primary"><i class="bi bi-plus-circle-dotted"></i> Cadastrar Caixão</button>
+  <button class="btn btn-primary" (click)="exibirDialogCadastrarCaixao()"><i class="bi bi-plus-circle-dotted"></i> Cadastrar Caixão</button>
 </ng-template>
 <ng-template pTemplate="header">
   <tr>
@@ -24,7 +24,7 @@ currentPageReportTemplate="Total de Caixões: {totalRecords}">
     <td>{{ caixao.modelo }}</td>
     <td>{{ caixao.preco }}</td>
     <td>
-      <button class="btn btn-warning text-white m-2" pTooltip="Editar Caixão"><i class="bi bi-pen-fill"></i></button>
+      <button class="btn btn-warning text-white m-2" pTooltip="Editar Caixão" (click)="exibirDialogEditarCaixao(caixao)"><i class="bi bi-pen-fill"></i></button>
       <button class="btn btn-danger text-white m-2" pTooltip="Excluir Caixão" (click)="exibirDialogExcluirCaixao(caixao)"><i class="bi bi-trash-fill"></i></button>
     </td>
   </tr>
@@ -43,4 +43,42 @@ Tem certeza que deseja excluir o Caixão?
   <button class="btn btn-success text-white m-2" (click)="excluirCaixao()"><i class="bi bi-check"></i> Confirmar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogExcluirCaixao()"><i class="bi bi-arrow-left"></i> Voltar</button>
 </ng-template>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogCadastrarCaixao"
+  [closable]="false"
+  [style]="{width: '50vw', height: '400px'}"
+  [draggable]="false"	
+>
+  <form [formGroup]="formularioCadastrarCaixao" class="formulario-caixao">
+    <input type="text" class="form-control" formControlName="material" placeholder="Material">
+    <input type="text" class="form-control" formControlName="cor" placeholder="Cor">
+    <input type="text" class="form-control" formControlName="comprimento" placeholder="Comprimento">
+    <input type="text" class="form-control" formControlName="modelo" placeholder="Modelo">
+    <input type="number" class="form-control" formControlName="preco" placeholder="Preço">
+  </form>
+  <p-footer>
+    <button class="btn btn-success text-white m-2" (click)="cadastrarCaixao()"><i class="bi bi-check"></i> Cadastrar</button>
+    <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarCaixao()"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogEditarCaixao"
+  [closable]="false"
+  [style]="{width: '50vw', height: '400px'}"
+  [draggable]="false"
+>
+  <form [formGroup]="formularioEditarCaixao" class="formulario-caixao">
+    <input type="text" class="form-control" formControlName="material" placeholder="Material">
+    <input type="text" class="form-control" formControlName="cor" placeholder="Cor">
+    <input type="text" class="form-control" formControlName="comprimento" placeholder="Comprimento">
+    <input type="text" class="form-control" formControlName="modelo" placeholder="Modelo">
+    <input type="number" class="form-control" formControlName="preco" placeholder="Preço">
+  </form>
+  <p-footer>
+    <button class="btn btn-success text-white m-2" (click)="editarCaixao()"><i class="bi bi-check"></i> Editar</button>
+    <button class="btn btn-danger m-2" (click)="fecharDialogEditarCaixao()"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </p-footer>
 </p-dialog>

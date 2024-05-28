@@ -19,4 +19,14 @@ export class CaixaoService {
   public excluirCaixao(id: number): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+
+  public cadastrarCaixao(caixao: Caixao): Observable<Caixao>{
+    return this.http.post<Caixao>(`${this.apiUrl}/create`, caixao);
+  }
+
+  public editarCaixao(caixao: Caixao): Observable<Caixao>{
+    return this.http.put<Caixao>(`${this.apiUrl}/update/${caixao.id}`, caixao);
+  }
+
+  
 }
