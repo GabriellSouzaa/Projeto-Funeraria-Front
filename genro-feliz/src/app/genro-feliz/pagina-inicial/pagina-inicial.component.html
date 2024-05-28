@@ -8,3 +8,40 @@
     <button class="btn btn-primary" (click)="fecharDialogBoasVindas()"><i class="bi bi-check-lg"></i> Okay</button>
   </p-footer>
 </p-dialog>
+<div class="texto-saudacao-inicial">Boas Vindas, Matheus!</div>
+<div class="texto-dashboard-inicial">Dashboard Inicial</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-4">
+      <p-fieldset legend="Planos Funerários em Atraso"  [toggleable]="true">
+        <p-table [value]="planosFunerariosEmAtraso" [paginator]="true" [rows]="3">
+          <ng-template pTemplate="caption">
+            <button class="btn btn-primary" [routerLink]="['/clientes']"><i class="bi bi-ticket-detailed"></i> Ver Detalhes</button>
+          </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Tempo Atrasado</th>
+                  <th>Cliente</th>
+                  <th>CPF</th>
+                  <th>Valor a Pagar</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-plano>
+              <tr>
+                  <td>{{ plano.tempoAtrasado }}</td>
+                  <td>{{ plano.nomeCliente }}</td>
+                  <td>{{ plano.cpfCliente }}</td>
+                  <td>{{ plano.valorAPagar }}</td>
+              </tr>
+          </ng-template>
+        </p-table>
+      </p-fieldset>
+    </div>
+    <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">.col-sm-5 .offset-sm-2 .col-md-6 .offset-md-0</div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-6 col-md-5 col-lg-6">.col-sm-6 .col-md-5 .col-lg-6</div>
+    <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0">.col-sm-6 .col-md-5 .offset-md-2 .col-lg-6 .offset-lg-0</div>
+  </div>
+</div>

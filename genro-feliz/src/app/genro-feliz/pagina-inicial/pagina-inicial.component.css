@@ -1,0 +1,18 @@
+.texto-dashboard-inicial {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #000;
+  margin-left: 10px ;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: "Baloo Da 2", sans-serif;
+}
+
+.texto-saudacao-inicial{
+  font-size: 2.0em;
+  font-weight: bold;
+  color: #2b7333;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

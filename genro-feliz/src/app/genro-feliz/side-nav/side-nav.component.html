@@ -1,5 +1,6 @@
 <mat-drawer-container class="side-nav-container" [ngClass]="{'opened': estaAberta, 'closed': !estaAberta}">
   <img src="../../assets/sao_vicente_logo_sidenav.png" alt="logo da são vicente" class="logo-sao-vicente">
+  <button class="botao-side-nav" [routerLink]="['/pagina-inicial']">Tela Inicial</button>
   <button class="botao-side-nav" [routerLink]="['/clientes']">Clientes</button>
   <button class="botao-side-nav" [routerLink]="['/planos-funerarios']">Planos Funerarios</button>
   <button class="botao-side-nav" [routerLink]="['/caixao']">Caixão</button>

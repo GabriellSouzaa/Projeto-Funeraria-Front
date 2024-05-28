@@ -1,1 +1,19 @@
-<p>beneficiarios works!</p>
+<p-table [value]="beneficiarios" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true"
+[rows]="5">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Nome do Beneficiario</th>
+          <th>Nome do Titular</th>
+          <th>Data de Nascimento</th>
+          <th>Adicional</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-beneficiario>
+      <tr>
+          <td>{{ beneficiario.nomeBeneficiario }}</td>
+          <td>{{ beneficiario.nomeClient }}</td>
+          <td>{{ beneficiario.dataNascimento }}</td>
+          <td>{{ beneficiario.adicional }}</td>
+      </tr>
+  </ng-template>
+</p-table>
