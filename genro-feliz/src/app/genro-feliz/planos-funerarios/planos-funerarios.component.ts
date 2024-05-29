@@ -3,14 +3,14 @@ import { TableModule } from 'primeng/table';
 import { PlanoFunerarioService } from '../shared/services/plano-funerario.service';
 import { PlanoFunerario } from '../shared/models/PlanoFunerario.model';
 import { DialogModule } from 'primeng/dialog';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlanoFunerarioForm } from '../forms/PlanoFunerario.form';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-planos-funerarios',
   standalone: true,
-  imports: [TableModule, DialogModule, ReactiveFormsModule, TooltipModule],
+  imports: [TableModule, DialogModule, ReactiveFormsModule, TooltipModule, FormsModule],
   templateUrl: './planos-funerarios.component.html',
   styleUrl: './planos-funerarios.component.css'
 })
@@ -29,6 +29,10 @@ export class PlanosFunerariosComponent {
   public planosFunerarios: PlanoFunerario[] = [];
 
   public planoFunerarioParaCadastrarForm: FormGroup  = PlanoFunerarioForm;
+
+  public planoFunerarioParaEditar: PlanoFunerario = new PlanoFunerario();
+
+  public visibleDialogEditarPlanoFunerario: boolean = false;  
 
   ngOnInit() {
     this.listarPlanosFunerarios();
@@ -52,6 +56,15 @@ export class PlanosFunerariosComponent {
 
   public fecharDialogCadastrarPlanoFunerario(): void{
     this.visibleDialogCadastrarPlanoFunerario = false;
+  }
+
+  public abrirDialogEditarPlanoFunerario(planoFunerario: PlanoFunerario): void {
+    this.visibleDialogEditarPlanoFunerario = true;
+    this.planoFunerarioParaEditar = planoFunerario;
+  }
+
+  public fecharDialogEditarPlanoFunerario(): void {
+    this.visibleDialogEditarPlanoFunerario = false;
   }
 
   public abrirDialogExcluirPlanoFunerario(planoFunerario: PlanoFunerario): void {
@@ -87,6 +100,15 @@ export class PlanosFunerariosComponent {
       })
     }
     
+  }
+
+  public editarPlanoFunerario(): void {
+    if(this.planoFunerarioParaEditar.id){
+      this.planoFunerarioService.atualizarPlanoFunerario(this.planoFunerarioParaEditar, this.planoFunerarioParaEditar.id).subscribe(() => {
+        this.listarPlanosFunerarios();
+        this.fecharDialogEditarPlanoFunerario();
+      })
+    }
   }
 
 

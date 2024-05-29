@@ -24,5 +24,9 @@ export class PlanoFunerarioService {
     return this.http.delete(`${this.apiUrl}/delete/${id}`)
   }
 
+  public atualizarPlanoFunerario(planoFunerario: PlanoFunerario, id: number): Observable<any>{
+    return this.http.post(`${this.apiUrl}/update/${id}`, planoFunerario)
+  }
+
   
 }

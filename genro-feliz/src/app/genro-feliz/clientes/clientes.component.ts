@@ -10,6 +10,7 @@ import { Form, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
 import { ClientesComBeneficiariosFalecidosComponent } from '../clientes-com-beneficiarios-falecidos/clientes-com-beneficiarios-falecidos.component';
 import { EditarClienteForm, atribuirForm } from '../forms/EditarCliente.form';
+import { Beneficiarios } from '../shared/models/Beneficiarios.model';
 
 
 
@@ -47,6 +48,12 @@ export class ClientesComponent {
   public visibleDialogClientesComBeneficiariosFalecidos: boolean = false;
 
   public visibleDialogEditarCliente: boolean = false;
+
+  public visibleDialogBeneficiariosDoCliente: boolean = false;
+
+  public clienteParaConsultarBeneficiarios: Cliente = new Cliente();
+
+  public beneficiariosDoCliente: Beneficiarios[] = [];
 
   ngOnInit(): void {
     this.listarClientes();
@@ -134,6 +141,24 @@ export class ClientesComponent {
 
   public fecharDialogEditarCliente(): void{
     this.visibleDialogEditarCliente = false;
+  }
+
+  public abrirDialogBeneficiariosDoCliente(cliente: Cliente): void{
+    this.clienteParaConsultarBeneficiarios = cliente;
+    this.visibleDialogBeneficiariosDoCliente = true;
+    this.listarBeneficiariosDoCliente();
+  }
+
+  public fecharDialogBeneficiariosDoCliente(): void{
+    this.visibleDialogBeneficiariosDoCliente = false;
+    this.beneficiariosDoCliente = [];
+    this.clienteParaConsultarBeneficiarios = new Cliente();
+  }
+
+  public listarBeneficiariosDoCliente(){
+    this.clienteService.listarBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios).subscribe(beneficiarios => {
+      this.beneficiariosDoCliente = beneficiarios;
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 <p-table [value]="salasDeVelorio" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true"
 [rows]="5">
   <ng-template pTemplate="caption">
-    <button class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
+    <button class="btn btn-primary" (click)="abrirDialogAdicionarSalaDeVelorio()"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
@@ -15,9 +15,56 @@
           <td>{{ salaDeVelorio.descricao }}</td>
           <td>{{ salaDeVelorio.valor }}</td>
           <td>
-            <button class="btn btn-warning text-white m-2"><i class="bi bi-pencil-fill"></i></button>
-            <button class="btn btn-danger text-white m-2"><i class="bi bi-trash-fill"></i></button>
+            <button class="btn btn-warning text-white m-2" pTooltip="Editar Sala de Velório" (click)="abrirDialogEditarSalaDeVelorio(salaDeVelorio)"><i class="bi bi-pencil-fill"></i></button>
+            <button class="btn btn-danger text-white m-2" pTooltip="Excluir Sala de Velório" (click)="abrirDialogExcluirSalaDeVelorio(salaDeVelorio)"><i class="bi bi-trash-fill"></i></button>
           </td>
       </tr>
   </ng-template>
 </p-table>
+
+<p-dialog [visible]="visibleDialogAdicionarSalaDeVelorio" [closable]="false"
+[style]="{ width: '60vw', height: '600px' }"
+[draggable]="false">
+<form [formGroup]="formularioAdicionarSalaDeVelorio">
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <input type="text" class="form-control" id="descricao" formControlName="descricao">
+  </div>
+  <div class="form-group">
+    <label for="valor">Valor (R$)</label>
+    <input type="number" class="form-control" id="valor" formControlName="valor">
+  </div>
+</form>
+<p-footer>
+  <button class="btn btn-success m-2" (click)="adicionarSalaDeVelorio()"><i class="bi bi-check"></i> Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogAdicionarSalaDeVelorio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+</p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogEditarSalaDeVelorio" [closable]="false"
+[style]="{ width: '60vw', height: '600px' }"
+[draggable]="false">
+<form [formGroup]="formularioEditarSalaDeVelorio">
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <input type="text" class="form-control" id="descricao" formControlName="descricao">
+  </div>
+  <div class="form-group">
+    <label for="valor">Valor (R$)</label>
+    <input type="number" class="form-control" id="valor" formControlName="valor">
+  </div>
+</form>
+<p-footer>
+  <button class="btn btn-success m-2" (click)="editarSalaDeVelorio()"><i class="bi bi-check"></i> Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogEditarSalaDeVelorio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+</p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogRemoverSalaDeVelorio" [style]="{ width: '30vw', height: '200px' }"
+[draggable]="false" [closable]="false">
+Tem certeza que deseja excluir essa sala de velório?
+<p-footer>
+  <button class="btn btn-success m-2" (click)="removerSalaDeVelorio()"><i class="bi bi-check"></i> Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirSalaDeVelorio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+</p-footer>
+</p-dialog>

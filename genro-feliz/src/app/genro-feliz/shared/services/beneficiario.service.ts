@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Beneficiarios } from '../models/Beneficiarios.model';
 import { Observable } from 'rxjs';
+import { BeneficiarioForm } from '../../forms/Beneficiario.form';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,16 @@ export class BeneficiarioService {
     return this.http.get<Beneficiarios[]>(`${this.apiUrl}`);
   }
 
-  public cadastrarBeneficiario(): Observable<Beneficiarios>{
-    return this.http.post<Beneficiarios>(`${this.apiUrl}/create`, Beneficiarios);
+  public cadastrarBeneficiario(formulario: BeneficiarioForm): Observable<Beneficiarios>{
+    return this.http.post<Beneficiarios>(`${this.apiUrl}/create`, formulario);
   }
 
   public excluirBeneficiario(id: number): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
 
-  public editarBeneficiario(beneficiario: Beneficiarios): Observable<Beneficiarios>{
-    return this.http.put<Beneficiarios>(`${this.apiUrl}/update/${beneficiario.id}`, beneficiario);
+  public editarBeneficiario(id: number, formulario: BeneficiarioForm): Observable<Beneficiarios>{
+    return this.http.put<Beneficiarios>(`${this.apiUrl}/update/${id}`, formulario);
   }
 
   public listarBeneficiariosDoCliente(id: number): Observable<Beneficiarios[]>{

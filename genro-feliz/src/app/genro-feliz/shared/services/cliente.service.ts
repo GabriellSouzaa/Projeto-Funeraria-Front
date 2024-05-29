@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente } from '../models/Cliente.model';
 import { ClientRequest } from '../models/ClientRequest.model';
+import { Beneficiarios } from '../models/Beneficiarios.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class ClienteService {
 
   public deleteClient(cliente: Cliente): Observable<any>{
     return this.http.delete(`${this.apiUrl}/delete/${cliente.id}`);
+  }
+
+  public listarBeneficiariosDoCliente(cliente: Cliente): Observable<Beneficiarios[]>{
+    return this.http.get<Beneficiarios[]>(`http://localhost:8080/beneficiary/client/${cliente.id}`);
   }
 
 

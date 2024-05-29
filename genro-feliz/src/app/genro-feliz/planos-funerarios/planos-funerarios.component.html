@@ -28,7 +28,7 @@
       <td>{{ plano.valor }}</td>
       <td>{{ plano.clientNome }}</td>
       <td>
-        <button class="btn btn-warning text-white m-2" pTooltip="Editar Plano Funerário" tooltipPosition="bottom"><i class="bi bi-pen-fill"></i></button>
+        <button class="btn btn-warning text-white m-2" pTooltip="Editar Plano Funerário" tooltipPosition="bottom" (click)="abrirDialogEditarPlanoFunerario(plano)"><i class="bi bi-pen-fill"></i></button>
         <button class="btn btn-danger m-2" (click)="abrirDialogExcluirPlanoFunerario(plano)" pTooltip="Excluir Plano Funerário" 
         tooltipPosition="bottom" ><i class="bi bi-trash-fill"></i></button>
       </td>
@@ -111,4 +111,35 @@ Tem certeza que deseja excluir este plano funerario?
   <button class="btn btn-primary m-2" ><i class="bi bi-check"></i> Salvar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()"><i class="bi bi-arrow-left"></i> Cancelar</button>
 </ng-template>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogEditarPlanoFunerario"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '300px' }"
+  >
+  <div>
+    <div class="form-group row">
+      <label for="valorEditar" class="col-sm-2 col-form-label">Valor</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="valorEditar" placeholder="Valor" [(ngModel)]="planoFunerarioParaEditar.valor">
+      </div>
+    </div>
+    <div class="form-group row mt-2">
+      <label for="dataPagamentoEditar" class="col-sm-2 col-form-label">Data Envio</label>
+      <div class="col-sm-10 mb-2">
+        <input type="text" class="form-control" id="dataPagamentoEditar" placeholder="Data Pagamento" [(ngModel)]="planoFunerarioParaEditar.dataEnvio">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nomeClienteEditar" class="col-sm-2 col-form-label">Nome do Cliente</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="nomeClienteEditar" placeholder="Nome do Cliente" [(ngModel)]="planoFunerarioParaEditar.clientNome">
+      </div>
+    </div>
+  </div>
+<p-footer>
+  <button class="btn btn-primary m-2" (click)="editarPlanoFunerario()"><i class="bi bi-check"></i> Salvar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogEditarPlanoFunerario()"><i class="bi bi-arrow-left"></i> Cancelar</button>
+</p-footer>
 </p-dialog>

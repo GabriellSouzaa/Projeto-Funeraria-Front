@@ -24,7 +24,7 @@ export class SalasDeVelorioService {
     return this.http.delete<SalaDeVelorio>(`${this.apiUrl}/delete/${id}`)
   }
 
-  public editarSalaDeVelorio(salaDeVelorio: SalaDeVelorio): Observable<SalaDeVelorio>{
-    return this.http.put<SalaDeVelorio>(`${this.apiUrl}/update`, salaDeVelorio)
+  public editarSalaDeVelorio(id: number, salaDeVelorio: SalaDeVelorio): Observable<SalaDeVelorio>{
+    return this.http.post<SalaDeVelorio>(`${this.apiUrl}/update/${id}`, salaDeVelorio)
   }
 }
