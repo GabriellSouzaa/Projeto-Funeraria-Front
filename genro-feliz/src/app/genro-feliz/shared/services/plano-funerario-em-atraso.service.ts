@@ -15,4 +15,12 @@ export class PlanoFunerarioEmAtrasoService {
   public listarPlanosFunerariosEmAtraso(): Observable<PlanoFunerarioAtrasado[]>{
     return this.http.get<PlanoFunerarioAtrasado[]>(`${this.apiUrl}/atrasados`);
   }
+
+  public gerarRelatorioPlanosFunerariosEmAtraso(){
+    return this.http.get(`${this.apiUrl}/report/delayed-plan`,
+      {
+        responseType: 'blob' as 'json',
+      }
+    );
+  }
 }

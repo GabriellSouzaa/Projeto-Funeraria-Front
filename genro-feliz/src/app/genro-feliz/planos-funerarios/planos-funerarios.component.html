@@ -1,10 +1,22 @@
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoPlanosFunerarios">
+  <p-progressSpinner 
+    
+    styleClass="w-8rem h-8rem" 
+    strokeWidth="8" 
+    fill="var(--surface-ground)" 
+    animationDuration=".5s" 
+  />
+</div>
 <p-table
+  #tabelaPlanosFunerarios
+  *ngIf="!carregandoPlanosFunerarios"
   [value]="planosFunerarios"
   [tableStyle]="{ 'min-width': '50rem' }"
   [paginator]="true"
   [rows]="5"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Total de Planos: {totalRecords}"
+  [globalFilterFields]="['clientNome']"
 >
   <ng-template pTemplate="caption">
     <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarPlanoFunerario()">
@@ -13,12 +25,24 @@
     <button class="btn btn-info m-2" (click)="abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano Para Clientes com Beneficiários
     </button>
-  </ng-template>
-  <ng-template pTemplate="header">
+    <div class="flex mt-3">
+      <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+          <i class="bi bi-search"></i>
+            </p-inputIcon>
+        <input
+          pInputText
+          type="text"
+          (input)="tabelaPlanosFunerarios.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Pesquisar por Cliente">
+      </p-iconField>
+      </div>
+      </ng-template>
+      <ng-template pTemplate="header">
     <tr>
       <th>Data Envio</th>
-      <th>Valor</th>
-      <th>Cliente</th>
+      <th pSortableColumn="valor" style="width:20%">Valor (R$)<p-sortIcon field="valor" /></th>
+      <th pSortableColumn="clientNome" style="width:20%">Cliente<p-sortIcon field="clientNome" /></th>
       <th>Ações</th>
     </tr>
   </ng-template>
@@ -39,11 +63,15 @@
 <p-dialog
   [visible]="visibleDialogExcluirPlanoFunerario"
   [closable]="false"
+  [draggable]="false"
+  [blockScroll]="true"
 >
 Tem certeza que deseja excluir este plano funerario?
 <ng-template pTemplate="footer">
-  <button class="btn btn-primary m-2" (click)="excluirPlanoFunerario()"><i class="bi bi-check"></i> Sim</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoFunerario()"><i class="bi bi-arrow-left"></i> Não</button>
+  <button class="btn btn-success m-2" (click)="excluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoFunerario"></i> 
+    <span *ngIf="carregandoExclusaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Voltar</button>
 </ng-template>
 </p-dialog>
 
@@ -51,6 +79,8 @@ Tem certeza que deseja excluir este plano funerario?
   [visible]="visibleDialogCadastrarPlanoFunerario"
   [closable]="false"
   [style]="{ width: '50vw', height: '300px' }"
+  [draggable]="false"
+  [blockScroll]="true"
 >
 <form  [formGroup]="planoFunerarioParaCadastrarForm"> 
   <div class="form-group row">
@@ -62,7 +92,7 @@ Tem certeza que deseja excluir este plano funerario?
   <div class="form-group row mt-2">
     <label for="dataPagamento" class="col-sm-2 col-form-label">Data Pagamento</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="dataPagamento" placeholder="Data Pagamento" formControlName="dataPagamento">
+      <p-inputMask mask="9999-99-99" formControlName="dataPagamento" placeholder="Data Pagamento" [style]="{'width': '100%'}"></p-inputMask>
     </div>
   </div>
   <div class="form-group row ">
@@ -73,8 +103,10 @@ Tem certeza que deseja excluir este plano funerario?
   </div>
 </form>
 <ng-template pTemplate="footer">
-  <button class="btn btn-primary m-2" (click)="salvarPlanoFunerario()"><i class="bi bi-check"></i> Salvar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerario()"><i class="bi bi-arrow-left"></i> Cancelar</button>
+  <button class="btn btn-primary m-2" (click)="salvarPlanoFunerario()" [disabled]="!planoFunerarioParaCadastrarForm.valid || carregandoCadastroPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoCadastroPlanoFunerario"></i> 
+    <span *ngIf="carregandoCadastroPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Salvar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerario()" [disabled]="carregandoCadastroPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
 </ng-template>
 </p-dialog>
 
@@ -82,6 +114,8 @@ Tem certeza que deseja excluir este plano funerario?
   [visible]="visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios"
   [closable]="false"
   [style]="{ width: '50vw', height: '600px' }"	
+  [draggable]="false"
+  [blockScroll]="true"
 >
 <form >
   <div class="form-group row">
@@ -108,7 +142,7 @@ Tem certeza que deseja excluir este plano funerario?
   <b>Beneficiários: </b>
 </div>
 <ng-template pTemplate="footer">
-  <button class="btn btn-primary m-2" ><i class="bi bi-check"></i> Salvar</button>
+  <button class="btn btn-primary m-2"><i class="bi bi-check"></i> Salvar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()"><i class="bi bi-arrow-left"></i> Cancelar</button>
 </ng-template>
 </p-dialog>
@@ -117,6 +151,8 @@ Tem certeza que deseja excluir este plano funerario?
   [visible]="visibleDialogEditarPlanoFunerario"
   [closable]="false"
   [style]="{ width: '50vw', height: '300px' }"
+  [draggable]="false"
+  [blockScroll]="true"
   >
   <div>
     <div class="form-group row">
@@ -139,7 +175,9 @@ Tem certeza que deseja excluir este plano funerario?
     </div>
   </div>
 <p-footer>
-  <button class="btn btn-primary m-2" (click)="editarPlanoFunerario()"><i class="bi bi-check"></i> Salvar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogEditarPlanoFunerario()"><i class="bi bi-arrow-left"></i> Cancelar</button>
+  <button class="btn btn-primary m-2" (click)="editarPlanoFunerario()" [disabled]="(!planoFunerarioParaEditar.valor || !planoFunerarioParaEditar.dataEnvio || !planoFunerarioParaEditar.clientNome) || carregandoEdicaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoEdicaoPlanoFunerario"></i>
+    <span *ngIf="carregandoEdicaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Salvar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogEditarPlanoFunerario()" [disabled]="carregandoEdicaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
 </p-footer>
 </p-dialog>

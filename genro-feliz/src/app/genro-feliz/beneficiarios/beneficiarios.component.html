@@ -1,12 +1,34 @@
-<p-table [value]="beneficiarios" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true"
-[rows]="5">
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoBeneficiarios">
+  <p-progressSpinner 
+    
+    styleClass="w-8rem h-8rem" 
+    strokeWidth="8" 
+    fill="var(--surface-ground)" 
+    animationDuration=".5s" 
+  />
+</div>
+<p-table #tabelaBeneficiarios [value]="beneficiarios" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" *ngIf="!carregandoBeneficiarios"
+[rows]="5" [globalFilterFields]="['nomeBeneficiario', 'nomeClient']" [showCurrentPageReport]="true" currentPageReportTemplate="Total de Beneficiários: {totalRecords}">
 <ng-template pTemplate="caption">
   <button class="btn btn-primary" (click)="abrirDialogCadastrarBeneficiario()"><i class="bi bi-plus-circle"></i> Adicionar Beneficiário</button>
+  <div class="flex mt-3">
+    <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+            <i class="bi bi-search"></i>
+        </p-inputIcon>
+        <input 
+            pInputText 
+            type="text" 
+            style="width: 25%;"
+            (input)="tabelaBeneficiarios.filterGlobal($any($event.target).value, 'contains')" 
+            placeholder="Pesquisar por Beneficiário ou Titular" />
+    </p-iconField>
+    </div>
 </ng-template>
   <ng-template pTemplate="header">
       <tr>
-          <th>Nome do Beneficiario</th>
-          <th>Nome do Titular</th>
+          <th pSortableColumn="nomeBeneficiario" style="width:20%">Nome do Beneficiario<p-sortIcon field="nomeBeneficiario" /></th>
+          <th pSortableColumn="nomeClient" style="width: 20%;">Nome do Titular<p-sortIcon field="nomeClient"></p-sortIcon></th>
           <th>Data de Nascimento</th>
           <th>Adicional</th>
           <th>Ações</th>
@@ -54,8 +76,10 @@
     </div>
   </div>
 <p-footer>
-  <button class="btn btn-success m-2" (click)="cadastrarBeneficiario()"><i class="bi bi-check"></i> Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarBeneficiario()"><i class="bi bi-arrow-left"></i> Voltar</button>
+  <button class="btn btn-success m-2" (click)="cadastrarBeneficiario()" [disabled]="carregandoCadastroDeBeneficiario"><i class="bi bi-check" *ngIf="!carregandoCadastroDeBeneficiario"></i> 
+    <span *ngIf="carregandoCadastroDeBeneficiario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarBeneficiario()" [disabled]="carregandoCadastroDeBeneficiario"><i class="bi bi-arrow-left"></i> Voltar</button>
 </p-footer>
 </p-dialog>
 
@@ -87,8 +111,10 @@
     </div>
   </div>
   <p-footer>
-    <button class="btn btn-success m-2" (click)="editarBeneficiario()"><i class="bi bi-check"></i> Confirmar</button>
-    <button class="btn btn-danger m-2" (click)="fecharDialogEditarBeneficiario()"><i class="bi bi-arrow-left"></i> Voltar</button>
+    <button class="btn btn-success m-2" (click)="editarBeneficiario()" [disabled]="carregandoEdicaoDeBeneficiario"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeBeneficiario"></i> 
+      <span *ngIf="carregandoEdicaoDeBeneficiario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar</button>
+    <button class="btn btn-danger m-2" (click)="fecharDialogEditarBeneficiario()" [disabled]="carregandoEdicaoDeBeneficiario"><i class="bi bi-arrow-left"></i> Voltar</button>
   </p-footer>
 </p-dialog>
 
@@ -102,7 +128,9 @@
 >
 Tem certeza que deseja excluir este beneficiário?
 <p-footer>
-  <button class="btn btn-success m-2" (click)="excluirBeneficiario()"><i class="bi bi-check"></i> Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirBeneficiario()"><i class="bi bi-arrow-left"></i> Voltar</button>
+  <button class="btn btn-success m-2" (click)="excluirBeneficiario()" [disabled]="carregandoExclusaoDeBeneficiario"><i class="bi bi-check" *ngIf="!carregandoExclusaoDeBeneficiario"></i> 
+    <span *ngIf="carregandoExclusaoDeBeneficiario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirBeneficiario()" [disabled]="carregandoExclusaoDeBeneficiario"><i class="bi bi-arrow-left"></i> Voltar</button>
 </p-footer>
 </p-dialog>

@@ -1,6 +1,6 @@
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 export const SalaDeVelorioForm = new FormGroup({
-  descricao: new FormControl(''),
-  valor: new FormControl(''),
+  descricao: new FormControl('', Validators.required),
+  valor: new FormControl('', Validators.required),
 })

@@ -6,11 +6,19 @@ import { DialogModule } from 'primeng/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlanoFunerarioForm } from '../forms/PlanoFunerario.form';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { NgIf } from '@angular/common';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
+
+
 
 @Component({
   selector: 'app-planos-funerarios',
   standalone: true,
-  imports: [TableModule, DialogModule, ReactiveFormsModule, TooltipModule, FormsModule],
+  imports: [TableModule, DialogModule, ReactiveFormsModule, TooltipModule, FormsModule, ProgressSpinnerModule, NgIf, IconFieldModule, InputIconModule, InputTextModule, InputMaskModule],
   templateUrl: './planos-funerarios.component.html',
   styleUrl: './planos-funerarios.component.css'
 })
@@ -34,18 +42,29 @@ export class PlanosFunerariosComponent {
 
   public visibleDialogEditarPlanoFunerario: boolean = false;  
 
+  public carregandoPlanosFunerarios: boolean = false;
+
+  public carregandoCadastroPlanoFunerario: boolean = false;
+
+  public carregandoEdicaoPlanoFunerario: boolean = false;
+
+  public carregandoExclusaoPlanoFunerario: boolean = false;
+
   ngOnInit() {
     this.listarPlanosFunerarios();
   }
 
   
   public listarPlanosFunerarios(): void {
+    this.carregandoPlanosFunerarios = true;
     this.planoFunerarioService.listarPlanosFunerarios().subscribe(
       (planosFunerarios: PlanoFunerario[]) => {
         this.planosFunerarios = planosFunerarios;
+        this.carregandoPlanosFunerarios = false;
       },
       (error) => {
         console.log('Erro ao listar planos funerários')
+        this.carregandoPlanosFunerarios = false;
       }
     );
   }
@@ -56,6 +75,7 @@ export class PlanosFunerariosComponent {
 
   public fecharDialogCadastrarPlanoFunerario(): void{
     this.visibleDialogCadastrarPlanoFunerario = false;
+    this.planoFunerarioParaCadastrarForm.reset();
   }
 
   public abrirDialogEditarPlanoFunerario(planoFunerario: PlanoFunerario): void {
@@ -85,30 +105,40 @@ export class PlanosFunerariosComponent {
   }
 
   public salvarPlanoFunerario(): void {
-    console.log(this.planoFunerarioParaCadastrarForm.value)
+    this.carregandoCadastroPlanoFunerario = true;
     this.planoFunerarioService.criarPlanoFunerario(this.planoFunerarioParaCadastrarForm.value).subscribe(() => {
       this.listarPlanosFunerarios();
       this.fecharDialogCadastrarPlanoFunerario();
+      this.planoFunerarioParaCadastrarForm.reset();
+      this.carregandoCadastroPlanoFunerario = false;
     })
   }
 
   public excluirPlanoFunerario(): void{
+    this.carregandoExclusaoPlanoFunerario = true;
     if(this.planoFunerarioParaRemover.id){
       this.planoFunerarioService.removerPlanoFunerario(this.planoFunerarioParaRemover.id).subscribe(() => {
         this.listarPlanosFunerarios();
         this.fecharDialogExcluirPlanoFunerario();
+        this.carregandoExclusaoPlanoFunerario = false;
       })
     }
     
   }
 
   public editarPlanoFunerario(): void {
+    this.carregandoEdicaoPlanoFunerario = true;
     if(this.planoFunerarioParaEditar.id){
       this.planoFunerarioService.atualizarPlanoFunerario(this.planoFunerarioParaEditar, this.planoFunerarioParaEditar.id).subscribe(() => {
         this.listarPlanosFunerarios();
         this.fecharDialogEditarPlanoFunerario();
-      })
+      }, 
+    ()=>{
+      this.carregandoEdicaoPlanoFunerario = false;
     }
+    )
+    }
+    this.carregandoExclusaoPlanoFunerario = false;
   }
 
 

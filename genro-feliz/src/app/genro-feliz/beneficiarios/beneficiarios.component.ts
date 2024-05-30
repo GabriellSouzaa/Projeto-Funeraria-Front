@@ -7,13 +7,22 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { Cliente } from '../shared/models/Cliente.model';
 import { ClienteService } from '../shared/services/cliente.service';
-import { Form, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BeneficiarioForm } from '../forms/Beneficiario.form';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { NgIf } from '@angular/common';
+
+
+
+
 
 @Component({
   selector: 'app-beneficiarios',
   standalone: true,
-  imports: [TableModule, TooltipModule, DialogModule, DropdownModule, FormsModule],
+  imports: [TableModule, TooltipModule, DialogModule, DropdownModule, FormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
   templateUrl: './beneficiarios.component.html',
   styleUrl: './beneficiarios.component.css'
 })
@@ -41,13 +50,23 @@ export class BeneficiariosComponent {
 
   public beneficiarioParaExcluir: Beneficiarios = new Beneficiarios();
 
+  public carregandoBeneficiarios: boolean = false;
+
+  public carregandoCadastroDeBeneficiario: boolean = false;
+
+  public carregandoEdicaoDeBeneficiario: boolean = false;
+
+  public carregandoExclusaoDeBeneficiario: boolean = false;
+
   ngOnInit(): void {
     this.listarBeneficiarios();
   }
 
   public listarBeneficiarios(): void{
+    this.carregandoBeneficiarios = true;
     this.beneficiarioService.listarBeneficiarios().subscribe(beneficiarios => {
       this.beneficiarios = beneficiarios;
+      this.carregandoBeneficiarios = false;
     }); 
   }
 
@@ -91,26 +110,32 @@ export class BeneficiariosComponent {
   }
 
   public cadastrarBeneficiario(): void{
+    this.carregandoCadastroDeBeneficiario = true;
     this.beneficiarioService.cadastrarBeneficiario(this.formularioCadastrarBeneficiario).subscribe(() => {
       this.listarBeneficiarios();
       this.fecharDialogCadastrarBeneficiario();
+      this.carregandoCadastroDeBeneficiario = false;
     });
   }
 
   public editarBeneficiario(): void{
+    this.carregandoEdicaoDeBeneficiario = true;
     if(this.beneficiarioParaEditar.id){
       this.beneficiarioService.editarBeneficiario(this.beneficiarioParaEditar.id, this.formularioEditarBeneficiario).subscribe(() => {
         this.listarBeneficiarios();
         this.fecharDialogEditarBeneficiario();
+        this.carregandoEdicaoDeBeneficiario = false;
       });
     } 
   }
 
   public excluirBeneficiario(): void{
+    this.carregandoExclusaoDeBeneficiario = true;
     if(this.beneficiarioParaExcluir.id){
       this.beneficiarioService.excluirBeneficiario(this.beneficiarioParaExcluir.id).subscribe(() => {
         this.listarBeneficiarios();
         this.fecharDialogExcluirBeneficiario();
+        this.carregandoExclusaoDeBeneficiario = false;
       });
     }
   }

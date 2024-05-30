@@ -6,18 +6,24 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
-import { Form, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
 import { ClientesComBeneficiariosFalecidosComponent } from '../clientes-com-beneficiarios-falecidos/clientes-com-beneficiarios-falecidos.component';
 import { EditarClienteForm, atribuirForm } from '../forms/EditarCliente.form';
 import { Beneficiarios } from '../shared/models/Beneficiarios.model';
+import { InputMaskModule } from 'primeng/inputmask';
+import { NgIf } from '@angular/common';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent, ClientesComBeneficiariosFalecidosComponent],
+  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent, ClientesComBeneficiariosFalecidosComponent, InputMaskModule, NgIf, ProgressSpinnerModule, IconFieldModule, InputIconModule, InputTextModule],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
@@ -55,6 +61,14 @@ export class ClientesComponent {
 
   public beneficiariosDoCliente: Beneficiarios[] = [];
 
+  public carregandoCadastroCliente: boolean = false;
+
+  public carregandoEditarCliente: boolean = false;
+
+  public carregandoExcluirCliente: boolean = false;
+
+  public carregandoClientes: boolean = false;
+
   ngOnInit(): void {
     this.listarClientes();
     this.formCadastrarCliente = ClienteForm;
@@ -62,8 +76,10 @@ export class ClientesComponent {
   }
 
   public listarClientes(): void {
+    this.carregandoClientes = true;
     this.clienteService.listarClientes().subscribe(clientes => {
       this.clientes = clientes;
+      this.carregandoClientes = false;
     });
   }
 
@@ -82,6 +98,7 @@ export class ClientesComponent {
 
   public fecharDialogCadastrarCliente(): void{
     this.visibleDialogCadastrarCliente = false;
+    this.formCadastrarCliente.reset();
   }
 
   public abrirDialogClientesAtraso(): void{
@@ -102,26 +119,32 @@ export class ClientesComponent {
   }
 
   public cadastrarCliente(): void{
+    this.carregandoCadastroCliente = true;
     this.clienteService.cadastrarCliente(this.formCadastrarCliente.value).subscribe(() => {
       this.fecharDialogCadastrarCliente();
       this.listarClientes();
       this.formCadastrarCliente.reset();
+      this.carregandoCadastroCliente = false;
     })
   }
 
   public editarCliente(): void{
+    this.carregandoEditarCliente = true;
     this.clienteService.editarCliente(this.formEditarCliente.value).subscribe(() => {
       this.fecharDialogEditarCliente();
       this.listarClientes();
       this.formEditarCliente.reset();
+      this.carregandoEditarCliente = false;
     })
   }
 
   public excluirCliente(): void{
+    this.carregandoExcluirCliente = true;
     this.clienteService.deleteClient(this.clienteSelecionadoParaExcluir).subscribe(() => {
       this.fecharDialogExcluirCliente();
       this.listarClientes();
       this.clienteSelecionadoParaExcluir = new Cliente();
+      this.carregandoExcluirCliente = false;
     });
   }
 

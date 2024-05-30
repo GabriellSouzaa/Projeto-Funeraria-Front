@@ -1,9 +1,32 @@
 <p-table
+  #tabelaPlanosFunerariosEmAtraso
   [value]="planosFunerariosEmAtraso"
+  [paginator]="true"
+  [rows]="4"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Total de Planos Atrasados: {totalRecords}"
+  [globalFilterFields]="['nomeCliente', 'cpfCliente']"
 >
+<ng-template pTemplate="caption">
+  <div class="flex mt-3">
+    <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+            <i class="bi bi-search"></i>
+        </p-inputIcon>
+        <input 
+            pInputText 
+            type="text" 
+            (input)="tabelaPlanosFunerariosEmAtraso.filterGlobal($any($event.target).value, 'contains')" 
+            placeholder="Pesquisar por Cliente" />
+    </p-iconField>
+    <button class="btn btn-warning text-white m-2" (click)="gerarRelatorioPlanosFunerariosEmAtraso()" [disabled]="carregandoRelatorioPlanosAtrasados"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioPlanosAtrasados"></i> 
+      <span *ngIf="carregandoRelatorioPlanosAtrasados" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Gerar Relatório</button>
+</div>
+</ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th>Nome Do Cliente</th>
+      <th pSortableColumn="nomeCliente" style="width:20%">Nome do Cliente<p-sortIcon field="nomeCliente" /></th>
       <th>Tempo Atrasado</th>
       <th>CPF Do Cliente</th>
       <th>Valor a Pagar</th>

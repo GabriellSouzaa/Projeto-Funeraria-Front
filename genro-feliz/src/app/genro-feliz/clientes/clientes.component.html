@@ -2,14 +2,25 @@
   [aplicacao]="'Gerenciador Funerária'"
   [subAplicacao]="'Clientes'"
 />
-
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoClientes">
+  <p-progressSpinner 
+    
+    styleClass="w-8rem h-8rem" 
+    strokeWidth="8" 
+    fill="var(--surface-ground)" 
+    animationDuration=".5s" 
+  />
+</div>
 <p-table
+  #tabelaClientes
   [value]="clientes"
   [tableStyle]="{ 'min-width': '50rem' }"
   [paginator]="true"
   [rows]="5"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Total de Clientes: {totalRecords}"
+  *ngIf="!carregandoClientes"
+  [globalFilterFields]="['nome', 'cliente.nome']"
 >
   <ng-template pTemplate="caption">
     <button class="btn btn-warning m-2 text-white" (click)="abrirDialogClientesAtraso()">
@@ -21,10 +32,22 @@
     <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarCliente()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
     </button>
+    <div class="flex mt-3">
+      <p-iconField iconPosition="left" class="ml-auto">
+          <p-inputIcon>
+              <i class="bi bi-search"></i>
+          </p-inputIcon>
+          <input 
+              pInputText 
+              type="text" 
+              (input)="tabelaClientes.filterGlobal($any($event.target).value, 'contains')" 
+              placeholder="Pesquisar por Cliente" />
+      </p-iconField>
+  </div>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th>Nome</th>
+      <th pSortableColumn="nome" style="width:20%">Nome <p-sortIcon field="nome" /></th>
       <th>CPF</th>
       <th>RG</th>
       <th>Data de Nascimento</th>
@@ -118,24 +141,27 @@
 
   <form [formGroup]="formCadastrarCliente" class="formulario-cadastrar-cliente">
     <input type="text" class="form-control" formControlName="nome" placeholder="Nome">
-    <input type="text" class="form-control" formControlName="dataNascimento" placeholder="Data de Nascimento">
-    <input type="text" class="form-control" formControlName="cidadeNascimento" placeholder="Cidade de Nascimento">
-    <input type="text" class="form-control" formControlName="rg" placeholder="RG">
-    <input type="text" class="form-control" formControlName="cpf" placeholder="CPF">
+    <p-inputMask mask="9999-99-99" formControlName="dataNascimento" placeholder="Data de Nascimento" [style]="{'width': '100%'}"></p-inputMask>
+    <input type="text" class="form-control" formControlName="cidadeNascimento" placeholder="Cidade de Nascimento" [maxlength]="30">
+    <p-inputMask mask="99-999-999-9" formControlName="rg" placeholder="RG" [style]="{'width': '100%'}"></p-inputMask>
+    <p-inputMask mask="999-999-999-99" formControlName="cpf" placeholder="CPF" [style]="{'width': '100%'}"></p-inputMask>
     <input type="text" class="form-control" formControlName="profissao" placeholder="Profissão">
     <input type="text" class="form-control" formControlName="religiao" placeholder="Religião">
     <input type="text" class="form-control" formControlName="estado_civil" placeholder="Estado Civil">
-    <input type="text" class="form-control" formControlName="telefone" placeholder="Telefone">
+    <input type="text" class="form-control" formControlName="telefone" placeholder="Telefone" [maxlength]="11">
   </form>
   <ng-template pTemplate="footer">
     <button
       class="btn btn-danger m-2"
       (click)="fecharDialogCadastrarCliente()"
+      [disabled]="carregandoCadastroCliente"
     >
       <i class="bi bi-arrow-left"></i> Voltar
     </button>
-    <button class="btn btn-success m-2" (click)="cadastrarCliente()">
-      <i class="bi bi-check"></i> Confirmar
+    <button class="btn btn-success m-2" (click)="cadastrarCliente()" [disabled]="!formCadastrarCliente.valid || carregandoCadastroCliente">
+      <i class="bi bi-check" *ngIf="!carregandoCadastroCliente"></i> 
+      <span *ngIf="carregandoCadastroCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar
     </button>
   </ng-template>
 </p-dialog>
@@ -143,7 +169,7 @@
 <p-dialog 
   [visible]="visibleDialogClientesAtraso"
   [closable]="false"
-  [style]="{ width: '60vw', height: '600px' }"
+  [style]="{ width: '60vw', height: '650px' }"
   [draggable]="false"
 >
   <ng-template pTemplate="header">Clientes em Atraso</ng-template>
@@ -167,7 +193,7 @@
   <p-header>
     Editar Cliente
   </p-header>
-  <form [formGroup]="formEditarCliente" class="formulario-cadastrar-cliente">
+    <form [formGroup]="formEditarCliente" class="formulario-cadastrar-cliente">
     <input type="text" class="form-control" formControlName="nome" placeholder="Nome">
     <input type="text" class="form-control" formControlName="dataNascimento" placeholder="Data de Nascimento">
     <input type="text" class="form-control" formControlName="cidadeNascimento" placeholder="Cidade de Nascimento">
@@ -182,11 +208,13 @@
     <button
       class="btn btn-danger m-2"
       (click)="fecharDialogEditarCliente()"
+      [disabled]="carregandoEditarCliente"
     >
       <i class="bi bi-arrow-left"></i> Voltar
     </button>
-    <button class="btn btn-success m-2" (click)="editarCliente()">
-      <i class="bi bi-check"></i> Confirmar
+    <button class="btn btn-success m-2" (click)="editarCliente()" [disabled]="!formEditarCliente.valid || carregandoEditarCliente">
+      <span *ngIf="carregandoEditarCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <i class="bi bi-check" *ngIf="!carregandoEditarCliente"></i> Confirmar
     </button>
   </p-footer>
 </p-dialog>
@@ -218,11 +246,14 @@
     <button
       class="btn btn-danger m-2"
       (click)="fecharDialogExcluirCliente()"
+      [disabled]="carregandoExcluirCliente"
     >
       <i class="bi bi-arrow-left"></i> Voltar
     </button>
-    <button class="btn btn-success m-2" (click)="excluirCliente()">
-      <i class="bi bi-check"></i> Confirmar
+    <button class="btn btn-success m-2" (click)="excluirCliente()" [disabled]="carregandoExcluirCliente">
+      <i class="bi bi-check" *ngIf="!carregandoExcluirCliente"></i>
+      <span *ngIf="carregandoExcluirCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar
     </button>
   </ng-template>
 </p-dialog>
