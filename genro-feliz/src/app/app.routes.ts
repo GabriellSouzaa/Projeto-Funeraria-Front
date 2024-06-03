@@ -11,6 +11,7 @@ import { PlanosFunerariosComponent } from './genro-feliz/planos-funerarios/plano
 import { VendedoresComponent } from './genro-feliz/vendedores/vendedores.component';
 import { ComunicarFalecimentoComponent } from './genro-feliz/comunicar-falecimento/comunicar-falecimento.component';
 import { PlanosDeSaudeComponent } from './genro-feliz/planos-de-saude/planos-de-saude.component';
+import { VendaDeCaixaoComponent } from './genro-feliz/venda-de-caixao/venda-de-caixao.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -23,5 +24,6 @@ export const routes: Routes = [
   {path: 'falecimentos', component: FalecimentosComponent, canActivate: [AuthGuard]},
   {path: 'vendedores', component: VendedoresComponent, canActivate: [AuthGuard]},
   {path: 'comunicar-falecimento', component: ComunicarFalecimentoComponent, canActivate: [AuthGuard]},
-  {path: 'planos-de-saude', component: PlanosDeSaudeComponent, canActivate: [AuthGuard]}
+  {path: 'planos-de-saude', component: PlanosDeSaudeComponent, canActivate: [AuthGuard]},
+  {path: 'venda-de-caixao', component: VendaDeCaixaoComponent, canActivate: [AuthGuard]}
 ];
