@@ -69,6 +69,8 @@ export class ClientesComponent {
 
   public carregandoClientes: boolean = false;
 
+  public carregandoRelatorioBeneficiariosDoCliente: boolean = false;
+
   ngOnInit(): void {
     this.listarClientes();
     this.formCadastrarCliente = ClienteForm;
@@ -182,6 +184,15 @@ export class ClientesComponent {
     this.clienteService.listarBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios).subscribe(beneficiarios => {
       this.beneficiariosDoCliente = beneficiarios;
     });
+  }
+
+  public gerarRelatorioBeneficiariosDoCliente(): void{
+    this.carregandoRelatorioBeneficiariosDoCliente = true;
+    this.clienteService.gerarRelatorioBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios).subscribe((relatorio: any)=>{
+      const url = window.URL.createObjectURL(relatorio);
+      window.open(url);
+      this.carregandoRelatorioBeneficiariosDoCliente = false;
+    })
   }
 
 }

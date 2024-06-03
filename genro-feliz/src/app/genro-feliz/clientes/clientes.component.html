@@ -263,6 +263,11 @@
   Beneficiários de {{ clienteParaConsultarBeneficiarios.nome }}
 </p-header>
 <p-table [value]="beneficiariosDoCliente" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="caption">
+    <button class="btn btn-warning text-white" (click)="gerarRelatorioBeneficiariosDoCliente()" [disabled]="carregandoRelatorioBeneficiariosDoCliente"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioBeneficiariosDoCliente"></i> 
+      <span *ngIf="carregandoRelatorioBeneficiariosDoCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Gerar Relatório</button>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th>Nome</th>
