@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VendedorForm } from '../forms/Vendedor.form';
+import { atribuirFormVendedor } from '../forms/EditarVendedor.form';
 
 @Component({
   selector: 'app-vendedores',
@@ -30,13 +31,28 @@ export class VendedoresComponent {
 
   public visibleDialogAdicionarVendedor: boolean = false;
 
+  public visibleDialogEditarVendedor: boolean = false;
+
+  public visibleDialogExcluirVendedor: boolean = false;
+
   public carregandoCadastroVendedores: boolean = false;
 
   public formularioAdicionarVendedor: FormGroup = new FormGroup({});
 
+  public formularioEditarVendedor: FormGroup = new FormGroup({});
+
+  public carregandoEdicaoVendedores: boolean = false;
+
+  public vendedorSelecionadoParaEditar: Vendedor = new Vendedor();
+
+  public vendedorSelecionadoParaExcluir: Vendedor = new Vendedor();
+
+  public carregandoExclusaoVendedores: boolean = false;
+
   ngOnInit(){
     this.listarVendedores();
     this.formularioAdicionarVendedor = VendedorForm;
+    this.formularioEditarVendedor = VendedorForm;
   }
 
   public listarVendedores(): void{
@@ -51,6 +67,29 @@ export class VendedoresComponent {
     this.visibleDialogAdicionarVendedor = true;
   }
 
+  public fecharDialogAdicionarVendedor(): void{
+    this.visibleDialogAdicionarVendedor = false;
+  }
+
+  public abrirDialogEditarVendedor(vendedor: Vendedor): void{
+    this.visibleDialogEditarVendedor = true;
+    this.vendedorSelecionadoParaEditar = vendedor;
+    atribuirFormVendedor(this.formularioEditarVendedor, vendedor);
+  }	
+
+  public fecharDialogEditarVendedor(): void{
+    this.visibleDialogEditarVendedor = false;
+  }
+
+  public abrirDialogExcluirVendedor(vendedor: Vendedor): void{
+    this.visibleDialogExcluirVendedor = true;
+    this.vendedorSelecionadoParaExcluir = vendedor;
+  }
+
+  public fecharDialogExcluirVendedor(): void{
+    this.visibleDialogExcluirVendedor = false;
+  }
+
   public cadastrarVendedor(): void{
     this.carregandoCadastroVendedores = true;
     this.vendedoresService.criarVendedor(this.formularioAdicionarVendedor.value).subscribe(() => {
@@ -58,5 +97,32 @@ export class VendedoresComponent {
       this.visibleDialogAdicionarVendedor = false;
       this.carregandoCadastroVendedores = false;
     });
+  }
+
+  public editarVendedor(): void{
+    this.carregandoEdicaoVendedores = true;
+    if(this.vendedorSelecionadoParaEditar.id){
+      this.vendedoresService.atualizarVendedor(this.formularioEditarVendedor.value, this.vendedorSelecionadoParaEditar.id).subscribe(() => {
+        this.listarVendedores();
+        this.visibleDialogEditarVendedor = false;
+        this.carregandoEdicaoVendedores = false;
+      });
+    }
+  }
+
+  public excluirVendedor(): void{
+    this.carregandoExclusaoVendedores = true;
+    if(this.vendedorSelecionadoParaExcluir.id){
+      this.vendedoresService.deletarVendedor(this.vendedorSelecionadoParaExcluir.id).subscribe(() => {
+        this.listarVendedores();
+        this.visibleDialogExcluirVendedor = false;
+        this.carregandoExclusaoVendedores = false;
+      }, 
+    () => {
+      this.listarVendedores();
+      this.carregandoExclusaoVendedores = false;
+    }
+    );
+    }
   }
 }

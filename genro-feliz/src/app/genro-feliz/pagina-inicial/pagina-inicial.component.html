@@ -37,7 +37,29 @@
         </p-table>
       </p-fieldset>
     </div>
-    <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">.col-sm-5 .offset-sm-2 .col-md-6 .offset-md-0</div>
+    <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+      <p-fieldset legend="Vendas de Caixão" [toggleable]="true">
+        <p-table [value]="vendasCaixao" [paginator]="true" [rows]="6">
+          <ng-template pTemplate="caption">
+            <button class="btn btn-primary" [routerLink]="['/venda-de-caixao']"><i class="bi bi-ticket-detailed"></i> Ver Detalhes</button>
+          </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Nome Vendedor</th>
+                  <th>Modelo do Caixão</th>
+                  <th>Data da Venda</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-venda>
+              <tr>
+                  <td>{{ venda.nomeVendedor }}</td>
+                  <td>{{ venda.modeloCaixao }}</td>
+                 <td>{{venda.dataVenda}}</td>
+              </tr>
+          </ng-template>
+        </p-table>
+      </p-fieldset>
+    </div>
   </div>
   
   <div class="row">

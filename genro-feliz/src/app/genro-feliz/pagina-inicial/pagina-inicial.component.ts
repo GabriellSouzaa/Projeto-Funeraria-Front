@@ -7,6 +7,8 @@ import { PlanoFunerarioEmAtrasoService } from '../shared/services/plano-funerari
 import { PlanoFunerarioAtrasado } from '../shared/models/PlanoFunerarioAtrasado.model';
 import { FieldsetModule } from 'primeng/fieldset';
 import { RouterModule } from '@angular/router';
+import { VendaDeCaixaoService } from '../shared/services/venda-de-caixao.service';
+import { VendaDeCaixao } from '../shared/models/VendaDeCaixao.model';
 
 @Component({
   selector: 'app-pagina-inicial',
@@ -17,15 +19,18 @@ import { RouterModule } from '@angular/router';
 })
 export class PaginaInicialComponent {
 
-  constructor(private planoFunerarioEmAtrasoService: PlanoFunerarioEmAtrasoService) { }
+  constructor(private planoFunerarioEmAtrasoService: PlanoFunerarioEmAtrasoService, private vendaDeCaixaoService: VendaDeCaixaoService) { }
 
   public visibleDialogBoasVindas: boolean = false;
 
   public planosFunerariosEmAtraso: PlanoFunerarioAtrasado[] = [];	
 
+  public vendasCaixao: VendaDeCaixao[] = [];
+
   ngOnInit(): void {
     this.abrirDialogBoasVindas();
     this.buscarPlanosFunerariosEmAtraso();
+    this.buscarVendasCaixao();
   }
 
   public abrirDialogBoasVindas(): void{
@@ -40,6 +45,17 @@ export class PaginaInicialComponent {
     this.planoFunerarioEmAtrasoService.listarPlanosFunerariosEmAtraso().subscribe(
       (response: PlanoFunerarioAtrasado[]) => {
         this.planosFunerariosEmAtraso = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+
+  public buscarVendasCaixao(): void{
+    this.vendaDeCaixaoService.listarVendasDeCaixao().subscribe(
+      (response: VendaDeCaixao[]) => {
+        this.vendasCaixao = response;
       },
       (error: any) => {
         console.error(error);

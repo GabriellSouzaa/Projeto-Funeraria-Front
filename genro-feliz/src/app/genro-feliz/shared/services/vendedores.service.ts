@@ -20,8 +20,8 @@ export class VendedoresService {
     return this.http.post<Vendedor>(`${this.apiUrl}/create`, vendedor);
   }
 
-  public atualizarVendedor(vendedor: Vendedor): Observable<Vendedor>{
-    return this.http.put<Vendedor>(`${this.apiUrl}/update/${vendedor.id}`, vendedor);
+  public atualizarVendedor(vendedor: Vendedor, id: number): Observable<Vendedor>{
+    return this.http.put<Vendedor>(`${this.apiUrl}/update/${id}`, vendedor);
   }
 
   public deletarVendedor(id: number): Observable<void>{

@@ -64,10 +64,10 @@
     <td>{{ vendedor.nome }}</td>
     <td>{{ vendedor.cargo }}</td>
     <td>
-      <button class="btn btn-warning m-2 text-white" pTooltip="Editar Vendedor">
+      <button class="btn btn-warning m-2 text-white" pTooltip="Editar Vendedor" (click)="abrirDialogEditarVendedor(vendedor)">
         <i class="bi bi-pencil"></i> 
       </button>
-      <button class="btn btn-danger m-2" pTooltip="Excluir Vendedor">
+      <button class="btn btn-danger m-2" pTooltip="Excluir Vendedor" (click)="abrirDialogExcluirVendedor(vendedor)">
         <i class="bi bi-trash"></i> 
       </button>
     </td>
@@ -111,4 +111,54 @@
       Confirmar</button>
     <button class="btn btn-danger m-2" (click)="visibleDialogAdicionarVendedor = false" [disabled]="carregandoCadastroVendedores"><i class="bi bi-arrow-left"></i> Voltar</button>
   </p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogEditarVendedor" [closable]="false" [style]="{width: '50vw', height: '50vh'}" [draggable]="false">
+  <p-header>
+    Editar Vendedor
+  </p-header>
+  <form [formGroup]="formularioEditarVendedor">
+    <div>
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          pInputText
+          formControlName="nome"
+          type="text"
+          class="form-control"
+          id="nome"
+          placeholder="Digite o nome do vendedor"
+        />
+      </div>
+      <div class="form-group">
+        <label for="cargo">Cargo</label>
+        <input
+          pInputText
+          formControlName="cargo"
+          type="text"
+          class="form-control"
+          id="cargo"
+          placeholder="Digite o cargo do vendedor"
+        />
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button class="btn btn-success m-2" (click)="editarVendedor()" [disabled]="carregandoEdicaoVendedores || !formularioEditarVendedor.valid"><i class="bi bi-check" *ngIf="!carregandoEdicaoVendedores"></i> 
+      <span *ngIf="carregandoEdicaoVendedores" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar</button>
+    <button class="btn btn-danger m-2" (click)="visibleDialogEditarVendedor = false" [disabled]="carregandoEdicaoVendedores"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogExcluirVendedor" [closable]="false" [style]="{width: '30vw', height: '30vh'}" [draggable]="false">
+<p-header>
+  Excluir Vendedor
+</p-header>
+<p-footer>
+  <button class="btn btn-success m-2" (click)="excluirVendedor()" [disabled]="carregandoExclusaoVendedores"><i class="bi bi-check" *ngIf="!carregandoExclusaoVendedores"></i> 
+    <span *ngIf="carregandoExclusaoVendedores" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="visibleDialogExcluirVendedor = false" [disabled]="carregandoExclusaoVendedores"><i class="bi bi-arrow-left"></i> Voltar</button>
+</p-footer>
 </p-dialog>

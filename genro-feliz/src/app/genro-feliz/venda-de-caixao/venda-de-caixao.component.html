@@ -95,7 +95,7 @@
   </div>
 </div>
 <p-footer>
-  <button class="btn btn-primary m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
+  <button class="btn btn-success m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
     <span *ngIf="carregandoCadastroDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     Confirmar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogCadastroVendaCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
@@ -118,7 +118,7 @@
     </div>
   </div>
   <p-footer>
-    <button class="btn btn-primary m-2" (click)="editarVendaDeCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeVendaDeCaixao"></i>
+    <button class="btn btn-success m-2" (click)="editarVendaDeCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeVendaDeCaixao"></i>
       <span *ngIf="carregandoEdicaoDeVendaDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Confirmar
     </button>
