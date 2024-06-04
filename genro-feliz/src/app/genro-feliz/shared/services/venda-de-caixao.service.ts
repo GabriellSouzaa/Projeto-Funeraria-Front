@@ -27,4 +27,10 @@ export class VendaDeCaixaoService {
   public deletarVendaDeCaixao(id: number): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+
+  public obterRelatorioDeVendasDeCaixao(){
+    return this.http.get(`${this.apiUrl}/report`, {
+      responseType: 'blob' as 'json',
+    });
+  }
 }

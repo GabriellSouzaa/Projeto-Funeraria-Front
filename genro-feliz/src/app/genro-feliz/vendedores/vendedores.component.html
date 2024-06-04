@@ -25,8 +25,13 @@
   [globalFilterFields]="['nome', 'cargo']"
 >
 <ng-template pTemplate="caption">
-  <button class="btn btn-primary" (click)="abrirDialogAdicionarVendedor()">
+  <button class="btn btn-primary m-2" (click)="abrirDialogAdicionarVendedor()">
     <i class="bi bi-plus"></i> Cadastrar Vendedor
+  </button>
+  <button class="btn btn-warning text-white m-2" (click)="obterRelatorioMensalDeVendasPorVendedor()" [disabled]="carregandoRelatorioMensalDeVendasPorVendedor">
+    <i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioMensalDeVendasPorVendedor"></i> 
+    <span *ngIf="carregandoRelatorioMensalDeVendasPorVendedor" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Gerar Relatório Mensal de Vendas por Vendedor
   </button>
   <div class="flex mt-3">
     <p-iconField iconPosition="left" class="ml-auto">

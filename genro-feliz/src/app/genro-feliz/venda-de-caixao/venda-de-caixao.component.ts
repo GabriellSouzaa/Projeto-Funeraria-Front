@@ -82,6 +82,8 @@ export class VendaDeCaixaoComponent {
 
   public carregandoExclusaoDeVendaDeCaixao: boolean = false;
 
+  public carregandoRelatorioMensalDeVendasDeCaixao: boolean = false;
+
   ngOnInit() {
     this.listarVendasDeCaixao();
     this.formularioCadastrarCaixao = VendaDeCaixaoForm;
@@ -193,6 +195,15 @@ export class VendaDeCaixaoComponent {
         this.carregandoExclusaoDeVendaDeCaixao = false;
       });
     }
+  }
+
+  public obterRelatorioDeVendasDeCaixao(): void {
+    this.carregandoRelatorioMensalDeVendasDeCaixao = true;
+    this.vendaDeCaixaoService.obterRelatorioDeVendasDeCaixao().subscribe((relatorio: any) => {
+      const url = window.URL.createObjectURL(relatorio);
+      window.open(url);
+      this.carregandoRelatorioMensalDeVendasDeCaixao = false;
+    });
   }
 
  

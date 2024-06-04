@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VendedorForm } from '../forms/Vendedor.form';
 import { atribuirFormVendedor } from '../forms/EditarVendedor.form';
+import { VendasDeVendedorService } from '../shared/services/vendas-de-vendedor.service';
 
 @Component({
   selector: 'app-vendedores',
@@ -23,7 +24,7 @@ import { atribuirFormVendedor } from '../forms/EditarVendedor.form';
 })
 export class VendedoresComponent {
 
-  constructor(private vendedoresService: VendedoresService){}
+  constructor(private vendedoresService: VendedoresService, private vendasDeVendedorService: VendasDeVendedorService){}
 
   public vendedores: Vendedor[] = [];
 
@@ -48,6 +49,8 @@ export class VendedoresComponent {
   public vendedorSelecionadoParaExcluir: Vendedor = new Vendedor();
 
   public carregandoExclusaoVendedores: boolean = false;
+
+  public carregandoRelatorioMensalDeVendasPorVendedor: boolean = false;
 
   ngOnInit(){
     this.listarVendedores();
@@ -124,5 +127,14 @@ export class VendedoresComponent {
     }
     );
     }
+  }
+
+  public obterRelatorioMensalDeVendasPorVendedor(): void{
+    this.carregandoRelatorioMensalDeVendasPorVendedor = true;
+    this.vendasDeVendedorService.obterRelatorioMensalDeVendasPorVendedor().subscribe((relatorio: any) => {
+      const url = window.URL.createObjectURL(relatorio);
+      window.open(url);
+      this.carregandoRelatorioMensalDeVendasPorVendedor = false;
+    });
   }
 }

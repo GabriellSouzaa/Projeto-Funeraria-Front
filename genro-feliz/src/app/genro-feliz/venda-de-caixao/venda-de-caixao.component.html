@@ -27,8 +27,13 @@
   [globalFilterFields]="['nomeVendedor', 'modeloCaixao']"
 >
   <ng-template pTemplate="caption">
-    <button class="btn btn-primary" (click)="abrirDialogCadastroVendaCaixao()">
+    <button class="btn btn-primary m-2" (click)="abrirDialogCadastroVendaCaixao()">
       <i class="bi bi-plus"></i> Cadastrar Venda de Caixão
+    </button>
+    <button class="btn btn-warning text-white m-2" (click)="obterRelatorioDeVendasDeCaixao()" [disabled]="carregandoRelatorioMensalDeVendasDeCaixao">
+      <i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioMensalDeVendasDeCaixao"></i> 
+      <span *ngIf="carregandoRelatorioMensalDeVendasDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Gerar Relatório de Venda Mensal de Caixão
     </button>
     <div class="flex mt-3">
       <p-iconField iconPosition="left" class="ml-auto">
