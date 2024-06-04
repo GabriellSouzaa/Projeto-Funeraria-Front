@@ -18,6 +18,9 @@ import { CaixaoService } from '../shared/services/caixao.service';
 import { Vendedor } from '../shared/models/Vendedor.model';
 import { Caixao } from '../shared/models/Caixao.model';
 import { EditarVendaDeCaixaoForm, atribuirFormVendaDeCaixao } from '../forms/EditarVendaDeCaixao.form';
+import { CadastroVendaDeCaixaoNovoForm } from '../forms/CadastroVendaDeCaixaoNovo.form';
+import { Cliente } from '../shared/models/Cliente.model';
+import { ClienteService } from '../shared/services/cliente.service';
 
 @Component({
   selector: 'app-venda-de-caixao',
@@ -43,7 +46,8 @@ export class VendaDeCaixaoComponent {
   constructor(
     private vendaDeCaixaoService: VendaDeCaixaoService,
     private vendedoresService: VendedoresService,
-    private caixaoService: CaixaoService
+    private caixaoService: CaixaoService,
+    private clienteService: ClienteService
   ) {}
 
   public vendasDeCaixao: VendaDeCaixao[] = [];
@@ -51,8 +55,6 @@ export class VendaDeCaixaoComponent {
   public carregandoListasDeCaixao: boolean = false;
 
   public carregandoCadastroDeCaixao: boolean = false;
-
-  public formularioCadastrarCaixao: FormGroup = new FormGroup({});
 
   public formularioEditarCaixao: FormGroup = new FormGroup({});
 
@@ -84,9 +86,12 @@ export class VendaDeCaixaoComponent {
 
   public carregandoRelatorioMensalDeVendasDeCaixao: boolean = false;
 
+  public formularioCadastrarVendaDeCaixao: CadastroVendaDeCaixaoNovoForm = new CadastroVendaDeCaixaoNovoForm();
+
+  public clientes: Cliente[] = [];
+
   ngOnInit() {
     this.listarVendasDeCaixao();
-    this.formularioCadastrarCaixao = VendaDeCaixaoForm;
     this.formularioEditarCaixao = EditarVendaDeCaixaoForm;
   }
 
@@ -113,6 +118,7 @@ export class VendaDeCaixaoComponent {
   public abrirDialogCadastroVendaCaixao(): void {
     this.listarVendedores();
     this.listarCaixoes();
+    this.listarClientes();
     this.visibleDialogCadastroVendaCaixao = true;
   }
 
@@ -139,34 +145,26 @@ export class VendaDeCaixaoComponent {
 
   public fecharDialogCadastroVendaCaixao(): void {
     this.visibleDialogCadastroVendaCaixao = false;
-    this.formularioCadastrarCaixao.reset();
   }
 
   public cadastrarVendaDeCaixao(): void {
     this.carregandoCadastroDeCaixao = true;
+    console.log(this.formularioCadastrarVendaDeCaixao)
     this.vendaDeCaixaoService
-      .cadastrarVendaDeCaixao(this.formularioCadastrarCaixao.value)
+      .cadastrarVendaDeCaixao(this.formularioCadastrarVendaDeCaixao)
       .subscribe(() => {
         this.listarVendasDeCaixao();
         this.carregandoCadastroDeCaixao = false;
         this.fecharDialogCadastroVendaCaixao();
-      });
+      }, 
+    () => {
+      this.carregandoCadastroDeCaixao = false;
+      console.log('Erro ao cadastrar venda de caixão')
+    }
+    );
   }
 
-  public selecionaVendedor(){
-    this.formularioCadastrarCaixao.get('seller.id')?.setValue(this.vendedorSelecionado.id);
-    this.formularioCadastrarCaixao.get('seller.nome')?.setValue(this.vendedorSelecionado.nome);
-    this.formularioCadastrarCaixao.get('seller.cargo')?.setValue(this.vendedorSelecionado.cargo);
-  }
-
-  public selecionaCaixao(){
-    this.formularioCadastrarCaixao.get('coffin.id')?.setValue(this.caixaoSelecionado.id);
-    this.formularioCadastrarCaixao.get('coffin.material')?.setValue(this.caixaoSelecionado.material);
-    this.formularioCadastrarCaixao.get('coffin.cor')?.setValue(this.caixaoSelecionado.cor);
-    this.formularioCadastrarCaixao.get('coffin.comprimento')?.setValue(this.caixaoSelecionado.comprimento);
-    this.formularioCadastrarCaixao.get('coffin.modelo')?.setValue(this.caixaoSelecionado.modelo);
-    this.formularioCadastrarCaixao.get('coffin.preco')?.setValue(this.caixaoSelecionado.preco);
-  }
+  
 
   public editarVendaDeCaixao(): void {
     atribuirFormVendaDeCaixao(this.formularioEditarCaixao, this.vendaDeCaixaoSelecionadaPelaEditar, this.caixaoSelecionadoPelaEditar, this.vendedorSelecionadoPelaEditar);
@@ -204,6 +202,12 @@ export class VendaDeCaixaoComponent {
       window.open(url);
       this.carregandoRelatorioMensalDeVendasDeCaixao = false;
     });
+  }
+
+  public listarClientes(){
+    this.clienteService.listarClientes().subscribe(clientes => {
+      this.clientes = clientes;
+    })
   }
 
  

@@ -89,18 +89,21 @@
   Cadastrar Venda de Caixão
 </p-header>
 <div>
-  <div class="form-group" >
-    <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionado" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaVendedor()" [filter]="true" filterBy="nome"></p-dropdown>
+  <div class="form-group">
+    <p-dropdown [options]="clientes" [(ngModel)]="formularioCadastrarVendaDeCaixao.client" optionLabel="nome" placeholder="Selecione um Cliente" [style]="{'width': '100%', 'margin-bottom': '10px'}" [filter]="true" filterBy="nome"></p-dropdown>
   </div>
   <div class="form-group" >
-    <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionado" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaCaixao()" [filter]="true" filterBy="modelo"></p-dropdown>
+    <p-dropdown [options]="vendedores" [(ngModel)]="formularioCadastrarVendaDeCaixao.seller" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="nome"></p-dropdown>
   </div>
-  <div [formGroup]="formularioCadastrarCaixao">
-    <input pInputText formControlName="dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
+  <div class="form-group" >
+    <p-dropdown [options]="caixoes" [(ngModel)]="formularioCadastrarVendaDeCaixao.coffin" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" [filter]="true" filterBy="modelo"></p-dropdown>
+  </div>
+  <div>
+    <input pInputText [(ngModel)]="formularioCadastrarVendaDeCaixao.dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
   </div>
 </div>
 <p-footer>
-  <button class="btn btn-success m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
+  <button class="btn btn-success m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
     <span *ngIf="carregandoCadastroDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     Confirmar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogCadastroVendaCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
@@ -113,10 +116,10 @@
   </p-header>
   <div>
     <div class="form-group" >
-      <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionadoPelaEditar" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaVendedor()" [filter]="true" filterBy="nome"></p-dropdown>
+      <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionadoPelaEditar" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="nome"></p-dropdown>
     </div>
     <div class="form-group" >
-      <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionadoPelaEditar" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaCaixao()" [filter]="true" filterBy="modelo"></p-dropdown>
+      <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionadoPelaEditar" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="modelo"></p-dropdown>
     </div>
     <div [formGroup]="formularioEditarCaixao">
       <input pInputText formControlName="dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
