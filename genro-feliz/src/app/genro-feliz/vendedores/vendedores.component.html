@@ -25,7 +25,7 @@
   [globalFilterFields]="['nome', 'cargo']"
 >
 <ng-template pTemplate="caption">
-  <button class="btn btn-primary">
+  <button class="btn btn-primary" (click)="abrirDialogAdicionarVendedor()">
     <i class="bi bi-plus"></i> Cadastrar Vendedor
   </button>
   <div class="flex mt-3">
@@ -74,3 +74,41 @@
   </tr>
 </ng-template>
 </p-table> 
+
+<p-dialog [visible]="visibleDialogAdicionarVendedor" [closable]="false" [style]="{width: '50vw', height: '50vh'}" [draggable]="false">
+  <p-header>
+    Adicionar Vendedor
+  </p-header>
+  <form [formGroup]="formularioAdicionarVendedor">
+    <div>
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          pInputText
+          formControlName="nome"
+          type="text"
+          class="form-control"
+          id="nome"
+          placeholder="Digite o nome do vendedor"
+        />
+      </div>
+      <div class="form-group">
+        <label for="cargo">Cargo</label>
+        <input
+          pInputText
+          formControlName="cargo"
+          type="text"
+          class="form-control"
+          id="cargo"
+          placeholder="Digite o cargo do vendedor"
+        />
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button class="btn btn-success m-2" (click)="cadastrarVendedor()" [disabled]="carregandoCadastroVendedores"><i class="bi bi-check" *ngIf="!carregandoCadastroVendedores"></i> 
+      <span *ngIf="carregandoCadastroVendedores" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar</button>
+    <button class="btn btn-danger m-2" (click)="visibleDialogAdicionarVendedor = false" [disabled]="carregandoCadastroVendedores"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </p-footer>
+</p-dialog>

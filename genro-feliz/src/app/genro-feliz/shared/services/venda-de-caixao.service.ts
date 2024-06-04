@@ -20,8 +20,8 @@ export class VendaDeCaixaoService {
     return this.http.post<VendaDeCaixao>(`${this.apiUrl}/create`, vendaDeCaixao);
   } 
 
-  public atualizarVendaDeCaixao(vendaDeCaixao: VendaDeCaixao): Observable<VendaDeCaixao>{
-    return this.http.put<VendaDeCaixao>(`${this.apiUrl}/update/${vendaDeCaixao.id}`, vendaDeCaixao);
+  public atualizarVendaDeCaixao(vendaDeCaixao: VendaDeCaixao, id: number): Observable<VendaDeCaixao>{
+    return this.http.put<VendaDeCaixao>(`${this.apiUrl}/update/${id}`, vendaDeCaixao);
   }
 
   public deletarVendaDeCaixao(id: number): Observable<void>{

@@ -17,6 +17,7 @@ import { VendedoresService } from '../shared/services/vendedores.service';
 import { CaixaoService } from '../shared/services/caixao.service';
 import { Vendedor } from '../shared/models/Vendedor.model';
 import { Caixao } from '../shared/models/Caixao.model';
+import { EditarVendaDeCaixaoForm, atribuirFormVendaDeCaixao } from '../forms/EditarVendaDeCaixao.form';
 
 @Component({
   selector: 'app-venda-de-caixao',
@@ -53,6 +54,8 @@ export class VendaDeCaixaoComponent {
 
   public formularioCadastrarCaixao: FormGroup = new FormGroup({});
 
+  public formularioEditarCaixao: FormGroup = new FormGroup({});
+
   public visibleDialogCadastroVendaCaixao: boolean = false;
 
   public vendedores: Vendedor[] = [];
@@ -63,9 +66,26 @@ export class VendaDeCaixaoComponent {
 
   public caixaoSelecionado: Caixao = new Caixao();
 
+  public vendedorSelecionadoPelaEditar: Vendedor = new Vendedor();
+
+  public caixaoSelecionadoPelaEditar: Caixao = new Caixao();
+
+  public visibleDialogEditarVendaCaixao: boolean = false;
+
+  public visibleDialogExcluirVendaCaixao: boolean = false;
+
+  public vendaDeCaixaoSelecionadaPelaEditar: VendaDeCaixao = new VendaDeCaixao();
+
+  public vendaDeCaixaoSelecionadaPelaExcluir: VendaDeCaixao = new VendaDeCaixao();
+
+  public carregandoEdicaoDeVendaDeCaixao: boolean = false;
+
+  public carregandoExclusaoDeVendaDeCaixao: boolean = false;
+
   ngOnInit() {
     this.listarVendasDeCaixao();
     this.formularioCadastrarCaixao = VendaDeCaixaoForm;
+    this.formularioEditarCaixao = EditarVendaDeCaixaoForm;
   }
 
   public listarVendasDeCaixao(): void {
@@ -92,6 +112,27 @@ export class VendaDeCaixaoComponent {
     this.listarVendedores();
     this.listarCaixoes();
     this.visibleDialogCadastroVendaCaixao = true;
+  }
+
+  public abrirDialogEditarVendaCaixao(vendaCaixao: VendaDeCaixao): void {
+    this.visibleDialogEditarVendaCaixao = true;
+    this.vendaDeCaixaoSelecionadaPelaEditar = vendaCaixao;
+    this.listarCaixoes();
+    this.listarVendedores();
+          
+  }
+
+  public abrirDialogExcluirVendaCaixao(vendaCaixao: VendaDeCaixao): void {
+    this.vendaDeCaixaoSelecionadaPelaExcluir = vendaCaixao;
+    this.visibleDialogExcluirVendaCaixao = true;
+  }
+
+  public fecharDialogEditarVendaCaixao(): void {
+    this.visibleDialogEditarVendaCaixao = false;
+  }
+
+  public fecharDialogExcluirVendaCaixao(): void {
+    this.visibleDialogExcluirVendaCaixao = false;
   }
 
   public fecharDialogCadastroVendaCaixao(): void {
@@ -124,4 +165,35 @@ export class VendaDeCaixaoComponent {
     this.formularioCadastrarCaixao.get('coffin.modelo')?.setValue(this.caixaoSelecionado.modelo);
     this.formularioCadastrarCaixao.get('coffin.preco')?.setValue(this.caixaoSelecionado.preco);
   }
+
+  public editarVendaDeCaixao(): void {
+    atribuirFormVendaDeCaixao(this.formularioEditarCaixao, this.vendaDeCaixaoSelecionadaPelaEditar, this.caixaoSelecionadoPelaEditar, this.vendedorSelecionadoPelaEditar);
+    this.carregandoEdicaoDeVendaDeCaixao = true;
+    if(this.vendaDeCaixaoSelecionadaPelaEditar.id){
+      this.vendaDeCaixaoService
+      .atualizarVendaDeCaixao(this.formularioEditarCaixao.value, this.vendaDeCaixaoSelecionadaPelaEditar.id)
+      .subscribe(() => {
+        this.listarVendasDeCaixao();
+        this.carregandoEdicaoDeVendaDeCaixao = false;
+        this.fecharDialogEditarVendaCaixao();
+      });
+    }else{
+      console.error('Erro ao editar venda de caixão, id não encontrado');
+    }
+  }
+
+  public deletarVendaDeCaixao(): void {
+    this.carregandoExclusaoDeVendaDeCaixao = true;
+    if(this.vendaDeCaixaoSelecionadaPelaExcluir.id){
+      this.vendaDeCaixaoService
+      .deletarVendaDeCaixao(this.vendaDeCaixaoSelecionadaPelaExcluir.id)
+      .subscribe(() => {
+        this.listarVendasDeCaixao();
+        this.fecharDialogExcluirVendaCaixao();
+        this.carregandoExclusaoDeVendaDeCaixao = false;
+      });
+    }
+  }
+
+ 
 }

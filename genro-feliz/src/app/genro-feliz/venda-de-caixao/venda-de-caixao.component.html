@@ -68,10 +68,10 @@
       <td>{{ venda.modeloCaixao }}</td>
       <td>{{ venda.dataVenda }}</td>
       <td>
-        <button class="btn btn-warning text-white m-2" pTooltip="Editar Venda de Caixão">
+        <button class="btn btn-warning text-white m-2" pTooltip="Editar Venda de Caixão" (click)="abrirDialogEditarVendaCaixao(venda)">
           <i class="bi bi-pencil"></i>
         </button>
-        <button class="btn btn-danger text-white m-2" pTooltip="Excluir Venda de Caixão">
+        <button class="btn btn-danger text-white m-2" pTooltip="Excluir Venda de Caixão" (click)="abrirDialogExcluirVendaCaixao(venda)">
           <i class="bi bi-trash"></i>
         </button>
       </td>
@@ -85,17 +85,55 @@
 </p-header>
 <div>
   <div class="form-group" >
-    <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionado" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaVendedor()"></p-dropdown>
+    <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionado" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaVendedor()" [filter]="true" filterBy="nome"></p-dropdown>
   </div>
   <div class="form-group" >
-    <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionado" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaCaixao()"></p-dropdown>
+    <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionado" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaCaixao()" [filter]="true" filterBy="modelo"></p-dropdown>
   </div>
   <div [formGroup]="formularioCadastrarCaixao">
     <input pInputText formControlName="dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
   </div>
 </div>
 <p-footer>
-  <button class="btn btn-primary m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="!formularioCadastrarCaixao.valid"><i class="bi bi-check"></i> Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastroVendaCaixao()"><i class="bi bi-arrow-left"></i> Voltar</button>
+  <button class="btn btn-primary m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
+    <span *ngIf="carregandoCadastroDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogCadastroVendaCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
+</p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogEditarVendaCaixao" [closable]="false" [style]="{width: '50vw', height: '610px'}" [draggable]="false">
+  <p-header>
+    Editar Venda de Caixão
+  </p-header>
+  <div>
+    <div class="form-group" >
+      <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionadoPelaEditar" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaVendedor()" [filter]="true" filterBy="nome"></p-dropdown>
+    </div>
+    <div class="form-group" >
+      <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionadoPelaEditar" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" (onChange)="selecionaCaixao()" [filter]="true" filterBy="modelo"></p-dropdown>
+    </div>
+    <div [formGroup]="formularioEditarCaixao">
+      <input pInputText formControlName="dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
+    </div>
+  </div>
+  <p-footer>
+    <button class="btn btn-primary m-2" (click)="editarVendaDeCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeVendaDeCaixao"></i>
+      <span *ngIf="carregandoEdicaoDeVendaDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Confirmar
+    </button>
+    <button class="btn btn-danger m-2" (click)="fecharDialogEditarVendaCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [visible]="visibleDialogExcluirVendaCaixao" [closable]="false" [style]="{width: '50vw', height: '50px'}" [draggable]="false">
+<p-header>
+  Excluir Venda de Caixão 
+</p-header>
+<p-footer>
+  <button class="btn btn-success m-2" (click)="deletarVendaDeCaixao()" [disabled]="carregandoExclusaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoExclusaoDeVendaDeCaixao"></i> 
+    <span *ngIf="carregandoExclusaoDeVendaDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirVendaCaixao()" [disabled]="carregandoExclusaoDeVendaDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
 </p-footer>
 </p-dialog>

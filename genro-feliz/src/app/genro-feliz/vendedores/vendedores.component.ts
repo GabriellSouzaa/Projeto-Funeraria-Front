@@ -9,11 +9,14 @@ import { TooltipModule } from 'primeng/tooltip';
 import { VendedoresService } from '../shared/services/vendedores.service';
 import { Vendedor } from '../shared/models/Vendedor.model';
 import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VendedorForm } from '../forms/Vendedor.form';
 
 @Component({
   selector: 'app-vendedores',
   standalone: true,
-  imports: [TableModule, ProgressSpinnerModule, BreadcrumbComponent, NgIf, InputIconModule, IconFieldModule, TooltipModule, InputTextModule],
+  imports: [TableModule, ProgressSpinnerModule, BreadcrumbComponent, NgIf, InputIconModule, IconFieldModule, TooltipModule, InputTextModule, DialogModule, FormsModule, ReactiveFormsModule],
   templateUrl: './vendedores.component.html',
   styleUrl: './vendedores.component.css'
 })
@@ -25,8 +28,15 @@ export class VendedoresComponent {
 
   public carregandoVendedores: boolean = false;
 
+  public visibleDialogAdicionarVendedor: boolean = false;
+
+  public carregandoCadastroVendedores: boolean = false;
+
+  public formularioAdicionarVendedor: FormGroup = new FormGroup({});
+
   ngOnInit(){
     this.listarVendedores();
+    this.formularioAdicionarVendedor = VendedorForm;
   }
 
   public listarVendedores(): void{
@@ -34,6 +44,19 @@ export class VendedoresComponent {
     this.vendedoresService.listarVendedores().subscribe(vendedores => {
       this.vendedores = vendedores;
       this.carregandoVendedores = false;
+    });
+  }
+
+  public abrirDialogAdicionarVendedor(): void{
+    this.visibleDialogAdicionarVendedor = true;
+  }
+
+  public cadastrarVendedor(): void{
+    this.carregandoCadastroVendedores = true;
+    this.vendedoresService.criarVendedor(this.formularioAdicionarVendedor.value).subscribe(() => {
+      this.listarVendedores();
+      this.visibleDialogAdicionarVendedor = false;
+      this.carregandoCadastroVendedores = false;
     });
   }
 }
