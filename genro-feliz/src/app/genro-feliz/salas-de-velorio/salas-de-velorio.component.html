@@ -1,3 +1,5 @@
+<app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Salas de Velório'"/>
+
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoSalasDeVelorio">
   <p-progressSpinner 
     styleClass="w-8rem h-8rem" 
@@ -13,7 +15,10 @@ currentPageReportTemplate="Total de Salas de Velório: {totalRecords}" [globalFi
 
 >
   <ng-template pTemplate="caption">
-    <button class="btn btn-primary" (click)="abrirDialogAdicionarSalaDeVelorio()"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
+    <button class="btn btn-primary m-2" (click)="abrirDialogAdicionarSalaDeVelorio()"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
+    <button class="btn btn-warning text-white m-2" (click)="obterRelatorioDasSalasDeVelorioMaisUsadas()" [disabled]="carregandoSalasDeVelorio"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioDasSalasDeVelorioMaisUsadas"></i> 
+      <span *ngIf="carregandoRelatorioDasSalasDeVelorioMaisUsadas" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Gerar Relatório das Salas de Velório Usadas no Mês</button>
   </ng-template>
   <ng-template pTemplate="header">
       <tr>

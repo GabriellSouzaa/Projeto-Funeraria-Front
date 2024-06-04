@@ -22,7 +22,7 @@ export class MorteDePacienteService {
   }
 
   public editarMorteDePaciente(id: number, morteDePaciente: MorteDePaciente): Observable<MorteDePaciente>{
-    return this.http.put<MorteDePaciente>(`${this.apiUrl}/update/${id}`, morteDePaciente);
+    return this.http.post<MorteDePaciente>(`${this.apiUrl}/update/${id}`, morteDePaciente);
   }
 
   public deletarMorteDePaciente(id: number): Observable<any>{

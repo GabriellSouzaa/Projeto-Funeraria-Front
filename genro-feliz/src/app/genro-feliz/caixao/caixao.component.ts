@@ -4,7 +4,7 @@ import { Caixao } from '../shared/models/Caixao.model';
 import { CaixaoService } from '../shared/services/caixao.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import {FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CaixaoForm } from '../forms/Caixao.form';
 import { EditarCaixaoForm, atribuirForm } from '../forms/EditarCaixao.form';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -12,17 +12,27 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgIf } from '@angular/common';
-
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-caixao',
   standalone: true,
-  imports: [TableModule, TooltipModule, DialogModule, ReactiveFormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
+  imports: [
+    TableModule,
+    TooltipModule,
+    DialogModule,
+    ReactiveFormsModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    ProgressSpinnerModule,
+    NgIf,
+    BreadcrumbComponent
+  ],
   templateUrl: './caixao.component.html',
-  styleUrl: './caixao.component.css'
+  styleUrl: './caixao.component.css',
 })
 export class CaixaoComponent {
-
   public caixoes: Caixao[] = [];
 
   public caixaoParaExcluir: Caixao | undefined;
@@ -42,25 +52,25 @@ export class CaixaoComponent {
   public carregandoCaixoes: boolean = false;
 
   public carregandoCadastroCaixoes: boolean = false;
-  
+
   public carregandoEdicaoCaixoes: boolean = false;
 
   public carregandoExclusaoCaixoes: boolean = false;
 
-  constructor(private caixaoService: CaixaoService) { }
+  constructor(private caixaoService: CaixaoService) {}
 
   ngOnInit(): void {
     this.listarCaixoes();
-    this.formularioCadastrarCaixao = CaixaoForm;     
-    this.formularioEditarCaixao = EditarCaixaoForm; 
+    this.formularioCadastrarCaixao = CaixaoForm;
+    this.formularioEditarCaixao = EditarCaixaoForm;
   }
 
   public listarCaixoes(): void {
     this.carregandoCaixoes = true;
-     this.caixaoService.listarCaixoes().subscribe((caixoes: Caixao[]) => {
+    this.caixaoService.listarCaixoes().subscribe((caixoes: Caixao[]) => {
       this.caixoes = caixoes;
       this.carregandoCaixoes = false;
-     });
+    });
   }
 
   public exibirDialogExcluirCaixao(caixao: Caixao): void {
@@ -91,35 +101,38 @@ export class CaixaoComponent {
     this.visibleDialogEditarCaixao = false;
   }
 
-  public excluirCaixao(): void{
+  public excluirCaixao(): void {
     this.carregandoExclusaoCaixoes = true;
-    if(this.caixaoParaExcluir?.id){
-      this.caixaoService.excluirCaixao(this.caixaoParaExcluir.id).subscribe(() => {
-        this.listarCaixoes();
-        this.fecharDialogExcluirCaixao();
-        this.carregandoExclusaoCaixoes = false;
-      });
+    if (this.caixaoParaExcluir?.id) {
+      this.caixaoService
+        .excluirCaixao(this.caixaoParaExcluir.id)
+        .subscribe(() => {
+          this.listarCaixoes();
+          this.fecharDialogExcluirCaixao();
+          this.carregandoExclusaoCaixoes = false;
+        });
     }
   }
 
-  public cadastrarCaixao(): void{
+  public cadastrarCaixao(): void {
     this.carregandoCadastroCaixoes = true;
-    this.caixaoService.cadastrarCaixao(this.formularioCadastrarCaixao.value).subscribe(() => {
-      this.listarCaixoes();
-      this.fecharDialogCadastrarCaixao();
-      this.carregandoCadastroCaixoes = false;
-    });
+    this.caixaoService
+      .cadastrarCaixao(this.formularioCadastrarCaixao.value)
+      .subscribe(() => {
+        this.listarCaixoes();
+        this.fecharDialogCadastrarCaixao();
+        this.carregandoCadastroCaixoes = false;
+      });
   }
 
-  public editarCaixao(): void{
+  public editarCaixao(): void {
     this.carregandoEdicaoCaixoes = true;
-    this.caixaoService.editarCaixao(this.formularioEditarCaixao.value).subscribe(() => {
-      this.listarCaixoes();
-      this.fecharDialogEditarCaixao();
-      this.carregandoEdicaoCaixoes = false;
-    });
+    this.caixaoService
+      .editarCaixao(this.formularioEditarCaixao.value)
+      .subscribe(() => {
+        this.listarCaixoes();
+        this.fecharDialogEditarCaixao();
+        this.carregandoEdicaoCaixoes = false;
+      });
   }
-
-
-
 }

@@ -46,7 +46,19 @@ export class MorteDePacienteComponent {
 
   public caixoes: Caixao[] = [];
 
+  public morteDePacienteSelecionadaParaExcluir: MorteDePaciente = new MorteDePaciente();
+
   public carregandoCadastroDeMorteDePaciente: boolean = false;
+
+  public visibleDialogExcluirMorteDePaciente: boolean = false;
+
+  public carregandoExclusaoMorteDePaciente: boolean = false;
+
+  public morteDePacienteSelecionadaParaEditar: MorteDePaciente = new MorteDePaciente();
+
+  public visibleDialogEditarMorteDePaciente: boolean = false;
+
+  public carregandoEdicaoMorteDePaciente: boolean = false;
 
   ngOnInit() {
     this.listarMortesDePaciente();
@@ -97,6 +109,51 @@ export class MorteDePacienteComponent {
 
   public fecharDialogAdicionarMorteDePaciente(): void{
     this.visibleDialogAdicionarMorteDePaciente = false;
+  }
+
+  public abrirDialogExcluirMorteDePaciente(morteSelecionada: MorteDePaciente): void{
+    this.visibleDialogExcluirMorteDePaciente = true;
+    this.morteDePacienteSelecionadaParaExcluir = morteSelecionada;
+  }
+
+  public fecharDialogExcluirMorteDePaciente(): void{
+    this.visibleDialogExcluirMorteDePaciente = false;
+  }
+
+  public excluirMorteDePaciente(): void{
+    this.carregandoExclusaoMorteDePaciente = true;
+    if(this.morteDePacienteSelecionadaParaExcluir.id){
+      this.morteDePacienteService.deletarMorteDePaciente(this.morteDePacienteSelecionadaParaExcluir.id).subscribe(() => {
+        this.listarMortesDePaciente();
+        this.fecharDialogExcluirMorteDePaciente();
+        this.carregandoExclusaoMorteDePaciente = false;
+      });
+    }
+  }
+
+  public abrirDialogEditarMorteDePaciente(morteSelecionada: MorteDePaciente): void{
+    this.buscarCaixoes();
+    this.buscarClientes();
+    this.buscarSalasDeVelorio();
+    this.morteDePacienteSelecionadaParaEditar = morteSelecionada;
+    this.visibleDialogEditarMorteDePaciente = true;
+    
+  }
+
+  public fecharDialogEditarMorteDePaciente(): void{
+    this.visibleDialogEditarMorteDePaciente = false;
+  }
+
+  public editarMorteDePaciente(): void{
+    //Arrumar essa parte depois
+    this.carregandoEdicaoMorteDePaciente = true;
+    if(this.morteDePacienteSelecionadaParaEditar.id){
+      this.morteDePacienteService.editarMorteDePaciente(this.morteDePacienteSelecionadaParaEditar.id, this.morteDePacienteSelecionadaParaEditar).subscribe(() => {
+        this.listarMortesDePaciente();
+        this.fecharDialogEditarMorteDePaciente();
+        this.carregandoEdicaoMorteDePaciente = false;
+      });
+    }
   }
 
 

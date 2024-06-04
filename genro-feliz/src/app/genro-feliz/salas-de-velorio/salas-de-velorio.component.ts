@@ -9,18 +9,20 @@ import { SalaDeVelorioForm } from '../forms/SalaDeVelorio.form';
 import { EditarSalaDeVelorioForm, atribuirForm } from '../forms/EditarSalaDeVelorio.form';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgIf } from '@angular/common';
+import { SalasDeVelorioMaisUsadasService } from '../shared/services/salas-de-velorio-mais-usadas.service';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 
 @Component({
   selector: 'app-salas-de-velorio',
   standalone: true,
-  imports: [TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ProgressSpinnerModule, NgIf],
+  imports: [TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ProgressSpinnerModule, NgIf, BreadcrumbComponent],
   templateUrl: './salas-de-velorio.component.html',
   styleUrl: './salas-de-velorio.component.css'
 })
 export class SalasDeVelorioComponent {
 
-  constructor(private salaDeVelorioService: SalasDeVelorioService) { }
+  constructor(private salaDeVelorioService: SalasDeVelorioService, private salasDeVelorioMaisUsadas: SalasDeVelorioMaisUsadasService) { }
 
   public salasDeVelorio: SalaDeVelorio[] = [];
 
@@ -45,6 +47,8 @@ export class SalasDeVelorioComponent {
   public carregandoEdicaoDeSalasDeVelorio: boolean = false;
 
   public carregandoExclusaoDeSalasDeVelorio: boolean = false;
+
+  public carregandoRelatorioDasSalasDeVelorioMaisUsadas: boolean = false;
 
   ngOnInit(): void {
     this.listarSalasDeVelorio();
@@ -122,6 +126,16 @@ export class SalasDeVelorioComponent {
       });
     }
     
+  }
+
+  public obterRelatorioDasSalasDeVelorioMaisUsadas(): void{
+    this.carregandoRelatorioDasSalasDeVelorioMaisUsadas = true;
+    this.salasDeVelorioMaisUsadas.obterRelatorioDasSalasDeVelorioMaisUsadas().subscribe((relatorio: any) => {
+      const blob = new Blob([relatorio], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+      this.carregandoRelatorioDasSalasDeVelorioMaisUsadas = false;
+    });
   }
 
 

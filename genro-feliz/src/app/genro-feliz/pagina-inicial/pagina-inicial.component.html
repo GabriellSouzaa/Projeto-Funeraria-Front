@@ -63,7 +63,32 @@
   </div>
   
   <div class="row">
-    <div class="col-sm-6 col-md-5 col-lg-6">.col-sm-6 .col-md-5 .col-lg-6</div>
+    <div class="col-sm-6 col-md-5 col-lg-6">
+      <p-fieldset legend="Mortes de Pacientes" [toggleable]="true">
+        <p-table [value]="mortesDePaciente" [paginator]="true" [rows]="6">
+          <ng-template pTemplate="caption">
+            <button class="btn btn-primary" [routerLink]="['/morte-de-paciente']"><i class="bi bi-ticket-detailed"></i> Ver Detalhes</button>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+                <th>Sala de Velório</th>
+                <th>Cliente </th>
+                <th>Caixão</th>
+                <th>Conservação Quimica</th>
+                <th>Descrição da Morte</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-morte>
+            <tr>
+              <td>{{ morte.funeralParlor }}</td>
+              <td>{{ morte.client }}</td>
+              <td>{{ morte.coffin }}</td>
+              <td>{{ morte.chemicalConservation }}</td>
+              <td>{{ morte.descriptionDeath }}</td>
+          </ng-template>
+        </p-table>
+      </p-fieldset>
+    </div>
     <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0">.col-sm-6 .col-md-5 .offset-md-2 .col-lg-6 .offset-lg-0</div>
   </div>
 </div>
