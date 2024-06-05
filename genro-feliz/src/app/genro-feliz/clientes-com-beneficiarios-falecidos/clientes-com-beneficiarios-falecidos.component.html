@@ -20,12 +20,17 @@
     <tr>
       <th>Nome Cliente</th>
       <th>Nome Beneficiario</th>
+      <th>Ações</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-beneficiario>
     <tr>
       <td>{{beneficiario.nomeClient}}</td>
       <td>{{beneficiario.nomeBeneficiario}}</td>
+      <button class="btn btn-primary" pTooltip="Enviar email notificando Beneficiario Inativo" (click)="enviarEmailParaCliente(beneficiario)" [disabled]="beneficiario.enviandoEmail">
+        <i class="bi bi-envelope-arrow-up" *ngIf="!beneficiario.enviandoEmail"></i>
+        <span *ngIf="beneficiario.enviandoEmail" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
     </tr>
   </ng-template>
   <ng-template pTemplate = "emptymessage">

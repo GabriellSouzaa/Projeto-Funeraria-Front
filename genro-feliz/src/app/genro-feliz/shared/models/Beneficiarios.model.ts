@@ -5,4 +5,5 @@ export class Beneficiarios{
     nomeBeneficiario: string | undefined;
     dataNascimento: string | undefined;
     adicional: number | undefined;
+     enviandoEmail: boolean | undefined ;
 }

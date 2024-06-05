@@ -14,4 +14,8 @@ export class EmailService {
   public sendEmailToDelayedFuneralPlan(nomeCliente: string, id: string): Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/${nomeCliente}/${id}`);
   }
+
+  public sendEmailToBeneficiariesDeath(id: number): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/beneficiary/${id}`);
+  }
 }
