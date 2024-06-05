@@ -8,6 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-clientes-com-beneficiarios-falecidos',
@@ -15,7 +16,8 @@ import { NgIf } from '@angular/common';
   imports: [ DropdownModule,
               TableModule,
               FormsModule,
-              NgIf
+              NgIf,
+              TooltipModule
   ],
   templateUrl: './clientes-com-beneficiarios-falecidos.component.html',
   styleUrl: './clientes-com-beneficiarios-falecidos.component.css'
