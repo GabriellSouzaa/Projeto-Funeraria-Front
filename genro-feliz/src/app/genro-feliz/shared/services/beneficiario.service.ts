@@ -32,4 +32,8 @@ export class BeneficiarioService {
   public listarBeneficiariosDoCliente(id: number): Observable<Beneficiarios[]>{
     return this.http.get<Beneficiarios[]>(`${this.apiUrl}/client/${id}`);
   }
+
+  public listarBeneficiariosInativosDoCliente(id: number): Observable<Beneficiarios[]>{
+    return this.http.get<Beneficiarios[]>(`${this.apiUrl}/death/client/${id}`);
+  }
 }

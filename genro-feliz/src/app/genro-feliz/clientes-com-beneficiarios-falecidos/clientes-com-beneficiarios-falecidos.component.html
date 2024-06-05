@@ -1,1 +1,34 @@
-<p>clientes-com-beneficiarios-falecidos works!</p>
+<p-dropdown
+  [options]="clientes"
+  optionLabel="nome"
+  placeholder="Cliente"
+  [(ngModel)]="clienteParaConsultarBeneficiarios"
+  [style]="{width: '100%', marginTop: '1rem'}"
+  (onChange)=" buscarBeneficiariosInativos()"
+></p-dropdown>
+
+
+
+<p-table
+  [value]="beneficiario"
+  [paginator]="true"
+  [rows]="4"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Total de Beneficiarios Inativos: {totalRecords}"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome Cliente</th>
+      <th>Nome Beneficiario</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-beneficiario>
+    <tr>
+      <td>{{beneficiario.nomeClient}}</td>
+      <td>{{beneficiario.nomeBeneficiario}}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate = "emptymessage">
+      <td>Não Existe Beneficiario Inativo para Esse Cliente</td>
+  </ng-template>
+</p-table>

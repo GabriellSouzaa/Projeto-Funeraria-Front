@@ -13,13 +13,13 @@
         <p-inputIcon>
             <i class="bi bi-search"></i>
         </p-inputIcon>
-        <input 
-            pInputText 
-            type="text" 
-            (input)="tabelaPlanosFunerariosEmAtraso.filterGlobal($any($event.target).value, 'contains')" 
+        <input
+            pInputText
+            type="text"
+            (input)="tabelaPlanosFunerariosEmAtraso.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Pesquisar por Cliente" />
     </p-iconField>
-    <button class="btn btn-warning text-white m-2" (click)="gerarRelatorioPlanosFunerariosEmAtraso()" [disabled]="carregandoRelatorioPlanosAtrasados"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioPlanosAtrasados"></i> 
+    <button class="btn btn-warning text-white m-2" (click)="gerarRelatorioPlanosFunerariosEmAtraso()" [disabled]="carregandoRelatorioPlanosAtrasados"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioPlanosAtrasados"></i>
       <span *ngIf="carregandoRelatorioPlanosAtrasados" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Gerar Relatório</button>
 </div>
