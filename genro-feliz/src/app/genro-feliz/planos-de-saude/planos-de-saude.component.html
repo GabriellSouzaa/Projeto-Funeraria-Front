@@ -1,1 +1,204 @@
-<app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Plano de Saúde'"/>
+<app-breadcrumb
+  [aplicacao]="'Gerenciador Funerária'"
+  [subAplicacao]="'Plano de Saúde'"
+/>
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="height: 100vh"
+  *ngIf="carregandoPlanosDeSaude"
+>
+  <p-progressSpinner
+    styleClass="w-8rem h-8rem"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".5s"
+  />
+</div>
+<p-table
+  [value]="planosDeSaude"
+  [paginator]="true"
+  [rows]="5"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Total de Planos de Saúde: {totalRecords}"
+  [globalFilterFields]="['descricao', 'telefone']"
+  *ngIf="!carregandoPlanosDeSaude"
+>
+  <ng-template pTemplate="caption">
+    <button
+      class="btn btn-primary"
+      (click)="abrirDialogAdicionarPlanoDeSaude()"
+    >
+      <i class="bi bi-plus"></i> Adicionar plano de saúde
+    </button>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Descrição</th>
+      <th>Telefone</th>
+      <th>Valor</th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-plano>
+    <tr>
+      <td>{{ plano.descricao }}</td>
+      <td>{{ plano.telefone }}</td>
+      <td>{{ plano.valor }}</td>
+      <td>
+        <button class="btn btn-warning text-white m-2" (click)="abrirDialogEditarPlanoDeSaude(plano)">
+          <i class="bi bi-pencil" pTooltip="Editar Plano de Saúde"></i>
+        </button>
+        <button class="btn btn-danger m-2" pTooltip="Excluir Plano de Saúde" (click)="abrirDialogExcluirPlanoDeSaude(plano)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [visible]="visibleDialogAdicionarPlanoDeSaude"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '400px' }"
+  [draggable]="false"
+>
+  <p-header> Cadastrar Plano de Saúde </p-header>
+  <form [formGroup]="formularioAdicionarPlanoDeSaude">
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <input
+        type="text"
+        class="form-control"
+        id="descricao"
+        formControlName="descricao"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="telefone"
+        formControlName="telefone"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="valor">Valor</label>
+      <input
+        type="number"
+        class="form-control"
+        id="valor"
+        formControlName="valor"
+      />
+    </div>
+  </form>
+  <p-footer>
+    <button
+      class="btn btn-success text-white m-2"
+      (click)="adicionarPlanoDeSaude()"
+      [disabled]="
+        !formularioAdicionarPlanoDeSaude.valid || carregandoAdicaoPlanoDeSaude
+      "
+    >
+      <i *ngIf="!carregandoAdicaoPlanoDeSaude" class="bi bi-check"></i>
+      <span
+        *ngIf="carregandoAdicaoPlanoDeSaude"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      Adicionar
+    </button>
+    <button
+      class="btn btn-danger m-2"
+      (click)="fecharDialogAdicionarPlanoDeSaude()"
+      [disabled]="carregandoAdicaoPlanoDeSaude"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  [visible]="visibleDialogEditarPlanoDeSaude"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '400px' }"
+  [draggable]="false"
+>
+  <p-header> Editar Plano de Saúde </p-header>
+  <form [formGroup]="formularioEditarPlanoDeSaude">
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <input
+        type="text"
+        class="form-control"
+        id="descricao"
+        formControlName="descricao"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="telefone"
+        formControlName="telefone"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="valor">Valor</label>
+      <input
+        type="number"
+        class="form-control"
+        id="valor"
+        formControlName="valor"
+      />
+    </div>
+  </form>
+  <p-footer>
+    <button
+      class="btn btn-success text-white m-2"
+      (click)="editarPlanoDeSaude()"
+      [disabled]="
+        !formularioEditarPlanoDeSaude.valid || carregandoEdicaoPlanoDeSaude
+      "
+    >
+      <i *ngIf="!carregandoEdicaoPlanoDeSaude" class="bi bi-check"></i>
+      <span
+        *ngIf="carregandoEdicaoPlanoDeSaude"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      Editar
+    </button>
+    <button
+      class="btn btn-danger m-2"
+      (click)="fecharDialogEditarPlanoDeSaude()"
+      [disabled]="carregandoEdicaoPlanoDeSaude"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog
+  [visible]="visibleDialogExcluirPlanoDeSaude"
+  [closable]="false"
+  [style]="{width: '50vw', height: '300px'}"
+  [draggable]="false"
+>
+Tem certeza que deseja excluir o Plano de Saude?
+<ng-template pTemplate="footer">
+  <button class="btn btn-success text-white m-2" (click)="excluirPlanoDeSaude()" [disabled]="carregandoExclusaoPlanoDeSaude"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoDeSaude"></i> 
+    <span *ngIf="carregandoExclusaoPlanoDeSaude" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+    Confirmar</button>
+  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoDeSaude()" [disabled]="carregandoExclusaoPlanoDeSaude"><i class="bi bi-arrow-left"></i> Voltar</button>
+</ng-template>
+</p-dialog>
