@@ -17,6 +17,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { Desconto } from '../shared/models/Desconto.model';
 
 
 
@@ -59,9 +60,15 @@ export class ClientesComponent {
 
   public clienteParaConsultarBeneficiarios: Cliente = new Cliente();
 
+  public clienteParaConsultarDesconto: Cliente = new Cliente();
+
   public beneficiariosDoCliente: Beneficiarios[] = [];
 
+  public descontos: Desconto = new Desconto();
+
   public carregandoCadastroCliente: boolean = false;
+
+  public buscarDescontos: boolean = false;
 
   public carregandoEditarCliente: boolean = false;
 
@@ -96,6 +103,12 @@ export class ClientesComponent {
 
   public abrirDialogCadastrarCliente(): void{
     this.visibleDialogCadastrarCliente = true;
+  }
+
+  public abrirDialogDesconto(): void{
+    this.buscarDescontos = true;
+    this.listarDescontos()
+
   }
 
   public fecharDialogCadastrarCliente(): void{
@@ -180,9 +193,21 @@ export class ClientesComponent {
     this.clienteParaConsultarBeneficiarios = new Cliente();
   }
 
+  public fecharDialogDesconto(): void {
+    this.buscarDescontos = false;
+  }
+
   public listarBeneficiariosDoCliente(){
+
     this.clienteService.listarBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios).subscribe(beneficiarios => {
       this.beneficiariosDoCliente = beneficiarios;
+    });
+  }
+
+  public listarDescontos(){
+    this.clienteService.listarDescontos(1).subscribe(descontos => {
+      this.descontos = descontos;
+
     });
   }
 

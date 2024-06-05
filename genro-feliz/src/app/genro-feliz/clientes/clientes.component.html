@@ -3,12 +3,12 @@
   [subAplicacao]="'Clientes'"
 />
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoClientes">
-  <p-progressSpinner 
-    
-    styleClass="w-8rem h-8rem" 
-    strokeWidth="8" 
-    fill="var(--surface-ground)" 
-    animationDuration=".5s" 
+  <p-progressSpinner
+
+    styleClass="w-8rem h-8rem"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".5s"
   />
 </div>
 <p-table
@@ -32,15 +32,18 @@
     <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarCliente()">
       <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
     </button>
+    <button class="btn btn-success m-2" (click)="abrirDialogDesconto()">
+      <i class="bi bi-plus-circle"></i> Calcular Descontos
+    </button>
     <div class="flex mt-3">
       <p-iconField iconPosition="left" class="ml-auto">
           <p-inputIcon>
               <i class="bi bi-search"></i>
           </p-inputIcon>
-          <input 
-              pInputText 
-              type="text" 
-              (input)="tabelaClientes.filterGlobal($any($event.target).value, 'contains')" 
+          <input
+              pInputText
+              type="text"
+              (input)="tabelaClientes.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Pesquisar por Cliente" />
       </p-iconField>
   </div>
@@ -84,15 +87,6 @@
           (click)="abrirDialogEditarCliente(cliente)"
         >
           <i class="bi bi-pencil"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-info m-2"
-          pTooltip="Consultar Informações Adicionais do Cliente"
-          tooltipPosition="bottom"
-          (click)="abrirDialogConsultarInformacoesAdicionais(cliente)"
-        >
-          <i class="bi bi-list text-white"></i>
         </button>
         <button
           type="button"
@@ -159,14 +153,14 @@
       <i class="bi bi-arrow-left"></i> Voltar
     </button>
     <button class="btn btn-success m-2" (click)="cadastrarCliente()" [disabled]="!formCadastrarCliente.valid || carregandoCadastroCliente">
-      <i class="bi bi-check" *ngIf="!carregandoCadastroCliente"></i> 
+      <i class="bi bi-check" *ngIf="!carregandoCadastroCliente"></i>
       <span *ngIf="carregandoCadastroCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Confirmar
     </button>
   </ng-template>
 </p-dialog>
 
-<p-dialog 
+<p-dialog
   [visible]="visibleDialogClientesAtraso"
   [closable]="false"
   [style]="{ width: '60vw', height: '650px' }"
@@ -188,7 +182,7 @@
   [visible]="visibleDialogEditarCliente"
   [closable]="false"
   [style]="{ width: '50vw', height: '600px' }"
-  [draggable]="false"	
+  [draggable]="false"
 >
   <p-header>
     Editar Cliente
@@ -219,7 +213,7 @@
   </p-footer>
 </p-dialog>
 
-<p-dialog 
+<p-dialog
   [visible]="visibleDialogClientesComBeneficiariosFalecidos"
   [closable]="false"
   [style]="{ width: '60vw', height: '600px' }"
@@ -239,7 +233,7 @@
 <p-dialog
   [visible]="visibleDialogExcluirCliente"
   [closable]="false"
-  [style]="{ width: '50vw', height: '300px' }"	
+  [style]="{ width: '50vw', height: '300px' }"
 >
   Tem Certeza que deseja excluir o cliente?
   <ng-template pTemplate="footer">
@@ -264,7 +258,7 @@
 </p-header>
 <p-table [value]="beneficiariosDoCliente" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="caption">
-    <button class="btn btn-warning text-white" (click)="gerarRelatorioBeneficiariosDoCliente()" [disabled]="carregandoRelatorioBeneficiariosDoCliente"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioBeneficiariosDoCliente"></i> 
+    <button class="btn btn-warning text-white" (click)="gerarRelatorioBeneficiariosDoCliente()" [disabled]="carregandoRelatorioBeneficiariosDoCliente"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioBeneficiariosDoCliente"></i>
       <span *ngIf="carregandoRelatorioBeneficiariosDoCliente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Gerar Relatório</button>
   </ng-template>
@@ -281,12 +275,12 @@
       <td>{{ beneficiario.dataNascimento }}</td>
       <td>{{ beneficiario.adicional }}</td>
     </tr>
-  </ng-template>  
+  </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
         <td colspan="5">Este cliente não tem beneficiários.</td>
     </tr>
-    </ng-template>  
+    </ng-template>
 </p-table>
 <p-footer>
   <button class="btn btn-danger m-2" (click)="fecharDialogBeneficiariosDoCliente()">
@@ -294,3 +288,19 @@
   </button>
 </p-footer>
 </p-dialog>
+
+<p-dialog
+  [visible]="buscarDescontos"
+  [closable]="false"
+  [style]="{ width: '50vw', height: '300px' }"
+>
+    <h1>Descontos</h1>
+    <p>Desconto para Compra de Caixão: {{descontos.descontoCaixao}}</p>
+    <p>Desconto para Aluguel de Sala de Velorio:{{descontos.descontoSalaVelorio}}</p>
+
+    <button class="btn btn-danger m-2" (click)="fecharDialogDesconto()">
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+</p-dialog>
+
+

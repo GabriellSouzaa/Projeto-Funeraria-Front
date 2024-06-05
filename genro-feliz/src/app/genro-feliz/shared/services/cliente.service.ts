@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Cliente } from '../models/Cliente.model';
 import { ClientRequest } from '../models/ClientRequest.model';
 import { Beneficiarios } from '../models/Beneficiarios.model';
+import { Desconto } from '../models/Desconto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class ClienteService {
 
   public editarCliente(cliente: Cliente): Observable<Cliente>{
     return this.http.put<Cliente>(`${this.apiUrl}/update/${cliente.id}`, cliente);
-  
+
   }
 
   public deleteClient(cliente: Cliente): Observable<any>{
@@ -40,6 +41,11 @@ export class ClienteService {
       responseType: 'blob' as 'json',
     })
   }
+
+  public listarDescontos(id: number): Observable<Desconto>{
+    return this.http.get<Desconto>(`http://localhost:8080/client/discount/${id}`);
+  }
+
 
 
 }
