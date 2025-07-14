@@ -1,59 +1,95 @@
-.side-nav-container{
-    width: 250px;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #0D1337;
-    padding-top: 20px;
-    margin-top: 115px;
-    color: white;
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
 }
 
-.side-nav-container {
-    transition: transform 0.3s ease;
-  }
-  
-  .opened {
-    transform: translateX(0);
-  }
-  
-  .closed {
-    transform: translateX(-100%);
-  }
+body{
+  min-width: 100vh;
+}
 
-  .botao-side-nav{
-    width: 100%;
-    background-color: transparent;
-    color: white;
-    border: none;
-    padding: 10px 0;
-  }
+.sidebar{
+  width: 60px;
+  height: 100%;
+  background-color: white;
+  overflow: hidden;
+  transition: .7s;
+  border-radius: 4%;
+}
 
-  .botao-side-nav:hover{
-    background-color: #1E2A78;
-  }
 
-  .logo-sao-vicente{
-    margin-left: 50px;
-    margin-bottom: 20px;
-    width: 60%;
-  }
-  
-  .info-funcionario{
-    display: flex;
-    flex-direction: row;
-    margin-top: 48vh;
-    margin-left: 8px;
-  }
 
-  .nome-funcionario{
-    margin-left: 5px;
-  }
+.sidebar:hover {
+  width: 250px;
+}
 
-  .cargo-funcionario{
-    font-size: small;
-    font-weight: lighter;
-    font-family: 'Inter', sans-serif;
-  }
+.sidebar ul li:hover {
+  background-color: #f3f3f3;
+}
 
+.sidebar ul li a {
+  display: flex;
+  white-space: nowrap;
+  text-decoration: none;
+  height: 60px;
+}
+
+
+
+.sidebar ul li .icone {
+  min-width: 60px;
+  margin-left: 15px;
+  margin-top: 18px;
+  height: 60px;
+  justify-content: center;
+  font-size: 1.5rem;
+  align-items: center;
+  color: #333;
+}
+
+.sidebar ul li .icone .pi{
+  min-width: 60px;
+  height: 60px;
+  justify-content: center;
+  font-size: 1.2rem;
+  align-items: center;
+  color: #333;
+}
+
+.sidebar ul li .img img{
+  width: 230px;
+  height: 200px;
+  justify-content: center;
+  font-size: 1.5rem;
+  align-items: center;
+  color: #333;
+}
+
+.sidebar ul li .titulo {
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+.sidebar ul li.logo{
+  margin-bottom: 50px;
+}
+
+.sidebar ul li.icone .pi{
+  margin-bottom: 50px;
+ }
+
+
+.sidebar ul li.logo:hover {
+  background: none;
+ }
+
+ .linha {
+  width: 100%;
+  border-bottom: 2px solid #e8e8e8;
+}

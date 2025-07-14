@@ -1,37 +1,102 @@
 <div class="login-screen">
   <div class="imagem">
-    <div class="texto-1">
-      Hoje, Amanhã e Sempre
-    </div>
+    <div class="texto-1">Hoje, Amanhã e Sempre</div>
     <div class="texto-2">
-      Guiando <p class="texto-voce">você</p> com respeito e carinho
+      Guiando
+      <p class="texto-voce">você</p>
+      com respeito e carinho
     </div>
-    <img src="../../assets/image-login.png">
+    <img src="../../assets/image-login.png" />
+  </div>
+  <div class="logo">
+    <img src="../../assets/sao_vicente_logo.png" alt="logo da são vicente" />
   </div>
   <div class="login-formulario">
     <form [formGroup]="loginForm">
-      <div class="logo">
-        <img src="../../assets/sao_vicente_logo.png" alt="logo da são vicente">
-      </div>
+      <div class="titulo">Faça login em sua conta</div>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Login</label>
-        <input type="email" class="form-control" formControlName="login" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input
+          type="email"
+          class="form-control"
+          formControlName="login"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Senha</label>
-        <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1" >
+        <label for="password"> Senha:</label>
+        <div class="input-group" style="display: flex">
+          <input
+            type="{{ showPassword ? 'text' : 'password' }}"
+            id="password"
+            name="password"
+            required
+            class="form-control"
+            formControlName="password"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="togglePasswordVisibility()"
+          >
+            <i class="pi pi-eye-slash" style="font-size: 15px"></i>
+          </button>
+        </div>
+      </div>
+      <div class="checkbox-wrapper-4">
+        <input class="inp-cbx" id="morning" type="checkbox" />
+        <label class="cbx" for="morning"
+          ><span>
+            <svg width="12px" height="10px">
+              <use xlink:href="#check-4"></use></svg></span
+          ><span>Relembre-me</span></label
+        >
+        <svg class="inline-svg">
+          <symbol id="check-4" viewbox="0 0 12 10">
+            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+          </symbol>
+        </svg>
       </div>
     </form>
-    <p-toast></p-toast>
-    <button type="button" (click)="login()" [disabled]="!loginForm.valid" class="btn btn-success">Fazer Login</button>
-    <button type="button" class="btn btn-info mt-2" (click)="abrirDialogRegistrarUsuario()">Criar Usuário</button>
+
+    <button
+      type="button"
+      (click)="login()"
+      [disabled]="!loginForm.valid"
+      class="btn"
+    >
+      Login
+    </button>
+    <p style="margin-left: 90px">
+      Não tem uma Conta?<a
+        style="color: blue"
+        (click)="abrirDialogRegistrarUsuario()"
+      >
+        Registre-se</a
+      >
+    </p>
   </div>
+  <p-toast position="bottom-right"></p-toast>
 </div>
 
-
-<p-dialog header="Novo Usuário" [(visible)]="visibleDialogRegistrarUsuario" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [closable]="false">
-  <app-register/>
+<p-dialog
+  header="Novo Usuário"
+  [(visible)]="visibleDialogRegistrarUsuario"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+>
+  <app-register />
   <ng-template pTemplate="footer">
-    <button type="button" class="btn btn-danger" (click)="visibleDialogRegistrarUsuario = false"><i class="bi bi-arrow-left"></i> Voltar</button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="visibleDialogRegistrarUsuario = false"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
   </ng-template>
 </p-dialog>

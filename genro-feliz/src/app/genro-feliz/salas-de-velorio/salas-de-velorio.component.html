@@ -1,93 +1,112 @@
-<app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Salas de Velório'"/>
-
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoSalasDeVelorio">
-  <p-progressSpinner 
-    styleClass="w-8rem h-8rem" 
-    strokeWidth="8" 
-    fill="var(--surface-ground)" 
-    animationDuration=".5s" 
-  />
-</div>
-<p-table [value]="salasDeVelorio" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" *ngIf="!carregandoSalasDeVelorio"
-[rows]="5"
-[showCurrentPageReport]="true"
-currentPageReportTemplate="Total de Salas de Velório: {totalRecords}" [globalFilterFields]="['descricao']"
-
->
-  <ng-template pTemplate="caption">
-    <button class="btn btn-primary m-2" (click)="abrirDialogAdicionarSalaDeVelorio()"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
-    <button class="btn btn-warning text-white m-2" (click)="obterRelatorioDasSalasDeVelorioMaisUsadas()" [disabled]="carregandoSalasDeVelorio"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioDasSalasDeVelorioMaisUsadas"></i> 
-      <span *ngIf="carregandoRelatorioDasSalasDeVelorioMaisUsadas" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Gerar Relatório das Salas de Velório Usadas no Mês</button>
-  </ng-template>
-  <ng-template pTemplate="header">
-      <tr>
-          <th pSortableColumn="descricao" style="width:20%">Descrição <p-sortIcon field="descricao" /></th>
-          <th pSortableColumn="valor" style="width:20%">Valor (R$) <p-sortIcon field="valor" /></th>
-          <th>Ações</th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-salaDeVelorio>
-      <tr>
-          <td>{{ salaDeVelorio.descricao }}</td>
-          <td>{{ salaDeVelorio.valor }}</td>
-          <td>
-            <button class="btn btn-warning text-white m-2" pTooltip="Editar Sala de Velório" (click)="abrirDialogEditarSalaDeVelorio(salaDeVelorio)"><i class="bi bi-pencil-fill"></i></button>
-            <button class="btn btn-danger text-white m-2" pTooltip="Excluir Sala de Velório" (click)="abrirDialogExcluirSalaDeVelorio(salaDeVelorio)"><i class="bi bi-trash-fill"></i></button>
-          </td>
-      </tr>
-  </ng-template>
-</p-table>
-
-<p-dialog [visible]="visibleDialogAdicionarSalaDeVelorio" [closable]="false"
-[style]="{ width: '60vw', height: '600px' }"
-[draggable]="false">
-<form [formGroup]="formularioAdicionarSalaDeVelorio">
-  <div class="form-group">
-    <label for="descricao">Descrição</label>
-    <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Descrição">
+<div class="componente" style="display: flex">
+  <div style="height: 100%; background-color: #d3d3d3">
+    <app-side-nav></app-side-nav>
   </div>
-  <div class="form-group">
-    <label for="valor">Valor (R$)</label>
-    <input type="number" class="form-control" id="valor" formControlName="valor" placeholder="Valor">
-  </div>
-</form>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="adicionarSalaDeVelorio()" [disabled]="!formularioAdicionarSalaDeVelorio.valid || carregandoCadastroDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoCadastroDeSalasDeVelorio"></i> 
-    <span *ngIf="carregandoCadastroDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogAdicionarSalaDeVelorio()" [disabled]="carregandoCadastroDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+  <div class="dashboard">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoSalasDeVelorio">
+      <p-progressSpinner
+        styleClass="w-8rem h-8rem"
+        strokeWidth="8"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      />
+    </div>
+    <div class="wapper">
+      <div class="single-card">
+        <div class="button">
+          <button class="btn btn-primary " style="width: 30%; height: 25%" (click)="abrirDialogAdicionarSalaDeVelorio()"><i class="bi bi-plus-circle-fill"></i> Adicionar Sala de Velório</button>
+          <button class="btn btn-primary text-white " style="width: 70%; height: 25%" (click)="obterRelatorioDasSalasDeVelorioMaisUsadas()" [disabled]="carregandoSalasDeVelorio"><i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioDasSalasDeVelorioMaisUsadas"></i>
+            <span *ngIf="carregandoRelatorioDasSalasDeVelorioMaisUsadas" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Gerar Relatório das Salas de Velório Usadas no Mês</button>
+        </div>
+      </div>
+    </div>
+    <div class="wapper">
+      <div class="single-card-table">
+        <p-table [value]="salasDeVelorio"  [paginator]="true" *ngIf="!carregandoSalasDeVelorio"
+    [rows]="4"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Total de Salas de Velório: {totalRecords}" [globalFilterFields]="['descricao']"
 
-<p-dialog [visible]="visibleDialogEditarSalaDeVelorio" [closable]="false"
-[style]="{ width: '60vw', height: '600px' }"
-[draggable]="false">
-<form [formGroup]="formularioEditarSalaDeVelorio">
-  <div class="form-group">
-    <label for="descricao">Descrição</label>
-    <input type="text" class="form-control" id="descricao" formControlName="descricao">
-  </div>
-  <div class="form-group">
-    <label for="valor">Valor (R$)</label>
-    <input type="number" class="form-control" id="valor" formControlName="valor">
-  </div>
-</form>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="editarSalaDeVelorio()" [disabled]="!formularioEditarSalaDeVelorio.valid || carregandoEdicaoDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeSalasDeVelorio"></i> 
-    <span *ngIf="carregandoEdicaoDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogEditarSalaDeVelorio()" [disabled]="carregandoEdicaoDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+    >
+      <ng-template pTemplate="caption">
 
-<p-dialog [visible]="visibleDialogRemoverSalaDeVelorio" [style]="{ width: '30vw', height: '200px' }"
-[draggable]="false" [closable]="false">
-Tem certeza que deseja excluir essa sala de velório?
-<p-footer>
-  <button class="btn btn-success m-2" (click)="removerSalaDeVelorio()" [disabled]="carregandoExclusaoDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoExclusaoDeSalasDeVelorio"></i> 
-    <span *ngIf="carregandoExclusaoDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirSalaDeVelorio()" [disabled]="carregandoExclusaoDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th pSortableColumn="descricao" style="width:30%">Descrição <p-sortIcon field="descricao" /></th>
+              <th pSortableColumn="valor" style="width:30%">Valor (R$) <p-sortIcon field="valor" /></th>
+              <th style="width:30%">Ações</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-salaDeVelorio>
+          <tr>
+              <td>{{ salaDeVelorio.descricao }}</td>
+              <td>{{ salaDeVelorio.valor }}</td>
+              <td>
+                <button class="btn btn-warning text-white m-2" pTooltip="Editar Sala de Velório" (click)="abrirDialogEditarSalaDeVelorio(salaDeVelorio)"><i class="bi bi-pencil-fill"></i></button>
+                <button class="btn btn-danger text-white m-2" pTooltip="Excluir Sala de Velório" (click)="abrirDialogExcluirSalaDeVelorio(salaDeVelorio)"><i class="bi bi-trash-fill"></i></button>
+              </td>
+          </tr>
+      </ng-template>
+    </p-table>
+      </div>
+    </div>
+
+
+    <p-dialog [visible]="visibleDialogAdicionarSalaDeVelorio" [closable]="false"
+    [style]="{ width: '60vw', height: '600px' }"
+    [draggable]="false">
+    <form [formGroup]="formularioAdicionarSalaDeVelorio">
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Descrição">
+      </div>
+      <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" class="form-control" id="valor" formControlName="valor" placeholder="Valor">
+      </div>
+    </form>
+    <p-footer>
+      <button class="btn btn-success m-2" (click)="adicionarSalaDeVelorio()" [disabled]="!formularioAdicionarSalaDeVelorio.valid || carregandoCadastroDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoCadastroDeSalasDeVelorio"></i>
+        <span *ngIf="carregandoCadastroDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Confirmar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogAdicionarSalaDeVelorio()" [disabled]="carregandoCadastroDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
+    </p-footer>
+    </p-dialog>
+
+    <p-dialog [visible]="visibleDialogEditarSalaDeVelorio" [closable]="false"
+    [style]="{ width: '60vw', height: '600px' }"
+    [draggable]="false">
+    <form [formGroup]="formularioEditarSalaDeVelorio">
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" id="descricao" formControlName="descricao">
+      </div>
+      <div class="form-group">
+        <label for="valor">Valor (R$)</label>
+        <input type="number" class="form-control" id="valor" formControlName="valor">
+      </div>
+    </form>
+    <p-footer>
+      <button class="btn btn-success m-2" (click)="editarSalaDeVelorio()" [disabled]="!formularioEditarSalaDeVelorio.valid || carregandoEdicaoDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeSalasDeVelorio"></i>
+        <span *ngIf="carregandoEdicaoDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Confirmar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogEditarSalaDeVelorio()" [disabled]="carregandoEdicaoDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
+    </p-footer>
+    </p-dialog>
+
+    <p-dialog [visible]="visibleDialogRemoverSalaDeVelorio" [style]="{ width: '30vw', height: '200px' }"
+    [draggable]="false" [closable]="false">
+    Tem certeza que deseja excluir essa sala de velório?
+    <p-footer>
+      <button class="btn btn-success m-2" (click)="removerSalaDeVelorio()" [disabled]="carregandoExclusaoDeSalasDeVelorio"><i class="bi bi-check" *ngIf="!carregandoExclusaoDeSalasDeVelorio"></i>
+        <span *ngIf="carregandoExclusaoDeSalasDeVelorio" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Confirmar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogExcluirSalaDeVelorio()" [disabled]="carregandoExclusaoDeSalasDeVelorio"><i class="bi bi-arrow-left"></i> Voltar</button>
+    </p-footer>
+    </p-dialog>
+
+  </div>
+
+<p-toast position="bottom-right"></p-toast>

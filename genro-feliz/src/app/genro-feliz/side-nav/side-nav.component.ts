@@ -1,7 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -12,8 +12,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './side-nav.component.css'
 })
 export class SideNavComponent {
-  
-  constructor() { }
+
+  constructor(private router: Router) { }
 
   @Input() public estaAberta: boolean = false;
 
@@ -23,5 +23,9 @@ export class SideNavComponent {
 
 
 
+  public deslogar(): void{
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+  }
 
 }

@@ -4,8 +4,15 @@
 @import '../node_modules/primeng/resources/primeng.css';
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "primeicons/primeicons.css";
+
 
 
 
 
 html, body { height: 100%; }
+.custom-input-mask input {
+  width: 100%;
+padding: 9px;
+}
+

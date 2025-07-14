@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaginaInicialComponent } from './pagina-inicial.component';
+import { EditUserComponent } from './edit-user.component';
 
-describe('PaginaInicialComponent', () => {
-  let component: PaginaInicialComponent;
-  let fixture: ComponentFixture<PaginaInicialComponent>;
+describe('EditUserComponent', () => {
+  let component: EditUserComponent;
+  let fixture: ComponentFixture<EditUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginaInicialComponent]
+      imports: [EditUserComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(PaginaInicialComponent);
+    
+    fixture = TestBed.createComponent(EditUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -20,5 +20,4 @@ describe('PaginaInicialComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

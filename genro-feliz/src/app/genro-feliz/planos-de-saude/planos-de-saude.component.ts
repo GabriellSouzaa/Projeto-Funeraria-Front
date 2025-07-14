@@ -10,6 +10,11 @@ import { PlanoDeSaudeForm } from '../forms/PlanoDeSaude.form';
 import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditarPlanoDeSaudeForm, atribuirFormPlanoDeSaude } from '../forms/EditarPlanoDeSaude.form';
+import { SideNavComponent } from '../side-nav/side-nav.component';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
+import { OpenAiService } from '../shared/services/open-ai.service';
 
 @Component({
   selector: 'app-planos-de-saude',
@@ -17,19 +22,24 @@ import { EditarPlanoDeSaudeForm, atribuirFormPlanoDeSaude } from '../forms/Edita
   imports: [
     BreadcrumbComponent,
     TableModule,
+    ToastModule,
+    MessagesModule,
     ProgressSpinnerModule,
     NgIf,
     DialogModule,
     FormsModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    SideNavComponent
   ],
   templateUrl: './planos-de-saude.component.html',
   styleUrl: './planos-de-saude.component.css',
+  providers: [MessageService]
 })
 export class PlanosDeSaudeComponent {
-  constructor(private planoDeSaudeService: PlanoDeSaudeService) {}
+  constructor(private planoDeSaudeService: PlanoDeSaudeService, private openAiService: OpenAiService, private messageService: MessageService) {}
 
+  public message: string = '';
   public planosDeSaude: PlanoDeSaude[] = [];
 
   public carregandoPlanosDeSaude: boolean = false;
@@ -52,7 +62,7 @@ export class PlanosDeSaudeComponent {
 
   public planoDeSaudeParaExcluir: PlanoDeSaude = new PlanoDeSaude();
 
-  public formularioEditarPlanoDeSaude: FormGroup = new FormGroup({}); 
+  public formularioEditarPlanoDeSaude: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.listarPlanosDeSaude();
@@ -101,12 +111,33 @@ export class PlanosDeSaudeComponent {
     this.carregandoPlanosDeSaude = true;
     this.planoDeSaudeService
       .criarPlanoDeSaude(this.formularioAdicionarPlanoDeSaude.value)
-      .subscribe(() => {
-        this.listarPlanosDeSaude();
+      .subscribe({
+        error: () => {
+          this.messageService.add({severity: 'error', detail: 'Erro ao cadastrar o Plano de Saude'})
+          this.listarPlanosDeSaude();
+        this.fecharDialogAdicionarPlanoDeSaude();
+        this.carregandoPlanosDeSaude = false;
+        },
+        next: () => {
+          this.listarPlanosDeSaude();
         this.fecharDialogAdicionarPlanoDeSaude();
         this.carregandoPlanosDeSaude = false;
         this.formularioAdicionarPlanoDeSaude.reset();
+          this.messageService.add({severity: 'success', detail: 'Plano de Saude adicionado com Sucesso'})
+        }
       });
+  }
+
+  public chat(message: string){
+    this.openAiService.chat(message).subscribe({
+      error: () => {
+        this.messageService.add({severity: 'error', detail: 'Erro ao gerar mensagem'})
+      },
+
+      next: () => {
+        this.messageService.add({severity: 'success', detail: 'Mensagem gerada com sucesso'})
+      }
+    })
   }
 
   public editarPlanoDeSaude(): void{
@@ -114,11 +145,22 @@ export class PlanosDeSaudeComponent {
     if(this.planoDeSaudeParaEditar.id){
       this.planoDeSaudeService
         .atualizarPlanoDeSaude(this.formularioEditarPlanoDeSaude.value, this.planoDeSaudeParaEditar.id)
-        .subscribe(() => {
-          this.listarPlanosDeSaude();
+        .subscribe(
+          {
+            error: () => {
+              this.messageService.add({severity: 'error', detail: 'Erro ao editar Plano de Saude'})
+              this.listarPlanosDeSaude();
           this.fecharDialogEditarPlanoDeSaude();
           this.carregandoPlanosDeSaude = false;
-        });
+            },
+            next: () => {
+              this.listarPlanosDeSaude();
+              this.fecharDialogEditarPlanoDeSaude();
+              this.carregandoPlanosDeSaude = false;
+              this.messageService.add({severity: 'success', detail: 'Plano de Saude editado com Sucesso'})
+            }
+          }
+          );
     }
   }
 
@@ -127,13 +169,24 @@ export class PlanosDeSaudeComponent {
     if(this.planoDeSaudeParaExcluir.id){
       this.planoDeSaudeService
         .deletarPlanoDeSaude(this.planoDeSaudeParaExcluir.id)
-        .subscribe(() => {
-          this.listarPlanosDeSaude();
+        .subscribe(
+          {
+            error: () => {
+              this.messageService.add({severity: 'error', detail: 'Erro ao excluir Plano de Saude'})
+              this.listarPlanosDeSaude();
           this.fecharDialogExcluirPlanoDeSaude();
           this.carregandoPlanosDeSaude = false;
-        });
+            },
+            next: () => {
+              this.listarPlanosDeSaude();
+          this.fecharDialogExcluirPlanoDeSaude();
+          this.carregandoPlanosDeSaude = false;
+              this.messageService.add({severity: 'success', detail: 'Plano de Saude excluido com Sucesso'})
+            }
+          }
+         );
     }
   }
 
-  
+
 }

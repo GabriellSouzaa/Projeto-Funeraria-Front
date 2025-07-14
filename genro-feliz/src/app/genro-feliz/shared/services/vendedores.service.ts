@@ -4,11 +4,10 @@ import { Vendedor } from '../models/Vendedor.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VendedoresService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private apiUrl: string = 'http://localhost:8080/seller';
 
@@ -16,16 +15,18 @@ export class VendedoresService {
     return this.http.get<Vendedor[]>(this.apiUrl);
   }
 
-  public criarVendedor(vendedor: Vendedor): Observable<Vendedor>{
+  public criarVendedor(vendedor: Vendedor): Observable<Vendedor> {
     return this.http.post<Vendedor>(`${this.apiUrl}/create`, vendedor);
   }
 
-  public atualizarVendedor(vendedor: Vendedor, id: number): Observable<Vendedor>{
+  public atualizarVendedor(
+    vendedor: Vendedor,
+    id: number
+  ): Observable<Vendedor> {
     return this.http.put<Vendedor>(`${this.apiUrl}/update/${id}`, vendedor);
   }
 
-  public deletarVendedor(id: number): Observable<void>{
+  public deletarVendedor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
-  
 }

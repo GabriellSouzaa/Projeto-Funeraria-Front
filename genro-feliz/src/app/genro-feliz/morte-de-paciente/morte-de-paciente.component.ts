@@ -20,17 +20,22 @@ import { ClienteService } from '../shared/services/cliente.service';
 import { CaixaoService } from '../shared/services/caixao.service';
 import { FormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SideNavComponent } from '../side-nav/side-nav.component';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-morte-de-paciente',
   standalone: true,
-  imports: [TableModule, BreadcrumbComponent, ProgressSpinnerModule, NgIf, InputIconModule, InputTextModule, TooltipModule, IconFieldModule, DialogModule, DropdownModule, FormsModule, InputTextareaModule],
+  imports: [TableModule,SideNavComponent,ToastModule,  MessagesModule,  BreadcrumbComponent, ProgressSpinnerModule, NgIf, InputIconModule, InputTextModule, TooltipModule, IconFieldModule, DialogModule, DropdownModule, FormsModule, InputTextareaModule],
   templateUrl: './morte-de-paciente.component.html',
-  styleUrl: './morte-de-paciente.component.css'
+  styleUrl: './morte-de-paciente.component.css',
+  providers: [MessageService]
 })
 export class MorteDePacienteComponent {
 
-  constructor(private morteDePacienteService: MorteDePacienteService, private salaDeVelorioService: SalasDeVelorioService, private clienteService: ClienteService, private caixaoService: CaixaoService) { }
+  constructor(private morteDePacienteService: MorteDePacienteService,  private messageService: MessageService,  private salaDeVelorioService: SalasDeVelorioService, private clienteService: ClienteService, private caixaoService: CaixaoService) { }
 
   public mortesDePaciente: MorteDePaciente[] = [];
 
@@ -75,11 +80,22 @@ export class MorteDePacienteComponent {
   public cadastrarMorteDePaciente(): void{
     this.carregandoCadastroDeMorteDePaciente = true;
     console.log(this.formParaCadastrarMorteDePaciente)
-    this.morteDePacienteService.cadastrarMorteDePaciente(this.formParaCadastrarMorteDePaciente).subscribe(() => {
-      this.listarMortesDePaciente();
+    this.morteDePacienteService.cadastrarMorteDePaciente(this.formParaCadastrarMorteDePaciente).subscribe(
+      {
+        error: () => {
+          this.messageService.add({severity: 'error', detail: 'Erro ao cadastrar Falecimento'})
+          this.listarMortesDePaciente();
       this.fecharDialogAdicionarMorteDePaciente();
       this.carregandoCadastroDeMorteDePaciente = false;
-    });
+        },
+        next: () => {
+          this.listarMortesDePaciente();
+      this.fecharDialogAdicionarMorteDePaciente();
+      this.carregandoCadastroDeMorteDePaciente = false;
+          this.messageService.add({severity: 'success', detail: 'Falecimento cadastrado com Sucesso'})
+        }
+      }
+      );
   }
 
   public buscarCaixoes(): void{
@@ -123,11 +139,22 @@ export class MorteDePacienteComponent {
   public excluirMorteDePaciente(): void{
     this.carregandoExclusaoMorteDePaciente = true;
     if(this.morteDePacienteSelecionadaParaExcluir.id){
-      this.morteDePacienteService.deletarMorteDePaciente(this.morteDePacienteSelecionadaParaExcluir.id).subscribe(() => {
-        this.listarMortesDePaciente();
+      this.morteDePacienteService.deletarMorteDePaciente(this.morteDePacienteSelecionadaParaExcluir.id).subscribe(
+        {
+          error: () => {
+            this.messageService.add({severity: 'error', detail: 'Erro ao excluir Falecimento'})
+            this.listarMortesDePaciente();
+            this.fecharDialogExcluirMorteDePaciente();
+            this.carregandoExclusaoMorteDePaciente = false;
+          },
+          next: () => {
+            this.listarMortesDePaciente();
         this.fecharDialogExcluirMorteDePaciente();
         this.carregandoExclusaoMorteDePaciente = false;
-      });
+            this.messageService.add({severity: 'success', detail: 'Falecimento excluido com Sucesso'})
+          }
+        }
+        );
     }
   }
 
@@ -137,7 +164,7 @@ export class MorteDePacienteComponent {
     this.buscarSalasDeVelorio();
     this.morteDePacienteSelecionadaParaEditar = morteSelecionada;
     this.visibleDialogEditarMorteDePaciente = true;
-    
+
   }
 
   public fecharDialogEditarMorteDePaciente(): void{
@@ -145,14 +172,24 @@ export class MorteDePacienteComponent {
   }
 
   public editarMorteDePaciente(): void{
-    //Arrumar essa parte depois
     this.carregandoEdicaoMorteDePaciente = true;
     if(this.morteDePacienteSelecionadaParaEditar.id){
-      this.morteDePacienteService.editarMorteDePaciente(this.morteDePacienteSelecionadaParaEditar.id, this.morteDePacienteSelecionadaParaEditar).subscribe(() => {
-        this.listarMortesDePaciente();
+      this.morteDePacienteService.editarMorteDePaciente(this.morteDePacienteSelecionadaParaEditar.id, this.morteDePacienteSelecionadaParaEditar).subscribe(
+        {
+          error: () => {
+            this.messageService.add({severity: 'error', detail: 'Erro ao editar Falecimento'})
+            this.listarMortesDePaciente();
         this.fecharDialogEditarMorteDePaciente();
         this.carregandoEdicaoMorteDePaciente = false;
-      });
+          },
+          next: () => {
+            this.listarMortesDePaciente();
+        this.fecharDialogEditarMorteDePaciente();
+        this.carregandoEdicaoMorteDePaciente = false;
+            this.messageService.add({severity: 'success', detail: 'Falecimento editado com Sucesso'})
+          }
+        }
+        );
     }
   }
 

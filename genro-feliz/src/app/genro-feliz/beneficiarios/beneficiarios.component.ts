@@ -14,6 +14,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgIf } from '@angular/common';
+import { SideNavComponent } from '../side-nav/side-nav.component';
 
 
 
@@ -22,7 +23,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-beneficiarios',
   standalone: true,
-  imports: [TableModule, TooltipModule, DialogModule, DropdownModule, FormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
+  imports: [TableModule, SideNavComponent, TooltipModule, DialogModule, DropdownModule, FormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
   templateUrl: './beneficiarios.component.html',
   styleUrl: './beneficiarios.component.css'
 })
@@ -67,7 +68,7 @@ export class BeneficiariosComponent {
     this.beneficiarioService.listarBeneficiarios().subscribe(beneficiarios => {
       this.beneficiarios = beneficiarios;
       this.carregandoBeneficiarios = false;
-    }); 
+    });
   }
 
   public abrirDialogCadastrarBeneficiario(): void{
@@ -87,7 +88,7 @@ export class BeneficiariosComponent {
     this.formularioEditarBeneficiario.dataNascimento = beneficiario.dataNascimento;
     this.formularioEditarBeneficiario.adicional = beneficiario.adicional;
     this.visibleDialogEditarBeneficiario = true;
-    
+
   }
 
   public fecharDialogEditarBeneficiario(): void{
@@ -126,7 +127,7 @@ export class BeneficiariosComponent {
         this.fecharDialogEditarBeneficiario();
         this.carregandoEdicaoDeBeneficiario = false;
       });
-    } 
+    }
   }
 
   public excluirBeneficiario(): void{

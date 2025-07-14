@@ -9,23 +9,59 @@ import { FalecimentosComponent } from './genro-feliz/falecimentos/falecimentos.c
 import { AuthGuard } from './genro-feliz/shared/guard/authguard';
 import { PlanosFunerariosComponent } from './genro-feliz/planos-funerarios/planos-funerarios.component';
 import { VendedoresComponent } from './genro-feliz/vendedores/vendedores.component';
-import { ComunicarFalecimentoComponent } from './genro-feliz/comunicar-falecimento/comunicar-falecimento.component';
 import { PlanosDeSaudeComponent } from './genro-feliz/planos-de-saude/planos-de-saude.component';
 import { VendaDeCaixaoComponent } from './genro-feliz/venda-de-caixao/venda-de-caixao.component';
 import { MorteDePacienteComponent } from './genro-feliz/morte-de-paciente/morte-de-paciente.component';
+import { EditUserComponent } from './genro-feliz/edit-user/edit-user.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent},
-  { path: 'pagina-inicial', component: PaginaInicialComponent, canActivate: [AuthGuard]},
-  {path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard]},
-  {path: 'planos-funerarios', component: PlanosFunerariosComponent, canActivate: [AuthGuard]},
-  {path: 'caixao', component: CaixaoComponent, canActivate: [AuthGuard]},
-  {path: 'beneficiarios', component: BeneficiariosComponent, canActivate: [AuthGuard]},
-  {path: 'salas-de-velorio', component: SalasDeVelorioComponent, canActivate: [AuthGuard]},
-  {path: 'falecimentos', component: FalecimentosComponent, canActivate: [AuthGuard]},
-  {path: 'vendedores', component: VendedoresComponent, canActivate: [AuthGuard]},
-  {path: 'comunicar-falecimento', component: ComunicarFalecimentoComponent, canActivate: [AuthGuard]},
-  {path: 'planos-de-saude', component: PlanosDeSaudeComponent, canActivate: [AuthGuard]},
-  {path: 'venda-de-caixao', component: VendaDeCaixaoComponent, canActivate: [AuthGuard]},
-  {path: 'morte-de-paciente', component: MorteDePacienteComponent, canActivate: [AuthGuard]},
+  { path: '', component: LoginComponent },
+  {
+    path: 'pagina-inicial',
+    component: PaginaInicialComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard] },
+  {
+    path: 'planos-funerarios',
+    component: PlanosFunerariosComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'caixao', component: CaixaoComponent, canActivate: [AuthGuard] },
+  {
+    path: 'beneficiarios',
+    component: BeneficiariosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'salas-de-velorio',
+    component: SalasDeVelorioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'falecimentos',
+    component: FalecimentosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vendedores',
+    component: VendedoresComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'planos-de-saude',
+    component: PlanosDeSaudeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'venda-de-caixao',
+    component: VendaDeCaixaoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'morte-de-paciente',
+    component: MorteDePacienteComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'edit-user', component: EditUserComponent, canActivate: [AuthGuard] },
 ];

@@ -1,0 +1,112 @@
+.componente{
+  width: 100%;
+  height: 100%;
+
+
+}
+.input{
+  display: flex;
+}
+
+.dashboard{
+  background-color: #d3d3d3;
+  width: 100%;
+  min-width: 80%;
+  height: 100%;
+}
+
+.wapper{
+  display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+  justify-content: space-evenly;
+  padding-bottom: 20px;
+  padding-top: 30px;
+  height: 100%;
+
+
+}
+.avatar{
+  margin-left: 260px;
+  margin-top: 10px;
+}
+.avatar img{
+  width: 20%;
+  height: 30%;
+}
+
+.single-card {
+	position: relative;
+	width: 70%;
+  min-width: 200px;
+  height: 100%;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+	transition: box-shadow 0.3s ease;
+	overflow: hidden;
+	background: #ffffff;
+	border-radius: 15px;
+	transition: all 0.6s ease-in-out;
+}
+
+
+.glass{
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border:1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
+.single-card:hover {
+	transform: translateY(-10px);
+}
+
+
+.single-card-table:hover {
+	transform: translateY(-10px);
+}
+
+
+.form{
+  margin-top: 30px;
+  margin-left: 40px;
+  background-color: #d3d3d3;
+  width: 90%;
+  height: 90%;
+
+}
+
+.input{
+  font-family: "Inter", sans-serif;
+  margin-left: 10%;
+  width: 80%;
+}
+.button{
+  padding-top: 50px;
+  margin-left: 30%;
+
+}
+.btn{
+  background-color: #19214a;
+  color: white;
+  width: 300px;
+}
+
+.form-control{
+  background-color: white!important;
+  color:rgb(13, 11, 11);
+  width: 100%;
+  margin-left: 5px;
+
+}
+
+
+
+.form-label{
+  font-family: "Inter", sans-serif;
+  margin-left: 5px;
+  font-size: 18px;
+  margin-top: 10px;
+}

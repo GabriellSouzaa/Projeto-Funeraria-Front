@@ -1,9 +1,109 @@
 <form [formGroup]="registerForm">
+  <h1>Informações Pessoais</h1>
+  <div style="display: flex; width: 100%">
+    <div style="width: 50%">
+      <label for="firstName">Primeiro Nome:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        required
+        class="form-control"
+        formControlName="firstName"
+      />
+      <label for="lastName">Sobrenome:</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        required
+        class="form-control"
+        formControlName="lastName"
+      />
+    </div>
+    <div style="width: 50%; margin-left: 40px">
+      <label for="cpf">Cpf:</label>
+      <p-inputMask
+        mask="999.999.999-99"
+        placeholder="000.000.000-00"
+        id="cpf"
+        name="cpf"
+        required
+        formControlName="cpf"
+        class="custom-input-mask"
+      ></p-inputMask>
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <p-inputMask
+        mask="99/99/9999"
+        placeholder="dd/MM/yyyy"
+        slotChar="dd/MM/yyyy"
+        id="dataNascimento"
+        name="dataNascimento"
+        required
+        class="form-control"
+        formControlName="dataNascimento"
+        class="custom-input-mask"
+      ></p-inputMask>
+    </div>
+  </div>
+
+  <h1 style="margin-top: 15px">Informações de Login</h1>
   <label for="login">Login:</label>
-  <input type="text" id="login" name="login" required class="form-control" formControlName="login">
+  <input
+    type="text"
+    placeholder="user@gmail.com"
+    id="login"
+    name="login"
+    required
+    class="form-control"
+    formControlName="login"
+  />
+  <label for="password"> Senha:</label>
+  <div class="input-group" style="display: flex">
+    <input
+      type="{{ showPassword ? 'text' : 'password' }}"
+      id="password"
+      name="password"
+      required
+      class="form-control"
+      formControlName="password"
+    />
 
-  <label for="password">Senha:</label>
-  <input type="password" id="password" name="password" required class="form-control" formControlName="password">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="togglePasswordVisibility()"
+    >
+      <i class="pi pi-eye-slash" style="font-size: 15px"></i>
+    </button>
+  </div>
 
-  <button type="submit" class="btn btn-success mt-2" (click)="registrarUsuario()"><i class="bi bi-check"></i> Registrar</button>
+  <label for="password"> Confirme a Senha:</label>
+  <div class="input-group" style="display: flex">
+    <input
+      type="{{ showPassword2 ? 'text' : 'password' }}"
+      id="password"
+      name="password"
+      required
+      class="form-control"
+      formControlName="password"
+    />
+
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="togglePasswordVisibility2()"
+    >
+      <i class="pi pi-eye-slash" style="font-size: 15px"></i>
+    </button>
+  </div>
+  <button
+    type="submit"
+    [disabled]="!registerForm.valid"
+    class="btn btn-success mt-2"
+    (click)="registrarUsuario()"
+  >
+    <i class="bi bi-check"></i> Registrar
+  </button>
 </form>
+<p-toast position="bottom-right"></p-toast>

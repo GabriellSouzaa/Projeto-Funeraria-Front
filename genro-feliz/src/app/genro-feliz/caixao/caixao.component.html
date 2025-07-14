@@ -1,12 +1,12 @@
 <app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Caixão'"/>
 
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoCaixoes">
-  <p-progressSpinner 
-    
-    styleClass="w-8rem h-8rem" 
-    strokeWidth="8" 
-    fill="var(--surface-ground)" 
-    animationDuration=".5s" 
+  <p-progressSpinner
+
+    styleClass="w-8rem h-8rem"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".5s"
   />
 </div>
 <p-table #tabelaCaixao [value]="caixoes" [tableStyle]="{ 'min-width': '50rem' }"
@@ -22,11 +22,11 @@ currentPageReportTemplate="Total de Caixões: {totalRecords}">
         <p-inputIcon>
             <i class="bi bi-search"></i>
         </p-inputIcon>
-        <input 
-            pInputText 
-            type="text" 
+        <input
+            pInputText
+            type="text"
             style="width: 25%;"
-            (input)="tabelaCaixao.filterGlobal($any($event.target).value, 'contains')" 
+            (input)="tabelaCaixao.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Pesquisar por Material ou Modelo" />
     </p-iconField>
   </div>
@@ -65,7 +65,7 @@ currentPageReportTemplate="Total de Caixões: {totalRecords}">
 >
 Tem certeza que deseja excluir o Caixão?
 <ng-template pTemplate="footer">
-  <button class="btn btn-success text-white m-2" (click)="excluirCaixao()" [disabled]="carregandoExclusaoCaixoes"><i class="bi bi-check" *ngIf="!carregandoExclusaoCaixoes"></i> 
+  <button class="btn btn-success text-white m-2" (click)="excluirCaixao()" [disabled]="carregandoExclusaoCaixoes"><i class="bi bi-check" *ngIf="!carregandoExclusaoCaixoes"></i>
     <span *ngIf="carregandoExclusaoCaixoes" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 
     Confirmar</button>
@@ -77,7 +77,7 @@ Tem certeza que deseja excluir o Caixão?
   [visible]="visibleDialogCadastrarCaixao"
   [closable]="false"
   [style]="{width: '50vw', height: '400px'}"
-  [draggable]="false"	
+  [draggable]="false"
 >
   <form [formGroup]="formularioCadastrarCaixao" class="formulario-caixao">
     <input type="text" class="form-control" formControlName="material" placeholder="Material">
@@ -87,7 +87,7 @@ Tem certeza que deseja excluir o Caixão?
     <input type="number" class="form-control" formControlName="preco" placeholder="Preço">
   </form>
   <p-footer>
-    <button class="btn btn-success text-white m-2" (click)="cadastrarCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroCaixoes"><i *ngIf="!carregandoCadastroCaixoes" class="bi bi-check"></i> 
+    <button class="btn btn-success text-white m-2" (click)="cadastrarCaixao()" [disabled]="!formularioCadastrarCaixao.valid || carregandoCadastroCaixoes"><i *ngIf="!carregandoCadastroCaixoes" class="bi bi-check"></i>
       <span *ngIf="carregandoCadastroCaixoes" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Cadastrar</button>
     <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarCaixao()" [disabled]="carregandoCadastroCaixoes"><i class="bi bi-arrow-left"></i> Voltar</button>
@@ -108,7 +108,7 @@ Tem certeza que deseja excluir o Caixão?
     <input type="number" class="form-control" formControlName="preco" placeholder="Preço">
   </form>
   <p-footer>
-    <button class="btn btn-success text-white m-2" (click)="editarCaixao()" [disabled]="!formularioEditarCaixao.valid || carregandoEdicaoCaixoes"><i *ngIf="!carregandoEdicaoCaixoes" class="bi bi-check"></i> 
+    <button class="btn btn-success text-white m-2" (click)="editarCaixao()" [disabled]="!formularioEditarCaixao.valid || carregandoEdicaoCaixoes"><i *ngIf="!carregandoEdicaoCaixoes" class="bi bi-check"></i>
       <span *ngIf="carregandoEdicaoCaixoes" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 
       Editar</button>

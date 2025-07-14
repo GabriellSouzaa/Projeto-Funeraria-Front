@@ -1,25 +1,73 @@
-<mat-drawer-container class="side-nav-container" [ngClass]="{'opened': estaAberta, 'closed': !estaAberta}">
-  <img src="../../assets/sao_vicente_logo_sidenav.png" alt="logo da são vicente" class="logo-sao-vicente">
-  <button class="botao-side-nav" [routerLink]="['/pagina-inicial']">Tela Inicial</button>
-  <button class="botao-side-nav" [routerLink]="['/clientes']">Clientes</button>
-  <button class="botao-side-nav" [routerLink]="['/planos-funerarios']">Planos Funerarios</button>
-  <button class="botao-side-nav" [routerLink]="['/caixao']">Caixão</button>
-  <button class="botao-side-nav" [routerLink]="['/venda-de-caixao']">Venda de Caixão</button>
-  <button class="botao-side-nav" [routerLink]="['/beneficiarios']">Beneficiários</button>
-  <button class="botao-side-nav" [routerLink]="['/salas-de-velorio']">Salas de Velório</button>
-  <!--<button class="botao-side-nav" [routerLink]="['/falecimentos']">Falecimentos</button>!-->
-  <button class="botao-side-nav" [routerLink]="['/vendedores']">Vendedores</button>
-  <!--<button class="botao-side-nav" [routerLink]="['/comunicar-falecimento']">Comunicar Falecimento</button>!-->
-  <button class="botao-side-nav" [routerLink]="['/planos-de-saude']">Planos de Saúde</button>
-  <button class="botao-side-nav" [routerLink]="['/morte-de-paciente']">Morte de Paciente</button>
-  
-
-  <div class="info-funcionario">
-    <div class="imagem-funcionario">
-      <img src="../../assets/avatar_funcionario.png" alt="imagem do funcionário">
-    </div>
-    <div class="nome-funcionario">MATHEUS DE OLIVEIRA RODRIGUES SALEH
-      <div class="cargo-funcionario">Atendente</div>
-    </div>
+<div class="sidebar">
+  <div>
+    <ul>
+      <li class="logo">
+        <a [routerLink]="['/pagina-inicial']">
+          <span class="icone"><i class="pi pi-users"></i></span>
+          <span class="titulo">São Vicente Prever</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/clientes']">
+          <span class="icone"><i class="pi pi-users"></i></span>
+          <span class="titulo">Clientes</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/planos-funerarios']">
+          <span class="icone"><i class="pi pi-wallet"></i></span>
+          <span class="titulo">Planos Funerários</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/venda-de-caixao']">
+          <span class="icone"><i class="pi pi-dollar"></i></span>
+          <span class="titulo">Venda de Urnas</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/beneficiarios']">
+          <span class="icone"><i class="pi pi-gift"></i></span>
+          <span class="titulo">Beneficiários</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/salas-de-velorio']">
+          <span class="icone"><i class="pi pi-shop"></i></span>
+          <span class="titulo">Salas de Velório</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/vendedores']">
+          <span class="icone"><i class="pi pi-users"></i></span>
+          <span class="titulo">Vendedores</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/planos-de-saude']">
+          <span class="icone"><i class="pi pi-heart"></i></span>
+          <span class="titulo">Planos de Saúde</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/morte-de-paciente']">
+          <span class="icone"><i class="pi pi-heart-fill"></i></span>
+          <span class="titulo">Falecimento</span>
+        </a>
+      </li>
+      <div class="linha"></div>
+      <li>
+        <a [routerLink]="['/edit-user']">
+          <span class="icone"><i class="pi pi-users"></i></span>
+          <span class="titulo">Editar Usuario</span>
+        </a>
+      </li>
+      <li>
+        <a href="" (click)="deslogar()">
+          <span class="icone"><i class="pi pi-sign-out"></i></span>
+          <span class="titulo">Logout</span>
+        </a>
+      </li>
+    </ul>
   </div>
-</mat-drawer-container>
+</div>

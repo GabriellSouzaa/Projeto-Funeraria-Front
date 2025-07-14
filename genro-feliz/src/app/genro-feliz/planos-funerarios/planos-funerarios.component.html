@@ -1,185 +1,203 @@
-<app-breadcrumb [aplicacao]="'Gerenciador Funerária'" [subAplicacao]="'Planos Funerários'"/>
+<div class="componente" style="display: flex;">
+  <div style="height: 100%; background-color: #d3d3d3"> <app-side-nav ></app-side-nav></div>
+  <div class="dashboard">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoPlanosFunerarios">
+      <p-progressSpinner
 
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="carregandoPlanosFunerarios">
-  <p-progressSpinner 
-    
-    styleClass="w-8rem h-8rem" 
-    strokeWidth="8" 
-    fill="var(--surface-ground)" 
-    animationDuration=".5s" 
-  />
-</div>
-<p-table
-  #tabelaPlanosFunerarios
-  *ngIf="!carregandoPlanosFunerarios"
-  [value]="planosFunerarios"
-  [tableStyle]="{ 'min-width': '50rem' }"
-  [paginator]="true"
-  [rows]="5"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Total de Planos: {totalRecords}"
-  [globalFilterFields]="['clientNome']"
->
-  <ng-template pTemplate="caption">
-    <button class="btn btn-primary m-2" (click)="abrirDialogCadastrarPlanoFunerario()">
-      <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano
-    </button>
-    <button class="btn btn-info m-2" (click)="abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()">
-      <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano Para Clientes com Beneficiários
-    </button>
-    <div class="flex mt-3">
-      <p-iconField iconPosition="left" class="ml-auto">
-        <p-inputIcon>
-          <i class="bi bi-search"></i>
-            </p-inputIcon>
-        <input
-          pInputText
-          type="text"
-          (input)="tabelaPlanosFunerarios.filterGlobal($any($event.target).value, 'contains')"
-          placeholder="Pesquisar por Cliente">
-      </p-iconField>
+        styleClass="w-8rem h-8rem"
+        strokeWidth="8"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      />
+    </div>
+
+    <div class="wapper">
+      <div class="single-card">
+        <div class="button">
+          <button class="btn btn-primary " style="width: 35%; height: 25%" (click)="abrirDialogCadastrarPlanoFunerario()">
+            <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano
+          </button>
+          <button class="btn btn-primary " style="width: 75%; height: 25%" (click)="abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()">
+            <i class="bi bi-plus-circle"></i> Cadastrar Novo Plano Para Clientes com Beneficiários
+          </button>
+        </div>
       </div>
+    </div>
+    <div class="wapper">
+      <div class="single-card-table">
+      <p-table
+      #tabelaPlanosFunerarios
+      *ngIf="!carregandoPlanosFunerarios"
+      [value]="planosFunerarios"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [rows]="4"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Total de Planos: {totalRecords}"
+      [globalFilterFields]="['clientNome']"
+    >
+      <ng-template pTemplate="caption">
+
+        <div class="flex mt-3">
+          <p-iconField iconPosition="left" class="ml-auto">
+            <p-inputIcon>
+              <i class="bi bi-search"></i>
+                </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              (input)="tabelaPlanosFunerarios.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Pesquisar por Cliente">
+          </p-iconField>
+          </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+        <tr>
+          <th>Data Envio</th>
+          <th pSortableColumn="valor" style="width:20%">Valor (R$)<p-sortIcon field="valor" /></th>
+          <th pSortableColumn="clientNome" style="width:20%">Cliente<p-sortIcon field="clientNome" /></th>
+          <th>Ações</th>
+        </tr>
       </ng-template>
-      <ng-template pTemplate="header">
-    <tr>
-      <th>Data Envio</th>
-      <th pSortableColumn="valor" style="width:20%">Valor (R$)<p-sortIcon field="valor" /></th>
-      <th pSortableColumn="clientNome" style="width:20%">Cliente<p-sortIcon field="clientNome" /></th>
-      <th>Ações</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-plano>
-    <tr>
-      <td>{{ plano.dataEnvio }}</td>
-      <td>{{ plano.valor }}</td>
-      <td>{{ plano.clientNome }}</td>
-      <td>
-        <button class="btn btn-warning text-white m-2" pTooltip="Editar Plano Funerário" tooltipPosition="bottom" (click)="abrirDialogEditarPlanoFunerario(plano)"><i class="bi bi-pen-fill"></i></button>
-        <button class="btn btn-danger m-2" (click)="abrirDialogExcluirPlanoFunerario(plano)" pTooltip="Excluir Plano Funerário" 
-        tooltipPosition="bottom" ><i class="bi bi-trash-fill"></i></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+      <ng-template pTemplate="body" let-plano>
+        <tr>
+          <td>{{ plano.dataEnvio }}</td>
+          <td>{{ plano.valor }}</td>
+          <td>{{ plano.clientNome }}</td>
+          <td>
+            <button class="btn btn-warning text-white m-2" pTooltip="Editar Plano Funerário" tooltipPosition="bottom" (click)="abrirDialogEditarPlanoFunerario(plano)"><i class="bi bi-pen-fill"></i></button>
+            <button class="btn btn-danger m-2" (click)="abrirDialogExcluirPlanoFunerario(plano)" pTooltip="Excluir Plano Funerário"
+            tooltipPosition="bottom" ><i class="bi bi-trash-fill"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+    </div>
 
-<p-dialog
-  [visible]="visibleDialogExcluirPlanoFunerario"
-  [closable]="false"
-  [draggable]="false"
-  [blockScroll]="true"
->
-Tem certeza que deseja excluir este plano funerario?
-<ng-template pTemplate="footer">
-  <button class="btn btn-success m-2" (click)="excluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoFunerario"></i> 
-    <span *ngIf="carregandoExclusaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Voltar</button>
-</ng-template>
-</p-dialog>
 
-<p-dialog
-  [visible]="visibleDialogCadastrarPlanoFunerario"
-  [closable]="false"
-  [style]="{ width: '50vw', height: '300px' }"
-  [draggable]="false"
-  [blockScroll]="true"
->
-<form  [formGroup]="planoFunerarioParaCadastrarForm"> 
-  <div class="form-group row">
-    <label for="valor" class="col-sm-2 col-form-label">Valor</label>
-    <div class="col-sm-10">
-      <input type="text"  class="form-control" id="valor" placeholder="Valor" formControlName="valor">
-    </div>
-  </div>
-  <div class="form-group row mt-2">
-    <label for="dataPagamento" class="col-sm-2 col-form-label">Data Pagamento</label>
-    <div class="col-sm-10">
-      <p-inputMask mask="9999-99-99" formControlName="dataPagamento" placeholder="Data Pagamento" [style]="{'width': '100%'}"></p-inputMask>
-    </div>
-  </div>
-  <div class="form-group row ">
-    <label for="nomeCliente" class="col-sm-2 col-form-label">Nome do Cliente</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do Cliente" formControlName="nomeCliente">
-    </div>
-  </div>
-</form>
-<ng-template pTemplate="footer">
-  <button class="btn btn-primary m-2" (click)="salvarPlanoFunerario()" [disabled]="!planoFunerarioParaCadastrarForm.valid || carregandoCadastroPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoCadastroPlanoFunerario"></i> 
-    <span *ngIf="carregandoCadastroPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Salvar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerario()" [disabled]="carregandoCadastroPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
-</ng-template>
-</p-dialog>
+    <p-dialog
+      [visible]="visibleDialogExcluirPlanoFunerario"
+      [closable]="false"
+      [draggable]="false"
+      [blockScroll]="true"
+    >
+    Tem certeza que deseja excluir este plano funerario?
+    <ng-template pTemplate="footer">
+      <button class="btn btn-success m-2" (click)="excluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoFunerario"></i>
+        <span *ngIf="carregandoExclusaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Confirmar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoFunerario()" [disabled]="carregandoExclusaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Voltar</button>
+    </ng-template>
+    </p-dialog>
 
-<p-dialog
-  [visible]="visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios"
-  [closable]="false"
-  [style]="{ width: '50vw', height: '600px' }"	
-  [draggable]="false"
-  [blockScroll]="true"
->
-<form >
-  <div class="form-group row">
-    <label for="valorBeneficiario" class="col-sm-2 col-form-label">Valor Beneficiário</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="valorBeneficiario" placeholder="Valor Beneficiário" >
+    <p-dialog
+      [visible]="visibleDialogCadastrarPlanoFunerario"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '300px' }"
+      [draggable]="false"
+      [blockScroll]="true"
+    >
+    <form  [formGroup]="planoFunerarioParaCadastrarForm">
+      <div class="form-group row">
+        <label for="valor" class="col-sm-2 col-form-label">Valor</label>
+        <div class="col-sm-10">
+          <input type="text"  class="form-control" id="valor" placeholder="Valor" formControlName="valor">
+        </div>
+      </div>
+      <div class="form-group row mt-2">
+        <label for="dataPagamento" class="col-sm-2 col-form-label">Data Pagamento</label>
+        <div class="col-sm-10">
+          <p-inputMask mask="9999-99-99" formControlName="dataPagamento" placeholder="Data Pagamento" [style]="{'width': '100%'}"></p-inputMask>
+        </div>
+      </div>
+      <div class="form-group row ">
+        <label for="nomeCliente" class="col-sm-2 col-form-label">Nome do Cliente</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do Cliente" formControlName="nomeCliente">
+        </div>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button class="btn btn-primary m-2" (click)="salvarPlanoFunerario()" [disabled]="!planoFunerarioParaCadastrarForm.valid || carregandoCadastroPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoCadastroPlanoFunerario"></i>
+        <span *ngIf="carregandoCadastroPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Salvar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerario()" [disabled]="carregandoCadastroPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
+    </ng-template>
+    </p-dialog>
+
+    <p-dialog
+      [visible]="visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '600px' }"
+      [draggable]="false"
+      [blockScroll]="true"
+    >
+    <form >
+      <div class="form-group row">
+        <label for="valorBeneficiario" class="col-sm-2 col-form-label">Valor Beneficiário</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="valorBeneficiario" placeholder="Valor Beneficiário" >
+        </div>
+      </div>
+      <div class="form-group row mt-2">
+        <label for="dataPagamentoBeneficiario" class="col-sm-2 col-form-label">Data Pagamento Beneficiário</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="dataPagamentoBeneficiario" placeholder="Data Pagamento Beneficiário" >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nomeClienteBeneficiario" class="col-sm-2 col-form-label">Nome do Cliente Beneficiário</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="nomeClienteBeneficiario" placeholder="Nome do Cliente Beneficiário" >
+        </div>
+      </div>
+    </form>
+    <div class="mt-4">
+      <div><button class="btn btn-dark">Adicionar Beneficiário</button></div>
+      <b>Beneficiários: </b>
     </div>
+    <ng-template pTemplate="footer">
+      <button class="btn btn-primary m-2"><i class="bi bi-check"></i> Salvar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()"><i class="bi bi-arrow-left"></i> Cancelar</button>
+    </ng-template>
+    </p-dialog>
+
+    <p-dialog
+      [visible]="visibleDialogEditarPlanoFunerario"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '300px' }"
+      [draggable]="false"
+      [blockScroll]="true"
+      >
+      <div>
+        <div class="form-group row">
+          <label for="valorEditar" class="col-sm-2 col-form-label">Valor</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="valorEditar" placeholder="Valor" [(ngModel)]="planoFunerarioParaEditar.valor">
+          </div>
+        </div>
+        <div class="form-group row mt-2">
+          <label for="dataPagamentoEditar" class="col-sm-2 col-form-label">Data Envio</label>
+          <div class="col-sm-10 mb-2">
+            <input type="text" class="form-control" id="dataPagamentoEditar" placeholder="Data Pagamento" [(ngModel)]="planoFunerarioParaEditar.dataEnvio">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="nomeClienteEditar" class="col-sm-2 col-form-label">Nome do Cliente</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="nomeClienteEditar" placeholder="Nome do Cliente" [(ngModel)]="planoFunerarioParaEditar.clientNome">
+          </div>
+        </div>
+      </div>
+    <p-footer>
+      <button class="btn btn-primary m-2" (click)="editarPlanoFunerario()" [disabled]="(!planoFunerarioParaEditar.valor || !planoFunerarioParaEditar.dataEnvio || !planoFunerarioParaEditar.clientNome) || carregandoEdicaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoEdicaoPlanoFunerario"></i>
+        <span *ngIf="carregandoEdicaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Salvar</button>
+      <button class="btn btn-danger m-2" (click)="fecharDialogEditarPlanoFunerario()" [disabled]="carregandoEdicaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
+    </p-footer>
+    </p-dialog>
+
   </div>
-  <div class="form-group row mt-2">
-    <label for="dataPagamentoBeneficiario" class="col-sm-2 col-form-label">Data Pagamento Beneficiário</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="dataPagamentoBeneficiario" placeholder="Data Pagamento Beneficiário" >
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="nomeClienteBeneficiario" class="col-sm-2 col-form-label">Nome do Cliente Beneficiário</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="nomeClienteBeneficiario" placeholder="Nome do Cliente Beneficiário" >
-    </div>
-  </div>
-</form>
-<div class="mt-4">
-  <div><button class="btn btn-dark">Adicionar Beneficiário</button></div>
-  <b>Beneficiários: </b>
 </div>
-<ng-template pTemplate="footer">
-  <button class="btn btn-primary m-2"><i class="bi bi-check"></i> Salvar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios()"><i class="bi bi-arrow-left"></i> Cancelar</button>
-</ng-template>
-</p-dialog>
 
-<p-dialog
-  [visible]="visibleDialogEditarPlanoFunerario"
-  [closable]="false"
-  [style]="{ width: '50vw', height: '300px' }"
-  [draggable]="false"
-  [blockScroll]="true"
-  >
-  <div>
-    <div class="form-group row">
-      <label for="valorEditar" class="col-sm-2 col-form-label">Valor</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="valorEditar" placeholder="Valor" [(ngModel)]="planoFunerarioParaEditar.valor">
-      </div>
-    </div>
-    <div class="form-group row mt-2">
-      <label for="dataPagamentoEditar" class="col-sm-2 col-form-label">Data Envio</label>
-      <div class="col-sm-10 mb-2">
-        <input type="text" class="form-control" id="dataPagamentoEditar" placeholder="Data Pagamento" [(ngModel)]="planoFunerarioParaEditar.dataEnvio">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="nomeClienteEditar" class="col-sm-2 col-form-label">Nome do Cliente</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="nomeClienteEditar" placeholder="Nome do Cliente" [(ngModel)]="planoFunerarioParaEditar.clientNome">
-      </div>
-    </div>
-  </div>
-<p-footer>
-  <button class="btn btn-primary m-2" (click)="editarPlanoFunerario()" [disabled]="(!planoFunerarioParaEditar.valor || !planoFunerarioParaEditar.dataEnvio || !planoFunerarioParaEditar.clientNome) || carregandoEdicaoPlanoFunerario"><i class="bi bi-check" *ngIf="!carregandoEdicaoPlanoFunerario"></i>
-    <span *ngIf="carregandoEdicaoPlanoFunerario" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Salvar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogEditarPlanoFunerario()" [disabled]="carregandoEdicaoPlanoFunerario"><i class="bi bi-arrow-left"></i> Cancelar</button>
-</p-footer>
-</p-dialog>

@@ -1,8 +1,9 @@
-<app-breadcrumb
-  [aplicacao]="'Gerenciador Funerária'"
-  [subAplicacao]="'Plano de Saúde'"
-/>
-<div
+<div class="componente" style="display: flex">
+  <div style="height: 100%; background-color: #d3d3d3">
+    <app-side-nav></app-side-nav>
+  </div>
+  <div class="dashboard">
+    <div
   class="d-flex justify-content-center align-items-center"
   style="height: 100vh"
   *ngIf="carregandoPlanosDeSaude"
@@ -14,22 +15,42 @@
     animationDuration=".5s"
   />
 </div>
-<p-table
+
+<div class="wapper">
+  <div class="single-card">
+    <div class="button">
+      <button
+      class="btn btn-primary" style="width: 100%;"
+      (click)="abrirDialogAdicionarPlanoDeSaude()"
+    >
+      <i class="bi bi-plus"></i> Adicionar plano de saúde
+    </button>
+    </div>
+  </div>
+  <div class="single-card">
+    <div class="button">
+      <button class="btn btn-primary" style="width: 100%;"
+       (click)="chat(message)">Enviar Mensagem</button>
+      <button>
+        <input type="text" [(ngModel)]="message">
+    </button>
+    </div>
+  </div>
+</div>
+
+<div class="wapper">
+  <div class="single-card-table">
+    <p-table
   [value]="planosDeSaude"
   [paginator]="true"
-  [rows]="5"
+  [rows]="4"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Total de Planos de Saúde: {totalRecords}"
   [globalFilterFields]="['descricao', 'telefone']"
   *ngIf="!carregandoPlanosDeSaude"
 >
   <ng-template pTemplate="caption">
-    <button
-      class="btn btn-primary"
-      (click)="abrirDialogAdicionarPlanoDeSaude()"
-    >
-      <i class="bi bi-plus"></i> Adicionar plano de saúde
-    </button>
+
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -55,6 +76,9 @@
     </tr>
   </ng-template>
 </p-table>
+  </div>
+</div>
+
 
 <p-dialog
   [visible]="visibleDialogAdicionarPlanoDeSaude"
@@ -195,10 +219,13 @@
 >
 Tem certeza que deseja excluir o Plano de Saude?
 <ng-template pTemplate="footer">
-  <button class="btn btn-success text-white m-2" (click)="excluirPlanoDeSaude()" [disabled]="carregandoExclusaoPlanoDeSaude"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoDeSaude"></i> 
+  <button class="btn btn-success text-white m-2" (click)="excluirPlanoDeSaude()" [disabled]="carregandoExclusaoPlanoDeSaude"><i class="bi bi-check" *ngIf="!carregandoExclusaoPlanoDeSaude"></i>
     <span *ngIf="carregandoExclusaoPlanoDeSaude" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 
     Confirmar</button>
   <button class="btn btn-danger m-2" (click)="fecharDialogExcluirPlanoDeSaude()" [disabled]="carregandoExclusaoPlanoDeSaude"><i class="bi bi-arrow-left"></i> Voltar</button>
 </ng-template>
 </p-dialog>
+
+  </div>
+  <p-toast position="bottom-right"></p-toast>

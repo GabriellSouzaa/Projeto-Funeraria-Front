@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { Cliente } from './../models/Cliente.model';
+import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cliente } from '../models/Cliente.model';
-import { ClientRequest } from '../models/ClientRequest.model';
 import { Beneficiarios } from '../models/Beneficiarios.model';
 import { Desconto } from '../models/Desconto.model';
 
@@ -19,8 +18,13 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.apiUrl}`);
   }
 
-  public cadastrarCliente(cliente: ClientRequest): Observable<Cliente>{
-    return this.http.post<Cliente>(`${this.apiUrl}/create`, cliente);
+  public cadastrarCliente(formData: FormData): Observable<Cliente> {
+
+    return this.http.post<Cliente>(`${this.apiUrl}/create`, formData, {
+      headers: new HttpHeaders ({
+
+      })
+    });
   }
 
   public editarCliente(cliente: Cliente): Observable<Cliente>{

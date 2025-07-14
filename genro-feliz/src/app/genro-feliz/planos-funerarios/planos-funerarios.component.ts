@@ -13,6 +13,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { SideNavComponent } from '../side-nav/side-nav.component';
 
 @Component({
   selector: 'app-planos-funerarios',
@@ -29,7 +30,8 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
     InputIconModule,
     InputTextModule,
     InputMaskModule,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    SideNavComponent
   ],
   templateUrl: './planos-funerarios.component.html',
   styleUrl: './planos-funerarios.component.css',

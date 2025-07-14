@@ -14,17 +14,40 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VendedorForm } from '../forms/Vendedor.form';
 import { atribuirFormVendedor } from '../forms/EditarVendedor.form';
 import { VendasDeVendedorService } from '../shared/services/vendas-de-vendedor.service';
+import { SideNavComponent } from '../side-nav/side-nav.component';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-vendedores',
   standalone: true,
-  imports: [TableModule, ProgressSpinnerModule, BreadcrumbComponent, NgIf, InputIconModule, IconFieldModule, TooltipModule, InputTextModule, DialogModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    TableModule,
+    SideNavComponent,
+    ToastModule,
+    MessagesModule,
+    ProgressSpinnerModule,
+    BreadcrumbComponent,
+    NgIf,
+    InputIconModule,
+    IconFieldModule,
+    TooltipModule,
+    InputTextModule,
+    DialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './vendedores.component.html',
-  styleUrl: './vendedores.component.css'
+  providers: [MessageService],
+  styleUrl: './vendedores.component.css',
 })
 export class VendedoresComponent {
-
-  constructor(private vendedoresService: VendedoresService, private vendasDeVendedorService: VendasDeVendedorService){}
+  constructor(
+    private vendedoresService: VendedoresService,
+    private messageService: MessageService,
+    private vendasDeVendedorService: VendasDeVendedorService
+  ) {}
 
   public vendedores: Vendedor[] = [];
 
@@ -52,89 +75,139 @@ export class VendedoresComponent {
 
   public carregandoRelatorioMensalDeVendasPorVendedor: boolean = false;
 
-  ngOnInit(){
+  ngOnInit() {
     this.listarVendedores();
     this.formularioAdicionarVendedor = VendedorForm;
     this.formularioEditarVendedor = VendedorForm;
   }
 
-  public listarVendedores(): void{
+  public listarVendedores(): void {
     this.carregandoVendedores = true;
-    this.vendedoresService.listarVendedores().subscribe(vendedores => {
+    this.vendedoresService.listarVendedores().subscribe((vendedores) => {
       this.vendedores = vendedores;
       this.carregandoVendedores = false;
     });
   }
 
-  public abrirDialogAdicionarVendedor(): void{
+  public abrirDialogAdicionarVendedor(): void {
     this.visibleDialogAdicionarVendedor = true;
   }
 
-  public fecharDialogAdicionarVendedor(): void{
+  public fecharDialogAdicionarVendedor(): void {
     this.visibleDialogAdicionarVendedor = false;
   }
 
-  public abrirDialogEditarVendedor(vendedor: Vendedor): void{
+  public abrirDialogEditarVendedor(vendedor: Vendedor): void {
     this.visibleDialogEditarVendedor = true;
     this.vendedorSelecionadoParaEditar = vendedor;
     atribuirFormVendedor(this.formularioEditarVendedor, vendedor);
-  }	
+  }
 
-  public fecharDialogEditarVendedor(): void{
+  public fecharDialogEditarVendedor(): void {
     this.visibleDialogEditarVendedor = false;
   }
 
-  public abrirDialogExcluirVendedor(vendedor: Vendedor): void{
+  public abrirDialogExcluirVendedor(vendedor: Vendedor): void {
     this.visibleDialogExcluirVendedor = true;
     this.vendedorSelecionadoParaExcluir = vendedor;
   }
 
-  public fecharDialogExcluirVendedor(): void{
+  public fecharDialogExcluirVendedor(): void {
     this.visibleDialogExcluirVendedor = false;
   }
 
-  public cadastrarVendedor(): void{
+  public cadastrarVendedor(): void {
     this.carregandoCadastroVendedores = true;
-    this.vendedoresService.criarVendedor(this.formularioAdicionarVendedor.value).subscribe(() => {
-      this.listarVendedores();
-      this.visibleDialogAdicionarVendedor = false;
-      this.carregandoCadastroVendedores = false;
-    });
-  }
-
-  public editarVendedor(): void{
-    this.carregandoEdicaoVendedores = true;
-    if(this.vendedorSelecionadoParaEditar.id){
-      this.vendedoresService.atualizarVendedor(this.formularioEditarVendedor.value, this.vendedorSelecionadoParaEditar.id).subscribe(() => {
-        this.listarVendedores();
-        this.visibleDialogEditarVendedor = false;
-        this.carregandoEdicaoVendedores = false;
+    this.vendedoresService
+      .criarVendedor(this.formularioAdicionarVendedor.value)
+      .subscribe({
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            detail: 'Erro ao cadastrar Vendedor',
+          });
+          this.listarVendedores();
+          this.visibleDialogAdicionarVendedor = false;
+          this.carregandoCadastroVendedores = false;
+        },
+        next: () => {
+          this.listarVendedores();
+          this.visibleDialogAdicionarVendedor = false;
+          this.carregandoCadastroVendedores = false;
+          this.messageService.add({
+            severity: 'success',
+            detail: 'Vendedor cadastrado com Sucesso',
+          });
+        },
       });
+  }
+
+  public editarVendedor(): void {
+    this.carregandoEdicaoVendedores = true;
+    if (this.vendedorSelecionadoParaEditar.id) {
+      this.vendedoresService
+        .atualizarVendedor(
+          this.formularioEditarVendedor.value,
+          this.vendedorSelecionadoParaEditar.id
+        )
+        .subscribe({
+          error: () => {
+            this.messageService.add({
+              severity: 'error',
+              detail: 'Erro ao editar Vendedor',
+            });
+            this.listarVendedores();
+            this.visibleDialogEditarVendedor = false;
+            this.carregandoEdicaoVendedores = false;
+          },
+          next: () => {
+            this.listarVendedores();
+            this.visibleDialogEditarVendedor = false;
+            this.carregandoEdicaoVendedores = false;
+            this.messageService.add({
+              severity: 'success',
+              detail: 'Vendedor editado com Sucesso',
+            });
+          },
+        });
     }
   }
 
-  public excluirVendedor(): void{
+  public excluirVendedor(): void {
     this.carregandoExclusaoVendedores = true;
-    if(this.vendedorSelecionadoParaExcluir.id){
-      this.vendedoresService.deletarVendedor(this.vendedorSelecionadoParaExcluir.id).subscribe(() => {
-        this.listarVendedores();
-        this.visibleDialogExcluirVendedor = false;
-        this.carregandoExclusaoVendedores = false;
-      }, 
-    () => {
-      this.listarVendedores();
-      this.carregandoExclusaoVendedores = false;
-    }
-    );
+    if (this.vendedorSelecionadoParaExcluir.id) {
+      this.vendedoresService
+        .deletarVendedor(this.vendedorSelecionadoParaExcluir.id)
+        .subscribe({
+          error: () => {
+            this.messageService.add({
+              severity: 'error',
+              detail: 'Erro ao excluir Vendedor',
+            });
+            this.listarVendedores();
+            this.carregandoExclusaoVendedores = false;
+          },
+          next: () => {
+            this.listarVendedores();
+            this.visibleDialogExcluirVendedor = false;
+            this.carregandoExclusaoVendedores = false;
+            this.messageService.add({
+              severity: 'success',
+              detail: 'Vendedor excluido com Sucesso',
+            });
+          },
+        });
     }
   }
 
-  public obterRelatorioMensalDeVendasPorVendedor(): void{
+  public obterRelatorioMensalDeVendasPorVendedor(): void {
     this.carregandoRelatorioMensalDeVendasPorVendedor = true;
-    this.vendasDeVendedorService.obterRelatorioMensalDeVendasPorVendedor().subscribe((relatorio: any) => {
-      const url = window.URL.createObjectURL(relatorio);
-      window.open(url);
-      this.carregandoRelatorioMensalDeVendasPorVendedor = false;
-    });
+    this.vendasDeVendedorService
+      .obterRelatorioMensalDeVendasPorVendedor()
+      .subscribe((relatorio: any) => {
+        const url = window.URL.createObjectURL(relatorio);
+        window.open(url);
+        this.carregandoRelatorioMensalDeVendasPorVendedor = false;
+      });
   }
 }

@@ -1,147 +1,295 @@
-<app-breadcrumb
-  [aplicacao]="'Gerenciador Funerária'"
-  [subAplicacao]="'Venda de Caixão'"
-/>
-<div
-  class="d-flex justify-content-center align-items-center"
-  style="height: 100vh"
-  *ngIf="carregandoListasDeCaixao"
->
-  <p-progressSpinner
-    styleClass="w-8rem h-8rem"
-    strokeWidth="8"
-    fill="var(--surface-ground)"
-    animationDuration=".5s"
-  />
-</div>
-
-<p-table
-  #tabelaVendasDeCaixao
-  [value]="vendasDeCaixao"
-  [tableStyle]="{ 'min-width': '50rem' }"
-  *ngIf="!carregandoListasDeCaixao"
-  [paginator]="true"
-  [rows]="5"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Total de Vendas de Caixão: {totalRecords}"
-  [globalFilterFields]="['nomeVendedor', 'modeloCaixao']"
->
-  <ng-template pTemplate="caption">
-    <button class="btn btn-primary m-2" (click)="abrirDialogCadastroVendaCaixao()">
-      <i class="bi bi-plus"></i> Cadastrar Venda de Caixão
-    </button>
-    <button class="btn btn-warning text-white m-2" (click)="obterRelatorioDeVendasDeCaixao()" [disabled]="carregandoRelatorioMensalDeVendasDeCaixao">
-      <i class="bi bi-file-bar-graph" *ngIf="!carregandoRelatorioMensalDeVendasDeCaixao"></i> 
-      <span *ngIf="carregandoRelatorioMensalDeVendasDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Gerar Relatório de Venda Mensal de Caixão
-    </button>
-    <div class="flex mt-3">
-      <p-iconField iconPosition="left" class="ml-auto">
-        <p-inputIcon>
-          <i class="bi bi-search"></i>
-        </p-inputIcon>
-        <input
-          pInputText
-          style="width: 30%;"
-          type="text"
-          (input)="
-            tabelaVendasDeCaixao.filterGlobal(
-              $any($event.target).value,
-              'contains'
-            )
-          "
-          placeholder="Pesquisar por Vendedor ou Modelo de Caixão"
-        />
-      </p-iconField>
+<div class="componente" style="display: flex">
+  <div style="height: 100%; background-color: #d3d3d3">
+    <app-side-nav></app-side-nav>
+  </div>
+  <div class="dashboard">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="height: 100vh"
+      *ngIf="carregandoListasDeCaixao"
+    >
+      <p-progressSpinner
+        styleClass="w-8rem h-8rem"
+        strokeWidth="8"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      />
     </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="nomeVendedor" style="width: 20%">
-        Nome do Vendedor <p-sortIcon field="nomeVendedor" />
-      </th>
-      <th pSortableColumn="modeloCaixao">
-        Modelo do Caixão<p-sortIcon field="modeloCaixao" />
-      </th>
-      <th>Data da Venda</th>
-      <th>Ações</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-venda>
-    <tr>
-      <td>{{ venda.nomeVendedor }}</td>
-      <td>{{ venda.modeloCaixao }}</td>
-      <td>{{ venda.dataVenda }}</td>
-      <td>
-        <button class="btn btn-warning text-white m-2" pTooltip="Editar Venda de Caixão" (click)="abrirDialogEditarVendaCaixao(venda)">
-          <i class="bi bi-pencil"></i>
+    <div class="wapper">
+      <div class="single-card">
+        <div class="button">
+          <button
+            class="btn btn-primary"
+            style="width: 43%; height: 25%"
+            (click)="abrirDialogCadastroVendaCaixao()"
+          >
+            <i class="bi bi-plus"></i> Cadastrar Venda de Caixão
+          </button>
+          <button
+            class="btn btn-primary text-white"
+            style="width: 65%; height: 25%"
+            (click)="obterRelatorioDeVendasDeCaixao()"
+            [disabled]="carregandoRelatorioMensalDeVendasDeCaixao"
+          >
+            <i
+              class="bi bi-file-bar-graph"
+              *ngIf="!carregandoRelatorioMensalDeVendasDeCaixao"
+            ></i>
+            <span
+              *ngIf="carregandoRelatorioMensalDeVendasDeCaixao"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Gerar Relatório de Venda Mensal de Caixão
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wapper">
+      <div class="single-card-table">
+        <p-table
+          #tabelaVendasDeCaixao
+          [value]="vendasDeCaixao"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          *ngIf="!carregandoListasDeCaixao"
+          [paginator]="true"
+          [rows]="4"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Total de Vendas de Caixão: {totalRecords}"
+          [globalFilterFields]="['nomeVendedor', 'modeloCaixao']"
+        >
+          <ng-template pTemplate="caption">
+            <div class="flex mt-3">
+              <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                  <i class="bi bi-search"></i>
+                </p-inputIcon>
+                <input
+                  pInputText
+                  style="width: 30%"
+                  type="text"
+                  (input)="
+                    tabelaVendasDeCaixao.filterGlobal(
+                      $any($event.target).value,
+                      'contains'
+                    )
+                  "
+                  placeholder="Pesquisar por Vendedor ou Modelo de Caixão"
+                />
+              </p-iconField>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="nomeVendedor" style="width: 20%">
+                Nome do Vendedor <p-sortIcon field="nomeVendedor" />
+              </th>
+              <th pSortableColumn="modeloCaixao">
+                Modelo do Caixão<p-sortIcon field="modeloCaixao" />
+              </th>
+              <th>Data da Venda</th>
+              <th>Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-venda>
+            <tr>
+              <td>{{ venda.nomeVendedor }}</td>
+              <td>{{ venda.modeloCaixao }}</td>
+              <td>{{ venda.dataVenda }}</td>
+              <td>
+                <button
+                  class="btn btn-warning text-white m-2"
+                  pTooltip="Editar Venda de Caixão"
+                  (click)="abrirDialogEditarVendaCaixao(venda)"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  class="btn btn-danger text-white m-2"
+                  pTooltip="Excluir Venda de Caixão"
+                  (click)="abrirDialogExcluirVendaCaixao(venda)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <p-dialog
+      [visible]="visibleDialogCadastroVendaCaixao"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '610px' }"
+      [draggable]="false"
+    >
+      <p-header> Cadastrar Venda de Caixão </p-header>
+      <div>
+        <div class="form-group">
+          <p-dropdown
+            [options]="clientes"
+            [(ngModel)]="formularioCadastrarVendaDeCaixao.client"
+            optionLabel="nome"
+            placeholder="Selecione um Cliente"
+            [style]="{ width: '100%', 'margin-bottom': '10px' }"
+            [filter]="true"
+            filterBy="nome"
+          ></p-dropdown>
+        </div>
+        <div class="form-group">
+          <p-dropdown
+            [options]="vendedores"
+            [(ngModel)]="formularioCadastrarVendaDeCaixao.seller"
+            optionLabel="nome"
+            placeholder="Selecione um Vendedor"
+            [style]="{ width: '100%', 'margin-bottom': '10px' }"
+            [filter]="true"
+            filterBy="nome"
+          ></p-dropdown>
+        </div>
+        <div class="form-group">
+          <p-dropdown
+            [options]="caixoes"
+            [(ngModel)]="formularioCadastrarVendaDeCaixao.coffin"
+            optionLabel="modelo"
+            placeholder="Selecione um Caixão"
+            [style]="{ width: '100%', 'margin-bottom': '10px' }"
+            [filter]="true"
+            filterBy="modelo"
+          ></p-dropdown>
+        </div>
+        <div>
+          <input
+            pInputText
+            [(ngModel)]="formularioCadastrarVendaDeCaixao.dataVenda"
+            placeholder="Data da Venda"
+            class="w-100 mt-2"
+          />
+        </div>
+      </div>
+      <p-footer>
+        <button
+          class="btn btn-success m-2"
+          (click)="cadastrarVendaDeCaixao()"
+          [disabled]="carregandoCadastroDeCaixao"
+        >
+          <i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i>
+          <span
+            *ngIf="carregandoCadastroDeCaixao"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Confirmar
         </button>
-        <button class="btn btn-danger text-white m-2" pTooltip="Excluir Venda de Caixão" (click)="abrirDialogExcluirVendaCaixao(venda)">
-          <i class="bi bi-trash"></i>
+        <button
+          class="btn btn-danger m-2"
+          (click)="fecharDialogCadastroVendaCaixao()"
+          [disabled]="carregandoCadastroDeCaixao"
+        >
+          <i class="bi bi-arrow-left"></i> Voltar
         </button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+      </p-footer>
+    </p-dialog>
 
-<p-dialog [visible]="visibleDialogCadastroVendaCaixao" [closable]="false" [style]="{width: '50vw', height: '610px'}" [draggable]="false">
-<p-header>
-  Cadastrar Venda de Caixão
-</p-header>
-<div>
-  <div class="form-group">
-    <p-dropdown [options]="clientes" [(ngModel)]="formularioCadastrarVendaDeCaixao.client" optionLabel="nome" placeholder="Selecione um Cliente" [style]="{'width': '100%', 'margin-bottom': '10px'}" [filter]="true" filterBy="nome"></p-dropdown>
-  </div>
-  <div class="form-group" >
-    <p-dropdown [options]="vendedores" [(ngModel)]="formularioCadastrarVendaDeCaixao.seller" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="nome"></p-dropdown>
-  </div>
-  <div class="form-group" >
-    <p-dropdown [options]="caixoes" [(ngModel)]="formularioCadastrarVendaDeCaixao.coffin" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}" [filter]="true" filterBy="modelo"></p-dropdown>
-  </div>
-  <div>
-    <input pInputText [(ngModel)]="formularioCadastrarVendaDeCaixao.dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
+    <p-dialog
+      [visible]="visibleDialogEditarVendaCaixao"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '610px' }"
+      [draggable]="false"
+    >
+      <p-header> Editar Venda de Caixão </p-header>
+      <div>
+        <div class="form-group">
+          <p-dropdown
+            [options]="vendedores"
+            [(ngModel)]="vendedorSelecionadoPelaEditar"
+            optionLabel="nome"
+            placeholder="Selecione um Vendedor"
+            [style]="{ width: '100%', 'margin-bottom': '10px' }"
+            [filter]="true"
+            filterBy="nome"
+          ></p-dropdown>
+        </div>
+        <div class="form-group">
+          <p-dropdown
+            [options]="caixoes"
+            [(ngModel)]="caixaoSelecionadoPelaEditar"
+            optionLabel="modelo"
+            placeholder="Selecione um Caixão"
+            [style]="{ width: '100%', 'margin-bottom': '10px' }"
+            [filter]="true"
+            filterBy="modelo"
+          ></p-dropdown>
+        </div>
+        <div [formGroup]="formularioEditarCaixao">
+          <input
+            pInputText
+            formControlName="dataVenda"
+            placeholder="Data da Venda"
+            class="w-100 mt-2"
+          />
+        </div>
+      </div>
+      <p-footer>
+        <button
+          class="btn btn-success m-2"
+          (click)="editarVendaDeCaixao()"
+          [disabled]="carregandoEdicaoDeVendaDeCaixao"
+        >
+          <i class="bi bi-check" *ngIf="!carregandoEdicaoDeVendaDeCaixao"></i>
+          <span
+            *ngIf="carregandoEdicaoDeVendaDeCaixao"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Confirmar
+        </button>
+        <button
+          class="btn btn-danger m-2"
+          (click)="fecharDialogEditarVendaCaixao()"
+          [disabled]="carregandoEdicaoDeVendaDeCaixao"
+        >
+          <i class="bi bi-arrow-left"></i> Voltar
+        </button>
+      </p-footer>
+    </p-dialog>
+
+    <p-dialog
+      [visible]="visibleDialogExcluirVendaCaixao"
+      [closable]="false"
+      [style]="{ width: '50vw', height: '50px' }"
+      [draggable]="false"
+    >
+      <p-header> Excluir Venda de Caixão </p-header>
+      <p-footer>
+        <button
+          class="btn btn-success m-2"
+          (click)="deletarVendaDeCaixao()"
+          [disabled]="carregandoExclusaoDeVendaDeCaixao"
+        >
+          <i class="bi bi-check" *ngIf="!carregandoExclusaoDeVendaDeCaixao"></i>
+          <span
+            *ngIf="carregandoExclusaoDeVendaDeCaixao"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Confirmar
+        </button>
+        <button
+          class="btn btn-danger m-2"
+          (click)="fecharDialogExcluirVendaCaixao()"
+          [disabled]="carregandoExclusaoDeVendaDeCaixao"
+        >
+          <i class="bi bi-arrow-left"></i> Voltar
+        </button>
+      </p-footer>
+    </p-dialog>
   </div>
 </div>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="cadastrarVendaDeCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-check" *ngIf="!carregandoCadastroDeCaixao"></i> 
-    <span *ngIf="carregandoCadastroDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogCadastroVendaCaixao()" [disabled]="carregandoCadastroDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
-
-<p-dialog [visible]="visibleDialogEditarVendaCaixao" [closable]="false" [style]="{width: '50vw', height: '610px'}" [draggable]="false">
-  <p-header>
-    Editar Venda de Caixão
-  </p-header>
-  <div>
-    <div class="form-group" >
-      <p-dropdown [options]="vendedores" [(ngModel)]="vendedorSelecionadoPelaEditar" optionLabel="nome" placeholder="Selecione um Vendedor" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="nome"></p-dropdown>
-    </div>
-    <div class="form-group" >
-      <p-dropdown [options]="caixoes" [(ngModel)]="caixaoSelecionadoPelaEditar" optionLabel="modelo" placeholder="Selecione um Caixão" [style]="{'width': '100%', 'margin-bottom': '10px'}"  [filter]="true" filterBy="modelo"></p-dropdown>
-    </div>
-    <div [formGroup]="formularioEditarCaixao">
-      <input pInputText formControlName="dataVenda" placeholder="Data da Venda" class="w-100 mt-2">
-    </div>
-  </div>
-  <p-footer>
-    <button class="btn btn-success m-2" (click)="editarVendaDeCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoEdicaoDeVendaDeCaixao"></i>
-      <span *ngIf="carregandoEdicaoDeVendaDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Confirmar
-    </button>
-    <button class="btn btn-danger m-2" (click)="fecharDialogEditarVendaCaixao()" [disabled]="carregandoEdicaoDeVendaDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
-  </p-footer>
-</p-dialog>
-
-<p-dialog [visible]="visibleDialogExcluirVendaCaixao" [closable]="false" [style]="{width: '50vw', height: '50px'}" [draggable]="false">
-<p-header>
-  Excluir Venda de Caixão 
-</p-header>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="deletarVendaDeCaixao()" [disabled]="carregandoExclusaoDeVendaDeCaixao"><i class="bi bi-check" *ngIf="!carregandoExclusaoDeVendaDeCaixao"></i> 
-    <span *ngIf="carregandoExclusaoDeVendaDeCaixao" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirVendaCaixao()" [disabled]="carregandoExclusaoDeVendaDeCaixao"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+<p-toast position="bottom-right"></p-toast>

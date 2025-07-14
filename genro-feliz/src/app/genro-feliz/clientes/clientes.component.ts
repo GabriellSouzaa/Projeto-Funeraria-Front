@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { ClienteService } from '../shared/services/cliente.service';
 import { Cliente } from '../shared/models/Cliente.model';
@@ -6,7 +6,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteForm } from '../forms/Cliente.form';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientesAtrasoComponent } from '../clientes-atraso/clientes-atraso.component';
 import { ClientesComBeneficiariosFalecidosComponent } from '../clientes-com-beneficiarios-falecidos/clientes-com-beneficiarios-falecidos.component';
 import { EditarClienteForm, atribuirForm } from '../forms/EditarCliente.form';
@@ -18,29 +18,48 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Desconto } from '../shared/models/Desconto.model';
-
+import { SideNavComponent } from '../side-nav/side-nav.component';
+import {SplitButtonModule} from 'primeng/splitbutton';
+import { RouterOutlet } from '@angular/router';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { ToastItem, ToastModule } from 'primeng/toast';
 
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent, ClientesComBeneficiariosFalecidosComponent, InputMaskModule, NgIf, ProgressSpinnerModule, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [BreadcrumbComponent, SplitButtonModule, MessagesModule, ToastModule, SideNavComponent, TableModule, TooltipModule, DialogModule, ReactiveFormsModule, ClientesAtrasoComponent, ClientesComBeneficiariosFalecidosComponent, InputMaskModule, NgIf, ProgressSpinnerModule, IconFieldModule, InputIconModule, InputTextModule],
   templateUrl: './clientes.component.html',
-  styleUrl: './clientes.component.css'
+  styleUrl: './clientes.component.css',
+  providers: [MessageService]
 })
 export class ClientesComponent {
 
-  constructor(private clienteService: ClienteService) { }
+
+  constructor(private clienteService: ClienteService, private messageService: MessageService) { }
 
   public clientes: Cliente[] = [];
 
   public clienteSelecionadoParaConsultarInformacoesAdicionais: Cliente = new Cliente();
 
   public clienteSelecionadoParaExcluir: Cliente = new Cliente();
+  private selectedFile: File | null = null;
 
   public clienteSelecionadoParaEditar: Cliente = new Cliente();
 
-  public formCadastrarCliente: FormGroup = new FormGroup({});
+  public formCadastrarCliente: FormGroup = new FormGroup({
+    nome: new FormControl('', Validators.required),
+    dataNascimento: new FormControl('', Validators.required),
+    cidadeNascimento: new FormControl('', Validators.required),
+    rg: new FormControl('', Validators.required),
+    cpf: new FormControl('', Validators.required),
+    profissao: new FormControl(''),
+    religiao: new FormControl(''),
+    estado_civil: new FormControl(''),
+    telefone: new FormControl('', [Validators.required, Validators.maxLength(11)]),
+    image: new FormControl('')
+  });
 
   public formEditarCliente: FormGroup = new FormGroup({});
 
@@ -79,9 +98,16 @@ export class ClientesComponent {
   public carregandoRelatorioBeneficiariosDoCliente: boolean = false;
 
   ngOnInit(): void {
+    console.log(this.formCadastrarCliente)
     this.listarClientes();
-    this.formCadastrarCliente = ClienteForm;
-    this.formEditarCliente = EditarClienteForm;
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   public listarClientes(): void {
@@ -133,33 +159,73 @@ export class ClientesComponent {
     this.visibleDialogExcluirCliente = false;
   }
 
-  public cadastrarCliente(): void{
+  public cadastrarCliente(): void {
     this.carregandoCadastroCliente = true;
-    this.clienteService.cadastrarCliente(this.formCadastrarCliente.value).subscribe(() => {
-      this.fecharDialogCadastrarCliente();
-      this.listarClientes();
-      this.formCadastrarCliente.reset();
-      this.carregandoCadastroCliente = false;
-    })
+  const formData: FormData = new FormData();
+  Object.keys(this.formCadastrarCliente.value).forEach(key => {
+    formData.append(key, this.formCadastrarCliente.value[key]);
+  });
+
+  if (this.selectedFile) {
+    formData.append('image', this.selectedFile, this.selectedFile.name); // Enviando o arquivo
+  }
+
+
+    this.clienteService.cadastrarCliente(formData).subscribe({
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          detail: 'Dados Incorretos ou já Existentes'
+        });
+        this.carregandoCadastroCliente = false;
+        this.fecharDialogCadastrarCliente();
+      },
+      next: () => {
+        this.fecharDialogCadastrarCliente();
+        this.listarClientes();
+        this.carregandoCadastroCliente = false;
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Cliente cadastrado com Sucesso'
+        });
+      }
+    });
   }
 
   public editarCliente(): void{
     this.carregandoEditarCliente = true;
-    this.clienteService.editarCliente(this.formEditarCliente.value).subscribe(() => {
-      this.fecharDialogEditarCliente();
-      this.listarClientes();
-      this.formEditarCliente.reset();
-      this.carregandoEditarCliente = false;
+    this.clienteService.editarCliente(this.formEditarCliente.value).subscribe({
+      error: () => {
+        this.messageService.add({severity: 'error', detail: 'Erro ao editar Cliente'})
+        this.fecharDialogEditarCliente();
+      },
+      next: () => {
+        this.fecharDialogEditarCliente();
+        this.listarClientes();
+        this.formEditarCliente.reset();
+        this.carregandoEditarCliente = false;
+        this.messageService.add({severity: 'success', detail: 'Cliente Editado com Sucesso'})
+      }
+
     })
   }
 
   public excluirCliente(): void{
     this.carregandoExcluirCliente = true;
-    this.clienteService.deleteClient(this.clienteSelecionadoParaExcluir).subscribe(() => {
-      this.fecharDialogExcluirCliente();
-      this.listarClientes();
-      this.clienteSelecionadoParaExcluir = new Cliente();
-      this.carregandoExcluirCliente = false;
+    this.clienteService.deleteClient(this.clienteSelecionadoParaExcluir).subscribe( {
+      error: () => {
+        this.messageService.add({severity: 'error', detail: 'Erro ao Deletar o Cliente'})
+        this.fecharDialogExcluirCliente();
+        this.carregandoExcluirCliente = false;
+      },
+      next: () => {
+        this.fecharDialogExcluirCliente();
+        this.listarClientes();
+        this.clienteSelecionadoParaExcluir = new Cliente();
+        this.carregandoExcluirCliente = false;
+        this.messageService.add({severity: 'success', detail: 'Cliente excluido com Sucesso'})
+      }
+
     });
   }
 
