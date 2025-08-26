@@ -107,6 +107,19 @@ export class PlanosFunerariosComponent {
     this.visibleDialogExcluirPlanoFunerario = true;
   }
 
+ 
+
+
+
+formatarData(data: string): string {
+  if (!data) return '';
+  const dateObj = new Date(data);
+  const dia = String(dateObj.getDate()).padStart(2, '0');
+  const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const ano = dateObj.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
+
   public abrirDialogCadastrarPlanoFunerarioParaClientesComBeneficiarios(): void {
     this.visibleDialogCadastrarPlanoFunerarioParaClienteComBeneficiarios = true;
   }

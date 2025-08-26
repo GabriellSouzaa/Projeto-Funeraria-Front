@@ -1,23 +1,15 @@
-<div class="container-botoes">
-  <div>
-    <button class="btn btn-dark botao-barra" (click)="abrirSideNav()"><i class="bi bi-list"></i></button>
-    <div class="texto-botao">Menu</div>
+<p-toolbar styleClass="custom-toolbar">
+  <div class="p-toolbar-group-left">
+    <p-button icon="pi pi-bars" class="p-button-text p-button-rounded" (onClick)="abrirSideNav()" label="Menu"></p-button>
+    <p-button icon="pi pi-home" class="p-button-text p-button-rounded" (onClick)="irParaHome()" label="Home"></p-button>
+    <p-button icon="pi pi-sign-out" class="p-button-text p-button-rounded" (onClick)="deslogar()" label="Sair"></p-button>
   </div>
-  <div>
-    <button class="btn btn-dark botao-barra" (click)="irParaHome()"><i class="bi bi-house "></i></button>
-    <div class="texto-botao">Home</div>
-  </div>
-  <div>
-    <button class="btn btn-dark botao-barra" (click)="deslogar()"><i class="bi bi-box-arrow-right"></i></button>
-    <div class="texto-botao">Sair</div>
-  </div>
-</div>
-<div class="container-nome-app">
-  <div>Gerenciador Funerária</div>
-</div>
+</p-toolbar>
+
+<p-panel header="Gerenciador Funerária" styleClass="custom-header-panel"></p-panel>
 
 <app-side-nav [estaAberta]="estaAbertaSideNav"></app-side-nav>
 
-<div class="data-hora-atual-card">
+<p-card styleClass="data-hora-card">
   <app-data-hora-atual></app-data-hora-atual>
-</div>
+</p-card>

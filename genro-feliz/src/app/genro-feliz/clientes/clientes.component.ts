@@ -61,7 +61,17 @@ export class ClientesComponent {
     image: new FormControl('')
   });
 
-  public formEditarCliente: FormGroup = new FormGroup({});
+  public formEditarCliente: FormGroup = new FormGroup({
+     nome: new FormControl('', Validators.required),
+    dataNascimento: new FormControl('', Validators.required),
+    cidadeNascimento: new FormControl('', Validators.required),
+    rg: new FormControl('', Validators.required),
+    cpf: new FormControl('', Validators.required),
+    profissao: new FormControl(''),
+    religiao: new FormControl(''),
+    estado_civil: new FormControl(''),
+    telefone: new FormControl('', [Validators.required, Validators.maxLength(11)]),
+  });
 
   public visibleDialogConsultarInformacoesAdicionais: boolean = false;
 
@@ -194,7 +204,7 @@ export class ClientesComponent {
 
   public editarCliente(): void{
     this.carregandoEditarCliente = true;
-    this.clienteService.editarCliente(this.formEditarCliente.value).subscribe({
+    this.clienteService.editarCliente(this.clienteSelecionadoParaEditar.id, this.formEditarCliente.value).subscribe({
       error: () => {
         this.messageService.add({severity: 'error', detail: 'Erro ao editar Cliente'})
         this.fecharDialogEditarCliente();
@@ -285,5 +295,24 @@ export class ClientesComponent {
       this.carregandoRelatorioBeneficiariosDoCliente = false;
     })
   }
+
+  formatCPF(cpf: string): string {
+  if (!cpf) return '';
+  return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+}
+
+formatRG(rg: string): string {
+  if (!rg) return '';
+  return rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})$/, '$1.$2.$3-$4');
+}
+
+formatarData(data: string): string {
+  if (!data) return '';
+  const dateObj = new Date(data);
+  const dia = String(dateObj.getDate()).padStart(2, '0');
+  const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const ano = dateObj.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
 
 }

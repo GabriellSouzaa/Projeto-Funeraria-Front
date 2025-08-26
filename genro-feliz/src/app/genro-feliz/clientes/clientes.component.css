@@ -74,3 +74,307 @@
 }
 
 
+
+/* Cartão da tabela */
+.single-card-table {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+/* Campo de pesquisa */
+.p-inputtext {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease;
+}
+
+.p-inputtext:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Tabela */
+::ng-deep .p-datatable {
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+}
+
+/* Cabeçalho da tabela */
+::ng-deep .p-datatable thead th {
+  background-color: #f1f3f5;
+  color: #343a40;
+  font-weight: 600;
+  padding: 0.75rem;
+  border-bottom: 2px solid #dee2e6;
+}
+
+/* Linhas do corpo */
+::ng-deep .p-datatable tbody td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+/* Hover nas linhas */
+::ng-deep .p-datatable tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Botões */
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Tooltip */
+::ng-deep .p-tooltip {
+  font-size: 0.85rem;
+}
+
+/* Container customizado do campo de busca */
+.search-input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Ícone de lupa */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* Estilo do input */
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.2rem; /* espaço à esquerda para o ícone */
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+/* Wrapper geral */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* Card único de dashboard */
+.card-dashboard {
+  background-color: #ffffff;
+  width: 95%;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card-dashboard:hover {
+  transform: translateY(-5px);
+}
+
+/* Botões do topo */
+.dashboard-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.dashboard-buttons .btn {
+  min-width: 220px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Estilo da busca */
+.search-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+/* Dialog */
+.editar-cliente-dialog ::ng-deep .p-dialog-content {
+  padding-top: 1rem !important;
+  padding-bottom: 0 !important;
+}
+
+/* Grid de campos */
+.editar-cliente-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+/* Campo */
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  color: #343a40;
+}
+
+/* Campo que ocupa largura total */
+.form-field.full-width {
+  grid-column: span 2;
+}
+
+/* Input */
+.form-control {
+  border-radius: 0.4rem;
+  border: 1px solid #ced4da;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+
+.dialog-cadastro-cliente .p-dialog-content {
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.dialog-cadastro-cliente .formulario-cadastrar-cliente {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+
+input.form-control:focus,
+.p-inputtext:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+} 
+
+.p-dialog .p-dialog-footer {
+  border-top: 1px solid #ddd;
+}
+.dialog-beneficiarios-cliente .header-beneficiarios {
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.dialog-beneficiarios-cliente .barra-acoes-dialog {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.tabela-beneficiarios th {
+  background-color: #f1f1f1;
+  text-align: left;
+  padding: 0.75rem;
+}
+
+.tabela-beneficiarios td {
+  padding: 0.75rem;
+}
+
+.texto-vazio {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 2rem;
+}
+
+.dialog-beneficiarios-cliente .footer-dialog {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+}

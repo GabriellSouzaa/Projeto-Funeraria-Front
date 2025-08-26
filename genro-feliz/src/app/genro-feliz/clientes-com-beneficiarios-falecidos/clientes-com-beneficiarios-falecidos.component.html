@@ -1,39 +1,65 @@
+<!-- Dropdown do Cliente -->
 <p-dropdown
   [options]="clientes"
   optionLabel="nome"
-  placeholder="Cliente"
+  placeholder="Selecione um Cliente"
   [(ngModel)]="clienteParaConsultarBeneficiarios"
-  [style]="{width: '100%', marginTop: '1rem'}"
-  (onChange)=" buscarBeneficiariosInativos()"
+  [style]="{ width: '100%', marginBottom: '1.5rem' }"
+  (onChange)="buscarBeneficiariosInativos()"
+  filter="true"
+  showClear="true"
 ></p-dropdown>
 
-
-
+<!-- Tabela de Beneficiários -->
 <p-table
   [value]="beneficiario"
   [paginator]="true"
   [rows]="4"
   [showCurrentPageReport]="true"
-  currentPageReportTemplate="Total de Beneficiarios Inativos: {totalRecords}"
+  currentPageReportTemplate="Total de Beneficiários Inativos: {totalRecords}"
+  [responsiveLayout]="'scroll'"
+  [styleClass]="'tabela-beneficiarios'"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th>Nome Cliente</th>
-      <th>Nome Beneficiario</th>
-      <th>Ações</th>
+      <th>Nome do Cliente</th>
+      <th>Nome do Beneficiário</th>
+      <th style="width: 180px; text-align: center;">Ações</th>
     </tr>
   </ng-template>
+
   <ng-template pTemplate="body" let-beneficiario>
     <tr>
-      <td>{{beneficiario.nomeClient}}</td>
-      <td>{{beneficiario.nomeBeneficiario}}</td>
-      <button class="btn btn-primary" pTooltip="Enviar email notificando Beneficiario Inativo" (click)="enviarEmailParaCliente(beneficiario)" [disabled]="beneficiario.enviandoEmail">
-        <i class="bi bi-envelope-arrow-up" *ngIf="!beneficiario.enviandoEmail"></i>
-        <span *ngIf="beneficiario.enviandoEmail" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      </button>
+      <td>{{ beneficiario.nomeClient }}</td>
+      <td>{{ beneficiario.nomeBeneficiario }}</td>
+      <td style="text-align: center;">
+        <button
+          class="btn btn-primary"
+          pTooltip="Enviar email notificando beneficiário inativo"
+          tooltipPosition="top"
+          (click)="enviarEmailParaCliente(beneficiario)"
+          [disabled]="beneficiario.enviandoEmail"
+        >
+          <i
+            class="bi bi-envelope-arrow-up"
+            *ngIf="!beneficiario.enviandoEmail"
+          ></i>
+          <span
+            *ngIf="beneficiario.enviandoEmail"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+        </button>
+      </td>
     </tr>
   </ng-template>
-  <ng-template pTemplate = "emptymessage">
-      <td>Não Existe Beneficiario Inativo para Esse Cliente</td>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="3" class="text-center text-muted">
+        Não existe beneficiário inativo para esse cliente.
+      </td>
+    </tr>
   </ng-template>
 </p-table>

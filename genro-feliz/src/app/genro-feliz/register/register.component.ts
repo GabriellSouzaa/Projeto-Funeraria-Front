@@ -6,11 +6,13 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, MessagesModule, ToastModule, InputMaskModule],
+  imports: [ReactiveFormsModule, MessagesModule, ToastModule, InputMaskModule, CalendarModule, CommonModule],
   providers: [MessageService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',

@@ -1,130 +1,152 @@
-
-
-.componente{
-  width: 100%;
-  height: 100%;
-
-
-}
-
-.dashboard{
-  background-color: #d3d3d3;
-  width: 100%;
-  min-width: 80%;
-  height: 100%;
-}
-
-.grafico{
+/* Container geral */
+.dashboard-container {
   display: flex;
-  margin-top: 40px;
-	width: 95%;
-	height: 400px;
-	margin-left: 40px;
-	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-	transition: box-shadow 0.3s ease;
-	overflow: hidden;
-	background: #ffffff;
-	border-radius: 15px;
-	transition: all 0.6s ease-in-out;
-
+  height: 100vh;
+  background: #f4f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-
-.wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-  justify-content: space-evenly;
-  padding-top: 40px;
-
-}
-.single-card {
-
-	position: relative;
-	width: 240px;
-  min-width: 200px;
-	height: 200px;
-	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-	transition: box-shadow 0.3s ease;
-	overflow: hidden;
-	background: #ffffff;
-	border-radius: 15px;
-	transition: all 0.6s ease-in-out;
-}
-
-
-.single-card:hover {
-	transform: translateY(-10px);
-}
-
-
-
-.grafico:hover {
-	transform: translateY(-10px);
-}
-
-
-
-
-.calendar{
-  position: relative;
-  width: 250px;
-
-}
-
-.calendar:before{
-  content: '';
-  position: absolute;
-  width: 180px;
-  height: 70px;
-
-  border-radius: 50%;
-}
-
-.calendar .calendar-body{
+/* Área principal do dashboard */
+.dashboard-main {
+  flex-grow: 1;
+  padding: 2rem 3rem;
+  overflow-y: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border-bottom: 12px solid #19214a;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  box-shadow: 0 5px 25px rgb(1 1 1 / 15%);
+  gap: 2.5rem;
+  background: #f4f7fa;
 }
 
-.calendar .calendar-body .month-name{
-  color: white;
-  background: #19214a;
-  width: 100%;
-  font-size: 1.6em;
-  text-align: center;
-  font-weight: 200;
-  padding: 5px 0;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+/* Cabeçalho */
+.dashboard-header {
+  border-bottom: 2px solid #cfd8dc;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
-.calendar .calendar-body .day-name{
-  color: black;
-  font-size: 1.2em;
-  font-weight: 200;
-  margin-top: 14px;
+.dashboard-header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: #19214a;
 }
 
-.calendar .calendar-body .date-number{
-  color: black;
-  font-size: 5.7em;
-  font-weight: 300;
-  line-height: 1em;
+.dashboard-header p {
+  margin: 0.2rem 0 0 0;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #606f7b;
 }
 
-.calendar .calendar-body .year{
-  color: black;
-  font-size: 1.2em;
-  font-weight: 200;
-  padding-top: 5px;
-  margin-bottom: 20px;
+/* Seção dos cards */
+.cards-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 1.8rem;
+}
+
+/* Cards PrimeNG customizados */
+.card {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(25, 33, 74, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  cursor: default;
+  background-color: #fff !important;
+  color: #19214a;
+  user-select: none;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 40px rgba(25, 33, 74, 0.25) !important;
+}
+
+/* Header dos cards */
+.p-card-header {
+  text-align: center !important;
+  padding: 1rem 1.5rem !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  color: #19214a !important;
+  border-bottom: none !important;
+}
+
+/* Conteúdo dos cards */
+.card-content {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem 2rem 1.5rem;
+  gap: 1.5rem;
+}
+
+.icon {
+  font-size: 3.8rem;
+  color: #19214a;
+  flex-shrink: 0;
+}
+
+.icon.warning {
+  color: #d9534f;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #19214a;
+}
+
+.subtext {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #7a869a;
+  margin-top: 6px;
+}
+
+/* Seção do gráfico */
+.chart-section {
+  box-shadow: 0 8px 25px rgba(25, 33, 74, 0.12);
+  border-radius: 12px;
+  background: white;
+  padding: 1.5rem 2rem;
+  max-height: none;
+  overflow: visible;
+  transition: box-shadow 0.3s ease;
+}
+
+.chart-section:hover {
+  box-shadow: 0 18px 40px rgba(25, 33, 74, 0.25);
+}
+
+/* Gráfico */
+.chart {
+  width: 100% !important;
+  height: 500px !important;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .dashboard-main {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-section {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header{
+    padding: 30px;
+  }
 }

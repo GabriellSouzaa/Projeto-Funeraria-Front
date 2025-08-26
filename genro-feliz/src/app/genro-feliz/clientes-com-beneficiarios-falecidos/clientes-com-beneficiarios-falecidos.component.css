@@ -1,0 +1,30 @@
+::ng-deep .tabela-beneficiarios {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+::ng-deep .tabela-beneficiarios .p-datatable-header,
+::ng-deep .tabela-beneficiarios .p-datatable-footer {
+  background-color: #f8f9fa;
+}
+
+::ng-deep .p-dropdown {
+  font-size: 1rem;
+}
+
+::ng-deep .p-datatable th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  text-align: left;
+  padding: 1rem;
+}
+
+::ng-deep .p-datatable td {
+  padding: 0.8rem;
+  vertical-align: middle;
+}
+
+::ng-deep .p-tooltip {
+  font-size: 0.9rem;
+}

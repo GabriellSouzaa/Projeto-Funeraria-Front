@@ -27,8 +27,8 @@ export class ClienteService {
     });
   }
 
-  public editarCliente(cliente: Cliente): Observable<Cliente>{
-    return this.http.put<Cliente>(`${this.apiUrl}/update/${cliente.id}`, cliente);
+  public editarCliente(id : number, cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.apiUrl}/update/${id}`, cliente);
 
   }
 

@@ -1,63 +1,73 @@
-<div class="componente" style="display: flex">
-  <div style="height: 100%; background-color: #d3d3d3">
-    <app-side-nav></app-side-nav>
-  </div>
-  <div class="dashboard">
-    <div>
-      <div class="wrapper">
-        <div class="single-card">
-          <div class="calendar">
-            <div class="calendar-body">
-              <span class="month-name">Caixões Disponiveis </span>
-              <span class="day-name"></span>
-              <span class="date-number"> 25</span>
-              <span class="year">Quantidade Vendida <br> 75/100</span>
-            </div>
-          </div>
-        </div>
-        <div class="single-card">
-          <div class="calendar">
-            <div class="calendar-body">
-              <span class="month-name">Planos Funerais <br> Vendidos</span>
-              <span class="day-name"></span>
-              <span class="date-number"> {{ planosVendidos }}</span>
-              <span class="year">Mês de {{monthName}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="single-card">
-          <div class="calendar">
-            <div class="calendar-body">
-              <span class="month-name">Planos Funerais <br> Atrasados</span>
-              <span class="day-name"></span>
-              <span class="date-number"> 10</span>
-              <span class="year">Mês de {{monthName}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="single-card">
-          <div class="calendar">
-            <div class="calendar-body">
-              <span class="month-name">{{ monthName }}</span>
-              <span class="day-name">{{ dayName }}</span>
-              <span class="date-number">{{ dayNumber }}</span>
-              <span class="year">{{ year }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="grafico">
-        <p-chart
-          [style]="{ width: '100%' }"
-          type="line"
-          responsive="true"
-          height="400px"
-          [data]="data"
-          [options]="options"
-        />
-      </div>
-    </div>
-  </div>
-  <p-toast></p-toast>
-</div>
+<div class="dashboard-container">
+  <app-side-nav></app-side-nav>
 
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>Gerenciador Funerária</h1>
+      <p>{{ dayName }}, {{ dayNumber }} de {{ monthName }} de {{ year }}</p>
+    </header>
+
+    <section class="cards-section">
+      <p-card class="card caixoes">
+        <ng-template pTemplate="header">
+          <p style="margin-left: 28%; margin-top: 10px;">Caixões Disponíveis</p>
+          
+        </ng-template>
+        <div class="card-content">
+          <i class="pi pi-box icon"></i>
+          <div class="card-info">
+            <span class="number">25</span>
+            <span class="subtext">75 / 100 vendidos</span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="card planos-vendidos">
+        <ng-template pTemplate="header">
+          <p style="margin-left: 28%; margin-top: 10px;"> Planos Funerais Vendidos</p>
+        </ng-template>
+        <div class="card-content">
+          <i class="pi pi-check-circle icon"></i>
+          <div class="card-info">
+            <span class="number">{{ planosVendidos }}</span>
+            <span class="subtext">Mês de {{ monthName }}</span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="card planos-atrasados">
+        <ng-template pTemplate="header">
+          <p style="margin-left: 28%; margin-top: 10px;">Planos Funerais Atrasados</p> 
+        </ng-template>
+        <div class="card-content">
+          <i class="pi pi-exclamation-triangle icon warning"></i>
+          <div class="card-info">
+            <span class="number">10</span>
+            <span class="subtext">Mês de {{ monthName }}</span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card class="card data-atual">
+        <ng-template pTemplate="header">
+          <p style="margin-left: 28%; margin-top: 10px;"> Data Atual</p>
+        </ng-template>
+        <div class="card-content">
+          <i class="pi pi-calendar icon"></i>
+          <div class="card-info">
+            <span class="number">{{ dayNumber }}</span>
+            <span class="subtext">{{ dayName }}, {{ monthName }} {{ year }}</span>
+          </div>
+        </div>
+      </p-card>
+    </section>
+
+    <section class="chart-section">
+      <p-panel header="Gráfico de Vendas" [toggleable]="false" [style]="{ padding: '1rem' }">
+        <p-chart type="line" [data]="data" [options]="options" styleClass="chart"></p-chart>
+      </p-panel>
+    </section>
+  </main>
+
+  <p-toast position="bottom-right"></p-toast>
+</div>

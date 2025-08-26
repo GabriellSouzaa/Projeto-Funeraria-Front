@@ -16,11 +16,13 @@ import { ChartModule } from 'primeng/chart';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
+import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-pagina-inicial',
   standalone: true,
-  imports: [ SideNavComponent,ChartModule,MessagesModule, ToastModule, BreadcrumbComponent, DialogModule, TableModule, FieldsetModule, RouterModule],
+  imports: [ SideNavComponent,ChartModule,MessagesModule, CardModule, ToastModule, BreadcrumbComponent, DialogModule, TableModule, FieldsetModule, RouterModule, PanelModule],
   templateUrl: './pagina-inicial.component.html',
   providers: [MessageService],
   styleUrl: './pagina-inicial.component.css',
@@ -79,36 +81,57 @@ export class PaginaInicialComponent {
       };
 
       this.options = {
-        maintainAspectRatio: false,
-        aspectRatio: 0.6,
-        plugins: {
-            legend: {
-                labels: {
-                    color: textColor
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            },
-            y: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            }
+  maintainAspectRatio: false,
+  responsive: true,
+  aspectRatio: 1.6,  // deixa o gráfico mais largo
+  plugins: {
+    legend: {
+      labels: {
+        color: '#19214a',
+        font: {
+          size: 14,
+          weight: 'bold'
         }
-    };
+      }
+    },
+    tooltip: {
+      enabled: true,
+      mode: 'nearest',
+      intersect: false,
+      backgroundColor: '#19214a',
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
+      cornerRadius: 4,
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#606f7b',
+        font: { size: 12 }
+      },
+      grid: {
+        color: '#e0e6ed',
+        drawBorder: false,
+      }
+    },
+    y: {
+      ticks: {
+        color: '#606f7b',
+        font: { size: 12 },
+        beginAtZero: true,
+      },
+      grid: {
+        color: '#e0e6ed',
+        drawBorder: false,
+      }
+    }
+  },
+  animation: {
+    duration: 700,
+    easing: 'easeOutQuart',
+  }
+};
 
     this.buscarPlanosFunerariosEmAtraso();
     this.buscarVendasCaixao();

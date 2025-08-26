@@ -9,6 +9,7 @@ import { LoginResponse } from '../shared/models/LoginResponse.model';
 import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { RegisterComponent } from '../register/register.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { RegisterComponent } from '../register/register.component';
     MessagesModule,
     DialogModule,
     RegisterComponent,
+    CommonModule
   ],
   templateUrl: './login.component.html',
   providers: [MessageService],

@@ -14,39 +14,54 @@ body {
   top: 0;
   left: 0;
 }
-
 .login-formulario {
-  width: 350px;
-  height: 380px;
+  width: 380px;
+  min-height: 420px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
   position: fixed;
   top: 50%;
-  right: 200px;
+  right: 220px;
   transform: translateY(-50%);
-  padding: 20px;
-  border-radius: 10px;
+  padding: 35px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  color: rgb(13, 11, 11);
-
-  background-color: white;
+  justify-content: flex-start;
+  gap: 20px;
+  color: #1e1e1e;
 }
 
 .form-control {
-  background-color: white !important;
-  color: rgb(13, 11, 11);
-  padding: 5px;
-  margin-left: 5px;
+  background-color: #fff !important;
+  color: #1e1e1e;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+  margin-left: 0;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #19214a;
+  box-shadow: 0 0 0 2px rgba(25, 33, 74, 0.1);
 }
 
 .imagem {
   width: 100%;
   margin-top: 20vh;
+  margin-left: 100px;
 }
 
 .form-label {
   font-family: "Inter", sans-serif;
-  margin-left: 5px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #2c2c2c;
+  margin-left: 0;
 }
 
 .texto-1 {
@@ -66,15 +81,19 @@ body {
   margin-left: 20px;
 }
 
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .titulo {
   font-family: "Baloo Da 2", sans-serif;
-  font-size: 26px;
-  font-weight: 300;
-  color: #110e0e;
+  font-size: 24px;
+  font-weight: 600;
+  color: #19214a;
+  text-align: center;
   margin-bottom: 10px;
-  padding: 10px;
 }
-
 .checkbox-wrapper-4 * {
   box-sizing: border-box;
 }
@@ -177,11 +196,40 @@ body {
   }
 }
 
+
 .btn {
   background-color: #19214a;
   color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* <-- CORRIGIDO AQUI */
+  margin-top: 10px;
 }
 
+.btn-voltar{
+  background-color: #19214a;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 15%;
+}
+
+.btn:hover {
+  background-color: #0f1533;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 .texto-2 {
   font-family: "Baloo Da 2", sans-serif;
   font-size: 50px;
@@ -198,3 +246,45 @@ body {
   margin-bottom: 50%;
   margin-left: 80%;
 }
+
+
+p {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+a {
+  color: #19214a;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.input-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-senha input.form-control {
+  padding-right: 40px; /* espaço para o ícone */
+}
+
+.input-senha i {
+  position: absolute;
+  right: 12px;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.input-senha i:hover {
+  color: #19214a;
+}
+

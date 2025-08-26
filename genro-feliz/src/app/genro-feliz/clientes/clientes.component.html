@@ -13,125 +13,123 @@
         animationDuration=".5s"
       />
     </div>
-    <div class="wapper">
-      <div class="single-card">
-        <div class="button">
-          <button
-            class="btn btn-primary text-white"
-            style="width: 25%; height: 25%"
-            (click)="abrirDialogClientesAtraso()"
-          >
-            <i class="bi bi-people-fill"></i> Clientes em Atraso
-          </button>
-          <button
-            class="btn btn-primary text-white"
-            style="width: 25%; height: 25%"
-            (click)="abrirDialogClientesComBeneficiariosFalecidos()"
-          >
-            <i class="bi bi-people-fill"></i> Beneficiários Falecidos
-          </button>
-          <button
-            class="btn btn-primary"
-            style="width: 25%; height: 25%"
-            (click)="abrirDialogCadastrarCliente()"
-          >
-            <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
-          </button>
-          <button
-            class="btn btn-primary"
-            style="width: 25%; height: 25%"
-            (click)="abrirDialogDesconto()"
-          >
-            <i class="bi bi-plus-circle"></i> Calcular Descontos
-          </button>
-        </div>
-      </div>
+   <div class="wrapper">
+  <div class="card-dashboard shadow-sm rounded-3 p-4">
+    <!-- Botões de ação -->
+    <div class="dashboard-buttons mb-4">
+      <button
+        class="btn btn-primary"
+        (click)="abrirDialogClientesAtraso()"
+      >
+        <i class="bi bi-people-fill"></i> Clientes em Atraso
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="abrirDialogClientesComBeneficiariosFalecidos()"
+      >
+        <i class="bi bi-people-fill"></i> Beneficiários Falecidos
+      </button>
+      <button
+        class="btn btn-success"
+        (click)="abrirDialogCadastrarCliente()"
+      >
+        <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
+      </button>
+      <button
+        class="btn btn-secondary"
+        (click)="abrirDialogDesconto()"
+      >
+        <i class="bi bi-cash-coin"></i> Calcular Descontos
+      </button>
     </div>
 
-    <div class="wapper">
-      <div class="single-card-table">
-        <p-table
-          #tabelaClientes
-          [value]="clientes"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          [paginator]="true"
-          [rows]="4"
-          [showCurrentPageReport]="true"
-          currentPageReportTemplate="Total de Clientes: {totalRecords}"
-          *ngIf="!carregandoClientes"
-          [globalFilterFields]="['nome', 'cliente.nome']"
-        >
-          <ng-template pTemplate="caption">
-            <div class="flex mt-3">
-              <p-iconField iconPosition="left" class="ml-auto">
-                <p-inputIcon>
-                  <i class="bi bi-search"></i>
-                </p-inputIcon>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="
-                    tabelaClientes.filterGlobal(
-                      $any($event.target).value,
-                      'contains'
-                    )
-                  "
-                  placeholder="Pesquisar por Cliente"
-                />
-              </p-iconField>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th pSortableColumn="nome" style="width: 20%">
-                Nome <p-sortIcon field="nome" />
-              </th>
-              <th>CPF</th>
-              <th>RG</th>
-              <th>Data de Nascimento</th>
-              <th>Telefone</th>
-              <th>Ações</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-cliente>
-            <tr>
-              <td>{{ cliente.nome }}</td>
-              <td>{{ cliente.cpf }}</td>
-              <td>{{ cliente.rg }}</td>
-              <td>{{ cliente.dataNascimento }}</td>
-              <td>{{ cliente.telefone }}</td>
-              <td>
-                <button
-                  class="btn btn-primary"
-                  pTooltip="Consultar Beneficiários do Cliente"
-                  tooltipPosition="bottom"
-                  (click)="abrirDialogBeneficiariosDoCliente(cliente)"
-                >
-                  <i class="bi bi-people-fill"></i>
-                </button>
-                <button
-                  class="btn btn-warning m-2 text-white"
-                  pTooltip="Editar Cliente"
-                  tooltipPosition="bottom"
-                  (click)="abrirDialogEditarCliente(cliente)"
-                >
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  pTooltip="Excluir Cliente"
-                  tooltipPosition="bottom"
-                  (click)="abrirDialogExcluirCliente(cliente)"
-                >
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </div>
+    <!-- Tabela -->
+    <p-table
+      #tabelaClientes
+      [value]="clientes"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [rows]="4"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Total de Clientes: {totalRecords}"
+      *ngIf="!carregandoClientes"
+      [globalFilterFields]="['nome', 'cpf', 'rg']"
+      class="p-datatable-striped p-datatable-sm"
+    >
+      <!-- Campo de busca -->
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-end mt-3">
+          <div class="search-input-container w-50">
+            <i class="bi bi-search search-icon"></i>
+            <input
+              pInputText
+              type="text"
+              class="search-input"
+              (input)="
+                tabelaClientes.filterGlobal(
+                  $any($event.target).value,
+                  'contains'
+                )
+              "
+              placeholder="Pesquisar por nome, CPF ou RG"
+            />
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Cabeçalho -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="nome">Nome <p-sortIcon field="nome" /></th>
+          <th>CPF</th>
+          <th>RG</th>
+          <th>Data de Nascimento</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <!-- Corpo -->
+      <ng-template pTemplate="body" let-cliente>
+        <tr>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ formatCPF(cliente.cpf) }}</td>
+          <td>{{ formatRG(cliente.rg) }}</td>
+          <td>{{ formatarData(cliente.dataNascimento) }}</td>
+          <td>{{ cliente.telefone }}</td>
+          <td>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              pTooltip="Consultar Beneficiários"
+              tooltipPosition="bottom"
+              (click)="abrirDialogBeneficiariosDoCliente(cliente)"
+            >
+              <i class="bi bi-people-fill"></i>
+            </button>
+            <button
+              class="btn btn-outline-warning btn-sm mx-1 text-dark"
+              pTooltip="Editar Cliente"
+              tooltipPosition="bottom"
+              (click)="abrirDialogEditarCliente(cliente)"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              pTooltip="Excluir Cliente"
+              tooltipPosition="bottom"
+              (click)="abrirDialogExcluirCliente(cliente)"
+            >
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
     <p-dialog
       [visible]="visibleDialogConsultarInformacoesAdicionais"
       [closable]="false"
@@ -158,107 +156,131 @@
         </button>
       </ng-template>
     </p-dialog>
+<p-dialog
+  [visible]="visibleDialogCadastrarCliente"
+  [closable]="false"
+  [style]="{ width: '55vw', maxWidth: '700px' }"
+  [draggable]="false"
+  modal="true"
+  class="dialog-cadastro-cliente"
+>
+  <p-header>
+    <h3 class="text-center mb-0">Cadastrar Novo Cliente</h3>
+  </p-header>
 
-    <p-dialog
-      [visible]="visibleDialogCadastrarCliente"
-      [closable]="false"
-      [style]="{ width: '50vw', height: '600px' }"
-      [draggable]="false"
-    >
-      <!-- JPOBKAOISFJOISAJFIOFSAJIOFSAJI -->
+  <form [formGroup]="formCadastrarCliente" class="formulario-cadastrar-cliente p-3">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input id="nome" type="text" class="form-control" formControlName="nome" />
+      </div>
 
-      <form
-        [formGroup]="formCadastrarCliente"
-        class="formulario-cadastrar-cliente"
-      >
-        <input
-          type="text"
-          class="form-control"
-          formControlName="nome"
-          placeholder="Nome"
-        />
+      <div class="form-group">
+        <label for="dataNascimento">Data de Nascimento</label>
         <p-inputMask
-          mask="9999-99-99"
+          id="dataNascimento"
+          mask="99/99/9999"
           formControlName="dataNascimento"
-          placeholder="Data de Nascimento"
+          placeholder="dd/mm/aaaa"
           [style]="{ width: '100%' }"
         ></p-inputMask>
+      </div>
+
+      <div class="form-group">
+        <label for="cidadeNascimento">Cidade de Nascimento</label>
         <input
+          id="cidadeNascimento"
           type="text"
           class="form-control"
           formControlName="cidadeNascimento"
-          placeholder="Cidade de Nascimento"
-          [maxlength]="30"
         />
+      </div>
+
+      <div class="form-group">
+        <label for="rg">RG</label>
         <p-inputMask
-          mask="99-999-999-9"
+          id="rg"
+          mask="99.999.999-9"
           formControlName="rg"
-          placeholder="RG"
           [style]="{ width: '100%' }"
         ></p-inputMask>
+      </div>
+
+      <div class="form-group">
+        <label for="cpf">CPF</label>
         <p-inputMask
-          mask="999-999-999-99"
+          id="cpf"
+          mask="999.999.999-99"
           formControlName="cpf"
-          placeholder="CPF"
           [style]="{ width: '100%' }"
         ></p-inputMask>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="profissao"
-          placeholder="Profissão"
-        />
-        <input
-          type="text"
-          class="form-control"
-          formControlName="religiao"
-          placeholder="Religião"
-        />
-        <input
-          type="text"
-          class="form-control"
-          formControlName="estado_civil"
-          placeholder="Estado Civil"
-        />
-        <input
-          type="text"
-          class="form-control"
+      </div>
+
+      <div class="form-group">
+        <label for="profissao">Profissão</label>
+        <input id="profissao" type="text" class="form-control" formControlName="profissao" />
+      </div>
+
+      <div class="form-group">
+        <label for="religiao">Religião</label>
+        <input id="religiao" type="text" class="form-control" formControlName="religiao" />
+      </div>
+
+      <div class="form-group">
+        <label for="estado_civil">Estado Civil</label>
+        <input id="estado_civil" type="text" class="form-control" formControlName="estado_civil" />
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <p-inputMask
+          id="telefone"
+          mask="(99) 99999-9999"
           formControlName="telefone"
-          placeholder="Telefone"
-          [maxlength]="11"
-        />
+          [style]="{ width: '100%' }"
+        ></p-inputMask>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="image">Imagem (opcional)</label>
         <input
-        type="file"
-        (change)="onFileSelected($event)"
-        class="form-control"
-        formControlName="image"
+          id="image"
+          type="file"
+          (change)="onFileSelected($event)"
+          class="form-control"
+          formControlName="image"
         />
-      </form>
-      
-      <ng-template pTemplate="footer">
-        <button
-          class="btn btn-danger m-2"
-          (click)="fecharDialogCadastrarCliente()"
-          [disabled]="carregandoCadastroCliente"
-        >
-          <i class="bi bi-arrow-left"></i> Voltar
-        </button>
-        <button
-          class="btn btn-success m-2"
-          (click)="cadastrarCliente()"
-          [disabled]="!formCadastrarCliente.valid || carregandoCadastroCliente"
-        >
-          <i class="bi bi-check" *ngIf="!carregandoCadastroCliente"></i>
-          <span
-            *ngIf="carregandoCadastroCliente"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Confirmar
-        </button>
-      </ng-template>
-    </p-dialog>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end px-3 pb-3">
+      <button
+        class="btn btn-danger me-2"
+        (click)="fecharDialogCadastrarCliente()"
+        [disabled]="carregandoCadastroCliente"
+      >
+        <i class="bi bi-arrow-left"></i> Voltar
+      </button>
+      <button
+        class="btn btn-success"
+        (click)="cadastrarCliente()"
+        [disabled]="!formCadastrarCliente.valid || carregandoCadastroCliente"
+      >
+        <i class="bi bi-check" *ngIf="!carregandoCadastroCliente"></i>
+        <span
+          *ngIf="carregandoCadastroCliente"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Confirmar
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
 
     <p-dialog
       [visible]="visibleDialogClientesAtraso"
@@ -278,206 +300,267 @@
       </ng-template>
     </p-dialog>
 
-    <p-dialog
-      [visible]="visibleDialogEditarCliente"
-      [closable]="false"
-      [style]="{ width: '50vw', height: '600px' }"
-      [draggable]="false"
-    >
-      <p-header> Editar Cliente </p-header>
-      <!-- <form
-        [formGroup]="formEditarCliente"
-        class="formulario-cadastrar-cliente"
-      >
+   <p-dialog
+  [(visible)]="visibleDialogEditarCliente"
+  [closable]="false"
+  [style]="{ width: '60vw' }"
+  [modal]="true"
+  [draggable]="false"
+  class="editar-cliente-dialog"
+>
+  <ng-template pTemplate="header">
+    <h4 class="mb-0">Editar Cliente</h4>
+  </ng-template>
+
+  <form [formGroup]="formEditarCliente" class="editar-cliente-form">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="nome">Nome</label>
         <input
+          id="nome"
           type="text"
           class="form-control"
           formControlName="nome"
-          placeholder="Nome"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="dataNascimento">Data de Nascimento</label>
         <input
-          type="text"
+          id="dataNascimento"
+          type="date"
           class="form-control"
           formControlName="dataNascimento"
-          placeholder="Data de Nascimento"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="cidadeNascimento">Cidade de Nascimento</label>
         <input
+          id="cidadeNascimento"
           type="text"
           class="form-control"
           formControlName="cidadeNascimento"
-          placeholder="Cidade de Nascimento"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="rg">RG</label>
         <input
+          id="rg"
           type="text"
           class="form-control"
           formControlName="rg"
-          placeholder="RG"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="cpf">CPF</label>
         <input
+          id="cpf"
           type="text"
           class="form-control"
           formControlName="cpf"
-          placeholder="CPF"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="profissao">Profissão</label>
         <input
+          id="profissao"
           type="text"
           class="form-control"
           formControlName="profissao"
-          placeholder="Profissão"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="religiao">Religião</label>
         <input
+          id="religiao"
           type="text"
           class="form-control"
           formControlName="religiao"
-          placeholder="Religião"
         />
+      </div>
+
+      <div class="form-field">
+        <label for="estado_civil">Estado Civil</label>
         <input
+          id="estado_civil"
           type="text"
           class="form-control"
           formControlName="estado_civil"
-          placeholder="Estado Civil"
         />
+      </div>
+
+      <div class="form-field full-width">
+        <label for="telefone">Telefone</label>
         <input
+          id="telefone"
           type="text"
           class="form-control"
           formControlName="telefone"
-          placeholder="Telefone"
         />
-      </form> -->
-      <p-footer>
-        <button
-          class="btn btn-danger m-2"
-          (click)="fecharDialogEditarCliente()"
-          [disabled]="carregandoEditarCliente"
-        >
-          <i class="bi bi-arrow-left"></i> Voltar
-        </button>
-        <button
-          class="btn btn-success m-2"
-          (click)="editarCliente()"
-          [disabled]="!formEditarCliente.valid || carregandoEditarCliente"
-        >
-          <span
-            *ngIf="carregandoEditarCliente"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          <i class="bi bi-check" *ngIf="!carregandoEditarCliente"></i> Confirmar
-        </button>
-      </p-footer>
-    </p-dialog>
+      </div>
+    </div>
+  </form>
 
-    <p-dialog
-      [visible]="visibleDialogClientesComBeneficiariosFalecidos"
-      [closable]="false"
-      [style]="{ width: '60vw', height: '600px' }"
-      [draggable]="false"
-    >
-      <app-clientes-com-beneficiarios-falecidos />
-      <ng-template pTemplate="footer">
-        <button
-          class="btn btn-danger mt-2"
-          (click)="fecharDialogClientesComBeneficiariosFalecidos()"
-        >
-          <i class="bi bi-arrow-left"></i> Voltar
-        </button>
-      </ng-template>
-    </p-dialog>
-
-    <p-dialog
-      [visible]="visibleDialogExcluirCliente"
-      [closable]="false"
-      [style]="{ width: '50vw', height: '250px' }"
-    >
-      <b>Tem Certeza que deseja excluir o(a) cliente {{clienteSelecionadoParaExcluir.nome}}?</b>
-      <p style="color: red;">Está ação é irreversivel</p>
-      <ng-template pTemplate="footer">
-        <button
-          class="btn btn-danger m-2"
-          (click)="fecharDialogExcluirCliente()"
-          [disabled]="carregandoExcluirCliente"
-        >
-          <i class="bi bi-arrow-left"></i> Voltar
-        </button>
-        <button
-          class="btn btn-success m-2"
-          (click)="excluirCliente()"
-          [disabled]="carregandoExcluirCliente"
-        >
-          <i class="bi bi-check" *ngIf="!carregandoExcluirCliente"></i>
-          <span
-            *ngIf="carregandoExcluirCliente"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Confirmar
-        </button>
-      </ng-template>
-    </p-dialog>
-
-    <p-dialog
-      [visible]="visibleDialogBeneficiariosDoCliente"
-      [closable]="false"
-      [style]="{ width: '50vw', height: '700px' }"
-      [draggable]="false"
-    >
-      <p-header>
-        Beneficiários de {{ clienteParaConsultarBeneficiarios.nome }}
-      </p-header>
-      <p-table
-        [value]="beneficiariosDoCliente"
-        [tableStyle]="{ 'min-width': '50rem' }"
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end gap-2">
+      <button
+        class="btn btn-outline-danger"
+        (click)="fecharDialogEditarCliente()"
+        [disabled]="carregandoEditarCliente"
       >
-        <ng-template pTemplate="caption">
-          <button
-            class="btn btn-warning text-white"
-            (click)="gerarRelatorioBeneficiariosDoCliente()"
-            [disabled]="carregandoRelatorioBeneficiariosDoCliente"
-          >
-            <i
-              class="bi bi-file-bar-graph"
-              *ngIf="!carregandoRelatorioBeneficiariosDoCliente"
-            ></i>
-            <span
-              *ngIf="carregandoRelatorioBeneficiariosDoCliente"
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-            Gerar Relatório
-          </button>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Nome</th>
-            <th>Data Nascimento</th>
-            <th>Adicional</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-beneficiario>
-          <tr>
-            <td>{{ beneficiario.nomeBeneficiario }}</td>
-            <td>{{ beneficiario.dataNascimento }}</td>
-            <td>{{ beneficiario.adicional }}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="5">Este cliente não tem beneficiários.</td>
-          </tr>
-        </ng-template>
-      </p-table>
-      <p-footer>
+        <i class="bi bi-x-circle"></i> Cancelar
+      </button>
+      <button
+        class="btn btn-success"
+        (click)="editarCliente()"
+        [disabled]="!formEditarCliente.valid || carregandoEditarCliente"
+      >
+        <span
+          *ngIf="carregandoEditarCliente"
+          class="spinner-border spinner-border-sm me-1"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <i class="bi bi-check-circle" *ngIf="!carregandoEditarCliente"></i>
+        Salvar
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+   <p-dialog
+  [visible]="visibleDialogExcluirCliente"
+  [closable]="false"
+  [style]="{ width: '40vw', maxWidth: '500px' }"
+  [draggable]="false"
+  [modal]="true"
+  [contentStyle]="{ 'text-align': 'center', 'padding': '2rem' }"
+  styleClass="dialog-exclusao-cliente"
+>
+  <div class="icone-alerta">
+    <i class="pi pi-exclamation-triangle"></i>
+  </div>
+
+  <h3 class="titulo-exclusao">Excluir Cliente?</h3>
+
+  <p class="mensagem-exclusao">
+    Tem certeza que deseja excluir o(a) cliente
+    <strong>{{ clienteSelecionadoParaExcluir.nome }}</strong>?
+  </p>
+  <p class="mensagem-aviso">
+    Essa ação é <strong>irreversível</strong>!
+  </p>
+
+  <ng-template pTemplate="footer">
+    <div class="botoes-exclusao">
+      <button
+      style="margin-right: 10px;"
+        class="btn btn-outline-danger"
+        (click)="fecharDialogExcluirCliente()"
+        [disabled]="carregandoExcluirCliente"
+      >
+        <i class="bi bi-arrow-left"></i> Cancelar
+      </button>
+      <button
+        class="btn btn-danger"
+        (click)="excluirCliente()"
+        [disabled]="carregandoExcluirCliente"
+      >
+        <i class="bi bi-trash" *ngIf="!carregandoExcluirCliente"></i>
+        <span
+          *ngIf="carregandoExcluirCliente"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Confirmar
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+
+   <p-dialog
+  [visible]="visibleDialogBeneficiariosDoCliente"
+  [closable]="false"
+  [style]="{ width: '60vw', maxHeight: '90vh' }"
+  [draggable]="false"
+  [modal]="true"
+  styleClass="dialog-beneficiarios-cliente"
+>
+  <p-header class="header-beneficiarios">
+    Beneficiários de <strong>{{ clienteParaConsultarBeneficiarios.nome }}</strong>
+  </p-header>
+
+  <p-table
+    [value]="beneficiariosDoCliente"
+    [tableStyle]="{ 'min-width': '100%' }"
+    class="tabela-beneficiarios"
+    [scrollable]="true"
+    scrollHeight="450px"
+  >
+    <ng-template pTemplate="caption">
+      <div class="barra-acoes-dialog">
         <button
-          class="btn btn-danger m-2"
-          (click)="fecharDialogBeneficiariosDoCliente()"
+          class="btn btn-warning text-white"
+          (click)="gerarRelatorioBeneficiariosDoCliente()"
+          [disabled]="carregandoRelatorioBeneficiariosDoCliente"
         >
-          <i class="bi bi-arrow-left"></i> Voltar
+          <i
+            class="bi bi-file-bar-graph"
+            *ngIf="!carregandoRelatorioBeneficiariosDoCliente"
+          ></i>
+          <span
+            *ngIf="carregandoRelatorioBeneficiariosDoCliente"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Gerar Relatório
         </button>
-      </p-footer>
-    </p-dialog>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Data de Nascimento</th>
+        <th>Adicional</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-beneficiario>
+      <tr>
+        <td>{{ beneficiario.nomeBeneficiario }}</td>
+        <td>{{ beneficiario.dataNascimento }}</td>
+        <td>{{ beneficiario.adicional }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="3" class="texto-vazio">
+          Este cliente não possui beneficiários.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-footer class="footer-dialog">
+    <button
+      class="btn btn-danger"
+      (click)="fecharDialogBeneficiariosDoCliente()"
+    >
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+  </p-footer>
+</p-dialog>
+
 
     <p-dialog
       [visible]="buscarDescontos"
@@ -501,3 +584,19 @@
   <p-toast position="bottom-right"></p-toast>
 </div>
 
+  <p-dialog
+      [visible]="visibleDialogClientesComBeneficiariosFalecidos"
+      [closable]="false"
+      [style]="{ width: '60vw', height: '600px' }"
+      [draggable]="false"
+    >
+      <app-clientes-com-beneficiarios-falecidos />
+      <ng-template pTemplate="footer">
+        <button
+          class="btn btn-danger mt-2"
+          (click)="fecharDialogClientesComBeneficiariosFalecidos()"
+        >
+          <i class="bi bi-arrow-left"></i> Voltar
+        </button>
+      </ng-template>
+    </p-dialog>

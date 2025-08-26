@@ -24,11 +24,12 @@ import { SideNavComponent } from '../side-nav/side-nav.component';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @Component({
   selector: 'app-morte-de-paciente',
   standalone: true,
-  imports: [TableModule,SideNavComponent,ToastModule,  MessagesModule,  BreadcrumbComponent, ProgressSpinnerModule, NgIf, InputIconModule, InputTextModule, TooltipModule, IconFieldModule, DialogModule, DropdownModule, FormsModule, InputTextareaModule],
+  imports: [TableModule,SideNavComponent,ToastModule,  MessagesModule,  SplitButtonModule,BreadcrumbComponent, ProgressSpinnerModule, NgIf, InputIconModule, InputTextModule, TooltipModule, IconFieldModule, DialogModule, DropdownModule, FormsModule, InputTextareaModule],
   templateUrl: './morte-de-paciente.component.html',
   styleUrl: './morte-de-paciente.component.css',
   providers: [MessageService]
@@ -97,6 +98,7 @@ export class MorteDePacienteComponent {
       }
       );
   }
+  
 
   public buscarCaixoes(): void{
     this.caixaoService.listarCaixoes().subscribe((data) => {
