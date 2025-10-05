@@ -57,8 +57,7 @@ export class ClientesComponent {
     profissao: new FormControl(''),
     religiao: new FormControl(''),
     estado_civil: new FormControl(''),
-    telefone: new FormControl('', [Validators.required, Validators.maxLength(11)]),
-    image: new FormControl('')
+    telefone: new FormControl('', Validators.required),
   });
 
   public formEditarCliente: FormGroup = new FormGroup({
@@ -120,6 +119,7 @@ export class ClientesComponent {
     }
   }
 
+
   public listarClientes(): void {
     this.carregandoClientes = true;
     this.clienteService.listarClientes().subscribe(clientes => {
@@ -176,6 +176,8 @@ export class ClientesComponent {
     formData.append(key, this.formCadastrarCliente.value[key]);
   });
 
+
+
   if (this.selectedFile) {
     formData.append('image', this.selectedFile, this.selectedFile.name); // Enviando o arquivo
   }
@@ -202,6 +204,16 @@ export class ClientesComponent {
     });
   }
 
+   formatarValorReal(valor: number | undefined): string {
+  if (valor === undefined) {
+    return 'R$ 0,00';
+  }
+
+  return valor.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+}
   public editarCliente(): void{
     this.carregandoEditarCliente = true;
     this.clienteService.editarCliente(this.clienteSelecionadoParaEditar.id, this.formEditarCliente.value).subscribe({
@@ -287,14 +299,24 @@ export class ClientesComponent {
     });
   }
 
-  public gerarRelatorioBeneficiariosDoCliente(): void{
-    this.carregandoRelatorioBeneficiariosDoCliente = true;
-    this.clienteService.gerarRelatorioBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios).subscribe((relatorio: any)=>{
-      const url = window.URL.createObjectURL(relatorio);
-      window.open(url);
+public gerarRelatorioBeneficiariosDoCliente(): void {
+  this.carregandoRelatorioBeneficiariosDoCliente = true;
+
+  this.clienteService.gerarRelatorioBeneficiariosDoCliente(this.clienteParaConsultarBeneficiarios)
+    .subscribe((relatorio: Blob) => {
+      // cria um Blob do tipo PDF
+      const blob = new Blob([relatorio], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+
+      // abre em uma nova aba
+      window.open(url, '_blank');
+
       this.carregandoRelatorioBeneficiariosDoCliente = false;
-    })
-  }
+    }, error => {
+      console.error(error);
+      this.carregandoRelatorioBeneficiariosDoCliente = false;
+    });
+}
 
   formatCPF(cpf: string): string {
   if (!cpf) return '';

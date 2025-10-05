@@ -30,17 +30,17 @@
         <i class="bi bi-people-fill"></i> Beneficiários Falecidos
       </button>
       <button
-        class="btn btn-success"
+        class="btn btn-primary"
         (click)="abrirDialogCadastrarCliente()"
       >
         <i class="bi bi-plus-circle"></i> Cadastrar Novo Cliente
       </button>
-      <button
+      <!-- <button
         class="btn btn-secondary"
         (click)="abrirDialogDesconto()"
       >
         <i class="bi bi-cash-coin"></i> Calcular Descontos
-      </button>
+      </button> -->
     </div>
 
     <!-- Tabela -->
@@ -241,16 +241,6 @@
         ></p-inputMask>
       </div>
 
-      <div class="form-group full-width">
-        <label for="image">Imagem (opcional)</label>
-        <input
-          id="image"
-          type="file"
-          (change)="onFileSelected($event)"
-          class="form-control"
-          formControlName="image"
-        />
-      </div>
     </div>
   </form>
 
@@ -538,7 +528,7 @@
       <tr>
         <td>{{ beneficiario.nomeBeneficiario }}</td>
         <td>{{ beneficiario.dataNascimento }}</td>
-        <td>{{ beneficiario.adicional }}</td>
+        <td>{{ formatarValorReal(beneficiario.adicional) }}</td>
       </tr>
     </ng-template>
 

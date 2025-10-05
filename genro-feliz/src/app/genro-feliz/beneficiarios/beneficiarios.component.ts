@@ -63,6 +63,7 @@ export class BeneficiariosComponent {
     this.listarBeneficiarios();
   }
 
+
   public listarBeneficiarios(): void{
     this.carregandoBeneficiarios = true;
     this.beneficiarioService.listarBeneficiarios().subscribe(beneficiarios => {

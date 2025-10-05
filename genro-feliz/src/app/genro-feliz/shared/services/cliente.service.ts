@@ -40,11 +40,11 @@ export class ClienteService {
     return this.http.get<Beneficiarios[]>(`http://localhost:8080/beneficiary/client/${cliente.id}`);
   }
 
-  public gerarRelatorioBeneficiariosDoCliente(cliente: Cliente){
-    return this.http.get(`http://localhost:8080/beneficiary/client/report/${cliente.id}`, {
-      responseType: 'blob' as 'json',
-    })
-  }
+  public gerarRelatorioBeneficiariosDoCliente(cliente: Cliente) {
+  return this.http.get(`http://localhost:8080/beneficiary/client/report/${cliente.id}`, {
+    responseType: 'blob' // aqui já é Blob, não use 'as json'
+  });
+}
 
   public listarDescontos(id: number): Observable<Desconto>{
     return this.http.get<Desconto>(`http://localhost:8080/client/discount/${id}`);
