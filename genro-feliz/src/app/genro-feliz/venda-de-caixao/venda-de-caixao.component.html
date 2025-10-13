@@ -23,7 +23,7 @@
             style="width: 18%; height: 35%"
             (click)="abrirDialogCadastroVendaCaixao()"
           >
-            <i class="bi bi-plus"></i> Cadastrar Venda de Caixão
+            <i class="bi bi-plus"></i> Cadastrar Venda de Urna
           </button>
           <button
             class="btn btn-primary text-white"
@@ -41,7 +41,7 @@
               role="status"
               aria-hidden="true"
             ></span>
-            Gerar Relatório de Venda Mensal de Caixão
+            Gerar Relatório de Venda Mensal de Urna
           </button>
         </div>
       
@@ -87,7 +87,7 @@
                 Nome do Vendedor <p-sortIcon field="nomeVendedor" />
               </th>
               <th pSortableColumn="modeloCaixao">
-                Modelo do Caixão<p-sortIcon field="modeloCaixao" />
+                Modelo da Urna<p-sortIcon field="modeloCaixao" />
               </th>
               <th>Data da Venda</th>
               <th>Ações</th>
@@ -126,7 +126,7 @@
       [style]="{ width: '50vw', height: '610px' }"
       [draggable]="false"
     >
-      <p-header> Cadastrar Venda de Caixão </p-header>
+      <p-header> Cadastrar Venda de Urna </p-header>
       <div>
         <div class="form-group">
           <p-dropdown
@@ -155,7 +155,7 @@
             [options]="caixoes"
             [(ngModel)]="formularioCadastrarVendaDeCaixao.coffin"
             optionLabel="modelo"
-            placeholder="Selecione um Caixão"
+            placeholder="Selecione uma Urna"
             [style]="{ width: '100%', 'margin-bottom': '10px' }"
             [filter]="true"
             filterBy="modelo"
@@ -219,7 +219,7 @@
             [options]="caixoes"
             [(ngModel)]="caixaoSelecionadoPelaEditar"
             optionLabel="modelo"
-            placeholder="Selecione um Caixão"
+            placeholder="Selecione uma urna"
             [style]="{ width: '100%', 'margin-bottom': '10px' }"
             [filter]="true"
             filterBy="modelo"

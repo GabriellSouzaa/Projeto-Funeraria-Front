@@ -15,6 +15,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgIf } from '@angular/common';
 import { SideNavComponent } from '../side-nav/side-nav.component';
+import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -23,13 +26,14 @@ import { SideNavComponent } from '../side-nav/side-nav.component';
 @Component({
   selector: 'app-beneficiarios',
   standalone: true,
-  imports: [TableModule, SideNavComponent, TooltipModule, DialogModule, DropdownModule, FormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
+  imports: [TableModule, SideNavComponent, ToastModule, MessagesModule, TooltipModule, DialogModule, DropdownModule, FormsModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, NgIf],
   templateUrl: './beneficiarios.component.html',
+  providers: [MessageService],
   styleUrl: './beneficiarios.component.css'
 })
 export class BeneficiariosComponent {
 
-  constructor(private beneficiarioService: BeneficiarioService, private clienteService: ClienteService) { }
+  constructor(private beneficiarioService: BeneficiarioService, private clienteService: ClienteService,  private messageService: MessageService) { }
 
   public beneficiarios: Beneficiarios[] = [];
 
@@ -123,11 +127,16 @@ export class BeneficiariosComponent {
   public editarBeneficiario(): void{
     this.carregandoEdicaoDeBeneficiario = true;
     if(this.beneficiarioParaEditar.id){
-      this.beneficiarioService.editarBeneficiario(this.beneficiarioParaEditar.id, this.formularioEditarBeneficiario).subscribe(() => {
+      this.beneficiarioService.editarBeneficiario(this.beneficiarioParaEditar.id, this.formularioEditarBeneficiario).subscribe({
+        next: () => {
         this.listarBeneficiarios();
         this.fecharDialogEditarBeneficiario();
         this.carregandoEdicaoDeBeneficiario = false;
-      });
+         this.messageService.add({severity: 'success', detail: 'Beneficiario editado com Sucesso'})
+      }, 
+        error: () => {
+           this.messageService.add({severity: 'error', detail: 'Erro ao Editar Beneficiario'})
+        }});
     }
   }
 
