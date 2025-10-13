@@ -3,178 +3,150 @@
     <app-side-nav></app-side-nav>
   </div>
   <div class="dashboard">
-    <div
-  class="d-flex justify-content-center align-items-center"
-  style="height: 100vh"
-  *ngIf="carregandoMortesDePaciente"
->
-  <p-progressSpinner
-    styleClass="w-8rem h-8rem"
-    strokeWidth="8"
-    fill="var(--surface-ground)"
-    animationDuration=".5s"
-  />
-</div>
-
-<div class="wapper">
-  <div class="single-card">
-    <div class="button">
-      <button class="btn btn-primary" style="width: 100%;" (click)="abrirDialogAdicionarMorteDePaciente()">
-        <i class="bi bi-plus"></i> Cadastrar Falecimento
-      </button>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh"
+      *ngIf="carregandoMortesDePaciente">
+      <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="8" fill="var(--surface-ground)"
+        animationDuration=".5s" />
     </div>
-  </div>
-</div>
-<div class="wapper">
-  <div class="single-card-table">
-    <p-table
-  #tabelaMortesDePaciente
-  [value]="mortesDePaciente"
-  *ngIf="!carregandoMortesDePaciente"
-  [paginator]="true"
-  [rows]="3"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Total de Mortes de Paciente: {totalRecords}"
-  [globalFilterFields]="['funeralParlor', 'client', 'coffin', 'chemicalConservation', 'descriptionDeath']"
->
-  <ng-template pTemplate="caption">
 
-    <div class="flex mt-3">
-      <p-iconField iconPosition="left" class="ml-auto">
-        <p-inputIcon>
-          <i class="bi bi-search"></i>
-        </p-inputIcon>
-        <input
-          pInputText
-          style="width: 30%;"
-          type="text"
-          (input)="
+    <div class="wapper">
+      <div class="card-unificado">
+        <div class="button">
+          <button class="btn btn-primary" style="width: 25%;" (click)="abrirDialogAdicionarMorteDePaciente()">
+            <i class="bi bi-plus"></i> Cadastrar Falecimento
+          </button>
+        </div>
+     
+   
+   
+        <p-table #tabelaMortesDePaciente [value]="mortesDePaciente" *ngIf="!carregandoMortesDePaciente"
+          [paginator]="true" [rows]="3" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Total de Mortes de Paciente: {totalRecords}"
+          [globalFilterFields]="['funeralParlor', 'client', 'coffin', 'chemicalConservation', 'descriptionDeath']">
+          <ng-template pTemplate="caption">
+
+            <div class="flex mt-3">
+              <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                  <i class="bi bi-search"></i>
+                </p-inputIcon>
+                <input pInputText style="width: 30%;" type="text" (input)="
             tabelaMortesDePaciente.filterGlobal(
               $any($event.target).value,
               'contains'
             )
-          "
-          placeholder="Pesquisar por Sala de Velório, Cliente, Caixão, Conservação Quimica ou Descrição da Morte"
-        />
-      </p-iconField>
+          " placeholder="Pesquisar por Sala de Velório, Cliente, Caixão, Conservação Quimica ou Descrição da Morte" />
+              </p-iconField>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Sala de Velório</th>
+              <th pSortableColumn="client" style="width: 20%;">Cliente <p-sortIcon field="client"></p-sortIcon></th>
+              <th>Caixão</th>
+              <th>Conservação Quimica</th>
+              <th>Descrição da Morte</th>
+              <th style="width: 20%;">Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-morte>
+            <tr>
+              <td>{{ morte.funeralParlor }}</td>
+              <td>{{ morte.client }}</td>
+              <td>{{ morte.coffin }}</td>
+              <td>{{ morte.chemicalConservation }}</td>
+              <td>{{ morte.descriptionDeath }}</td>
+              <td>
+                <button class="btn btn-outline-warning btn-sm mx-1 text-black"
+                  (click)="abrirDialogEditarMorteDePaciente(morte)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="abrirDialogExcluirMorteDePaciente(morte)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Sala de Velório</th>
-      <th pSortableColumn="client" style="width: 20%;">Cliente <p-sortIcon field="client"></p-sortIcon></th>
-      <th>Caixão</th>
-      <th>Conservação Quimica</th>
-      <th>Descrição da Morte</th>
-      <th style="width: 20%;">Ações</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-morte>
-    <tr>
-      <td>{{ morte.funeralParlor }}</td>
-      <td>{{ morte.client }}</td>
-      <td>{{ morte.coffin }}</td>
-      <td>{{ morte.chemicalConservation }}</td>
-      <td>{{ morte.descriptionDeath }}</td>
-      <td>
-        <button class="btn btn-warning text-white m-2" (click)="abrirDialogEditarMorteDePaciente(morte)">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button class="btn btn-danger text-white m-2" (click)="abrirDialogExcluirMorteDePaciente(morte)">
-          <i class="bi bi-trash"></i>
-        </button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-  </div>
-</div>
 
 
 
-<p-dialog [visible]="visibleDialogAdicionarMorteDePaciente" [closable]="false" [style]="{width: '50vw', height: '75vh'}" [draggable]="false">
-<p-header>
-  Adicionar Morte de Paciente
-</p-header>
-<p-dropdown
-  [options]="salasDeVelorio"
-  optionLabel="descricao"
-  placeholder="Sala de Velório"
-  [(ngModel)]="formParaCadastrarMorteDePaciente.funeralParlor"
-  [style]="{width: '100%'}"
-></p-dropdown>
-<p-dropdown
-  [options]="clientes"
-  optionLabel="nome"
-  placeholder="Cliente"
-  [(ngModel)]="formParaCadastrarMorteDePaciente.client"
-  [style]="{width: '100%', marginTop: '1rem'}"
-></p-dropdown>
-<p-dropdown
-  [options]="caixoes"
-  optionLabel="modelo"
-  placeholder="Caixão"
-  [(ngModel)]="formParaCadastrarMorteDePaciente.coffin"
-  [style]="{width: '100%', marginTop: '1rem'}"
-></p-dropdown>
-<input type="text" pInputText style="width: 100%; margin-top: 1rem;" placeholder="Conversavação Quimica (S/N)" [(ngModel)]="formParaCadastrarMorteDePaciente.chemicalConservation">
-<textarea pInputTextarea style="width: 100%; margin-top: 1rem;" placeholder="Descrição da Morte" [(ngModel)]="formParaCadastrarMorteDePaciente.descriptionDeath"></textarea>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="cadastrarMorteDePaciente()" [disabled]="carregandoCadastroDeMorteDePaciente"><i class="bi bi-check" *ngIf="!carregandoCadastroDeMorteDePaciente"></i>
-    <span *ngIf="carregandoCadastroDeMorteDePaciente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogAdicionarMorteDePaciente()" [disabled]="carregandoCadastroDeMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+    <p-dialog [visible]="visibleDialogAdicionarMorteDePaciente" [closable]="false"
+      [style]="{width: '50vw', height: '75vh'}" [draggable]="false">
+      <p-header>
+        Adicionar Morte de Paciente
+      </p-header>
+      <p-dropdown [options]="salasDeVelorio" optionLabel="descricao" placeholder="Sala de Velório"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.funeralParlor" [style]="{width: '100%'}"></p-dropdown>
+      <p-dropdown [options]="clientes" optionLabel="nome" placeholder="Cliente"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.client" [style]="{width: '100%', marginTop: '1rem'}"></p-dropdown>
+      <p-dropdown [options]="caixoes" optionLabel="modelo" placeholder="Caixão"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.coffin" [style]="{width: '100%', marginTop: '1rem'}"></p-dropdown>
+      <input type="text" pInputText style="width: 100%; margin-top: 1rem;" placeholder="Conversavação Quimica (S/N)"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.chemicalConservation">
+      <textarea pInputTextarea style="width: 100%; margin-top: 1rem;" placeholder="Descrição da Morte"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.descriptionDeath"></textarea>
+      <p-footer>
+        <button class="btn btn-success m-2" (click)="cadastrarMorteDePaciente()"
+          [disabled]="carregandoCadastroDeMorteDePaciente"><i class="bi bi-check"
+            *ngIf="!carregandoCadastroDeMorteDePaciente"></i>
+          <span *ngIf="carregandoCadastroDeMorteDePaciente" class="spinner-border spinner-border-sm" role="status"
+            aria-hidden="true"></span>
+          Confirmar</button>
+        <button class="btn btn-danger m-2" (click)="fecharDialogAdicionarMorteDePaciente()"
+          [disabled]="carregandoCadastroDeMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
+      </p-footer>
+    </p-dialog>
 
-<p-dialog [visible]="visibleDialogEditarMorteDePaciente" [closable]="false" [style]="{width: '50vw', height: '50vh'}" [draggable]="false">
-  <p-dropdown
-  [options]="salasDeVelorio"
-  optionLabel="descricao"
-  placeholder="Sala de Velório"
-  [(ngModel)]="morteDePacienteSelecionadaParaEditar.funeralParlor"
-  [style]="{width: '100%'}"
-></p-dropdown>
-<p-dropdown
-  [options]="clientes"
-  optionLabel="nome"
-  placeholder="Cliente"
-  [(ngModel)]="morteDePacienteSelecionadaParaEditar.client"
-  [style]="{width: '100%', marginTop: '1rem'}"
-></p-dropdown>
-<p-dropdown
-  [options]="caixoes"
-  optionLabel="modelo"
-  placeholder="Caixão"
-  [(ngModel)]="morteDePacienteSelecionadaParaEditar.coffin"
-  [style]="{width: '100%', marginTop: '1rem'}"
-></p-dropdown>
-<input type="text" pInputText style="width: 100%; margin-top: 1rem;" placeholder="Conversavação Quimica (S/N)" [(ngModel)]="formParaCadastrarMorteDePaciente.chemicalConservation">
-<textarea pInputTextarea style="width: 100%; margin-top: 1rem;" placeholder="Descrição da Morte" [(ngModel)]="formParaCadastrarMorteDePaciente.descriptionDeath"></textarea>
-<p-header>
-  Editar Morte de Paciente
-</p-header>
-<p-footer>
-  <button class="btn btn-success m-2" (click)="editarMorteDePaciente()" [disabled]="carregandoEdicaoMorteDePaciente"><i class="bi bi-check" *ngIf="!carregandoEdicaoMorteDePaciente"></i>
-    <span *ngIf="carregandoEdicaoMorteDePaciente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogEditarMorteDePaciente()" [disabled]="carregandoEdicaoMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+    <p-dialog [visible]="visibleDialogEditarMorteDePaciente" [closable]="false"
+      [style]="{width: '50vw', height: '50vh'}" [draggable]="false">
+      <p-dropdown [options]="salasDeVelorio" optionLabel="descricao" placeholder="Sala de Velório"
+        [(ngModel)]="morteDePacienteSelecionadaParaEditar.funeralParlor" [style]="{width: '100%'}"></p-dropdown>
+      <p-dropdown [options]="clientes" optionLabel="nome" placeholder="Cliente"
+        [(ngModel)]="morteDePacienteSelecionadaParaEditar.client"
+        [style]="{width: '100%', marginTop: '1rem'}"></p-dropdown>
+      <p-dropdown [options]="caixoes" optionLabel="modelo" placeholder="Caixão"
+        [(ngModel)]="morteDePacienteSelecionadaParaEditar.coffin"
+        [style]="{width: '100%', marginTop: '1rem'}"></p-dropdown>
+      <input type="text" pInputText style="width: 100%; margin-top: 1rem;" placeholder="Conversavação Quimica (S/N)"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.chemicalConservation">
+      <textarea pInputTextarea style="width: 100%; margin-top: 1rem;" placeholder="Descrição da Morte"
+        [(ngModel)]="formParaCadastrarMorteDePaciente.descriptionDeath"></textarea>
+      <p-header>
+        Editar Morte de Paciente
+      </p-header>
+      <p-footer>
+        <button class="btn btn-success m-2" (click)="editarMorteDePaciente()"
+          [disabled]="carregandoEdicaoMorteDePaciente"><i class="bi bi-check"
+            *ngIf="!carregandoEdicaoMorteDePaciente"></i>
+          <span *ngIf="carregandoEdicaoMorteDePaciente" class="spinner-border spinner-border-sm" role="status"
+            aria-hidden="true"></span>
+          Confirmar</button>
+        <button class="btn btn-danger m-2" (click)="fecharDialogEditarMorteDePaciente()"
+          [disabled]="carregandoEdicaoMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
+      </p-footer>
+    </p-dialog>
 
 
-<p-dialog [visible]="visibleDialogExcluirMorteDePaciente" [closable]="false" [style]="{width: '30vw', height: '30vh'}" [draggable]="false">
-<p-header>
-  Excluir Morte de Paciente
-</p-header>
-Tem certeza que deseja excluir essa morte de paciente?
-<p-footer>
-  <button class="btn btn-success m-2" (click)="excluirMorteDePaciente()" [disabled]="carregandoExclusaoMorteDePaciente"><i class="bi bi-check" *ngIf="!carregandoExclusaoMorteDePaciente"></i>
-    <span *ngIf="carregandoExclusaoMorteDePaciente" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Confirmar</button>
-  <button class="btn btn-danger m-2" (click)="fecharDialogExcluirMorteDePaciente()" [disabled]="carregandoExclusaoMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
-</p-footer>
-</p-dialog>
+    <p-dialog [visible]="visibleDialogExcluirMorteDePaciente" [closable]="false"
+      [style]="{width: '30vw', height: '30vh'}" [draggable]="false">
+      <p-header>
+        Excluir Morte de Paciente
+      </p-header>
+      Tem certeza que deseja excluir essa morte de paciente?
+      <p-footer>
+        <button class="btn btn-success m-2" (click)="excluirMorteDePaciente()"
+          [disabled]="carregandoExclusaoMorteDePaciente"><i class="bi bi-check"
+            *ngIf="!carregandoExclusaoMorteDePaciente"></i>
+          <span *ngIf="carregandoExclusaoMorteDePaciente" class="spinner-border spinner-border-sm" role="status"
+            aria-hidden="true"></span>
+          Confirmar</button>
+        <button class="btn btn-danger m-2" (click)="fecharDialogExcluirMorteDePaciente()"
+          [disabled]="carregandoExclusaoMorteDePaciente"><i class="bi bi-arrow-left"></i> Voltar</button>
+      </p-footer>
+    </p-dialog>
 
 
 

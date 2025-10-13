@@ -18,14 +18,11 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.apiUrl}`);
   }
 
-  public cadastrarCliente(formData: FormData): Observable<Cliente> {
-
-    return this.http.post<Cliente>(`${this.apiUrl}/create`, formData, {
-      headers: new HttpHeaders ({
-
-      })
-    });
-  }
+ cadastrarCliente(cliente: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/create`, cliente, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
 
   public editarCliente(id : number, cliente: Cliente): Observable<Cliente>{
     return this.http.put<Cliente>(`${this.apiUrl}/update/${id}`, cliente);

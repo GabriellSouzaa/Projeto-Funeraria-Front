@@ -16,18 +16,18 @@
       />
     </div>
     <div class="wapper">
-      <div class="single-card">
+      <div class="card-unificado">
         <div class="button">
           <button
             class="btn btn-primary"
-            style="width: 43%; height: 25%"
+            style="width: 18%; height: 35%"
             (click)="abrirDialogCadastroVendaCaixao()"
           >
             <i class="bi bi-plus"></i> Cadastrar Venda de Caixão
           </button>
           <button
             class="btn btn-primary text-white"
-            style="width: 65%; height: 25%"
+            style="width: 26%; height: 25%"
             (click)="obterRelatorioDeVendasDeCaixao()"
             [disabled]="carregandoRelatorioMensalDeVendasDeCaixao"
           >
@@ -44,11 +44,11 @@
             Gerar Relatório de Venda Mensal de Caixão
           </button>
         </div>
-      </div>
-    </div>
+      
+   
 
-    <div class="wapper">
-      <div class="single-card-table">
+   
+      
         <p-table
           #tabelaVendasDeCaixao
           [value]="vendasDeCaixao"
@@ -100,14 +100,14 @@
               <td>{{ venda.dataVenda }}</td>
               <td>
                 <button
-                  class="btn btn-warning text-white m-2"
+                  class="btn btn-outline-warning btn-sm mx-1 text-black"
                   pTooltip="Editar Venda de Caixão"
                   (click)="abrirDialogEditarVendaCaixao(venda)"
                 >
                   <i class="bi bi-pencil"></i>
                 </button>
                 <button
-                  class="btn btn-danger text-white m-2"
+                  class="btn btn-outline-danger btn-sm"
                   pTooltip="Excluir Venda de Caixão"
                   (click)="abrirDialogExcluirVendaCaixao(venda)"
                 >
@@ -117,7 +117,7 @@
             </tr>
           </ng-template>
         </p-table>
-      </div>
+     </div>
     </div>
 
     <p-dialog

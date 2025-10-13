@@ -169,40 +169,46 @@ export class ClientesComponent {
     this.visibleDialogExcluirCliente = false;
   }
 
-  public cadastrarCliente(): void {
-    this.carregandoCadastroCliente = true;
-  const formData: FormData = new FormData();
-  Object.keys(this.formCadastrarCliente.value).forEach(key => {
-    formData.append(key, this.formCadastrarCliente.value[key]);
+public cadastrarCliente(): void {
+  this.carregandoCadastroCliente = true;
+
+  // Captura os dados do formulário
+  const clienteData = { ...this.formCadastrarCliente.value };
+
+  // 🧹 Remove caracteres não numéricos do telefone
+  clienteData.telefone = clienteData.telefone.replace(/\D/g, '');
+
+  // 🗓️ Formata data para yyyy-MM-dd
+  if (clienteData.dataNascimento) {
+    const data = new Date(clienteData.dataNascimento);
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    clienteData.dataNascimento = `${ano}-${mes}-${dia}`;
+  }
+
+  // Envia JSON para o backend
+  this.clienteService.cadastrarCliente(clienteData).subscribe({
+    next: () => {
+      this.fecharDialogCadastrarCliente();
+      this.listarClientes();
+      this.carregandoCadastroCliente = false;
+      this.messageService.add({
+        severity: 'success',
+        detail: 'Cliente cadastrado com sucesso'
+      });
+    },
+    error: () => {
+      this.messageService.add({
+        severity: 'error',
+        detail: 'Dados incorretos ou já existentes'
+      });
+      this.carregandoCadastroCliente = false;
+      this.fecharDialogCadastrarCliente();
+    }
   });
+}
 
-
-
-  if (this.selectedFile) {
-    formData.append('image', this.selectedFile, this.selectedFile.name); // Enviando o arquivo
-  }
-
-
-    this.clienteService.cadastrarCliente(formData).subscribe({
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          detail: 'Dados Incorretos ou já Existentes'
-        });
-        this.carregandoCadastroCliente = false;
-        this.fecharDialogCadastrarCliente();
-      },
-      next: () => {
-        this.fecharDialogCadastrarCliente();
-        this.listarClientes();
-        this.carregandoCadastroCliente = false;
-        this.messageService.add({
-          severity: 'success',
-          detail: 'Cliente cadastrado com Sucesso'
-        });
-      }
-    });
-  }
 
    formatarValorReal(valor: number | undefined): string {
   if (valor === undefined) {
